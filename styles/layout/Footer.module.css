@@ -1,0 +1,99 @@
+/* ------------- footer ------------- */
+
+.container {
+  padding: 1rem 7rem;
+}
+
+.footer {
+  background-color: #1ea9e4;
+
+  color: #ffffff;
+
+  padding: 5rem 0 2rem 0;
+}
+
+.footer_menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  margin-bottom: 2rem;
+}
+
+.footer_copyright {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  letter-spacing: -0.01em;
+
+  padding-top: 2rem;
+}
+
+.footer_alamat_logo {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+.footer_alamat_logo_1 {
+  position: relative;
+}
+
+.footer_alamat_logo_2 {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+
+  /* background-color: #3e3e3e; */
+}
+
+.footer_alamat_logo_3 {
+  margin-left: 0.5rem;
+}
+
+.footer_alamat_detail nav {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  line-height: 1.7rem;
+}
+
+.footer_alamat_logo,
+.footer_troffen_label,
+.footer_bantuan_label,
+.footer_sosial_media_label {
+  margin-bottom: 2rem;
+
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.footer_troffen_detail,
+.footer_bantuan_detail,
+.footer_sosial_media_detail {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height */
+
+  letter-spacing: -0.01em;
+  line-height: 2.7rem;
+}
+
+.footer_alamat_logo,
+.tentang_kami,
+.jadi_guru,
+.blog,
+.FAQ,
+.syarat_dan_ketentuan,
+.kebijakan_privasi,
+.hubungi_kami,
+.ig,
+.fb {
+  cursor: pointer;
+}

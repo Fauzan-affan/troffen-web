@@ -1,0 +1,95 @@
+.container {
+  padding: 1rem 7rem;
+}
+
+.container_navbar {
+  padding: 1rem 7rem;
+
+  box-shadow: 0 1em 1em -1em rgba(0, 0, 0, 0.25);
+}
+
+.navbar_contents {
+  display: grid;
+  grid-template-columns: 50% 50%;
+
+  align-items: center;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  letter-spacing: -0.01em;
+}
+
+.navbar_contents_menu {
+  display: grid;
+  grid-auto-flow: column;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar_contents_logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo1 {
+  position: relative;
+  top: 0;
+  left: 0;
+
+  cursor: pointer;
+}
+
+.logo1_1 {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.logo1_2 {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+}
+
+.logo2 {
+  margin-left: 0.5rem;
+
+  cursor: pointer;
+}
+
+.navbar_contents_menu1,
+.navbar_contents_menu2,
+.navbar_contents_menu3,
+.navbar_contents_menu4 {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.button_submit {
+  background: #1ea9e4;
+  border-radius: 12px;
+  color: white;
+  border: none;
+
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+
+  padding: 0.7em 2.5em;
+  cursor: pointer;
+}
+
+.button_submit:hover {
+  opacity: 0.9;
+}
+
+.navbar_contents_menu1:hover,
+.navbar_contents_menu2:hover,
+.navbar_contents_menu3:hover,
+.navbar_contents_menu4:hover {
+  color: #1ea9e4;
+  font-weight: bold;
+}
