@@ -51,7 +51,7 @@ function Footer() {
           <hr />
           <div className={styles.footer_copyright}>
             Copyright Troffen
-            <script>document.write(new Date().getFullYear());</script>
+            <script>{new Date().getFullYear()}</script>
             All rights reserved.
           </div>
         </div>
