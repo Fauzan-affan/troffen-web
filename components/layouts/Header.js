@@ -12,13 +12,17 @@ function Header() {
       <div className={styles.container_navbar}>
         <div className={styles.navbar_contents}>
           <div className={styles.navbar_contents_logo}>
-            <nav className={styles.logo1}>
-              <Image src={TroffenLogo1} className={styles.logo1_1} priority />
-              <Image src={TroffenLogo2} className={styles.logo1_2} priority />
-            </nav>
-            <nav className={styles.logo2}>
-              <Image src={TroffenLogo3} priority />
-            </nav>
+            <Link href={"/"}>
+              <nav className={styles.logo1}>
+                <Image src={TroffenLogo1} className={styles.logo1_1} priority />
+                <Image src={TroffenLogo2} className={styles.logo1_2} priority />
+              </nav>
+            </Link>
+            <Link href={"/"}>
+              <nav className={styles.logo2}>
+                <Image src={TroffenLogo3} priority />
+              </nav>
+            </Link>
           </div>
           <div className={styles.navbar_contents_menu}>
             <div className={styles.navbar_contents_menu1}>

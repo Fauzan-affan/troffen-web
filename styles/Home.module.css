@@ -784,8 +784,12 @@ body::-webkit-scrollbar {
 }
 
 .button_lihat_semua:hover {
-  /* background: #1588b9; */
   opacity: 0.9;
+
+  background: #1ea9e4;
+  border-radius: 12px;
+  color: #fff;
+  border: 1.5px solid #1ea9e4;
 }
 
 /* ------------- benefit sebagai ------------- */
