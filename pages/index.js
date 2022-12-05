@@ -350,10 +350,10 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.benefit_sebagai}>
             <div className={styles.benefit_sebagai_tutor}>
-              <Image src={GuruBenefit} priority />
+              <Image src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
             </div>
             <div className={styles.benefit_sebagai_student}>
-              <Image src={MuridBenefit} />
+              <Image src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
             </div>
           </div>
         </div>

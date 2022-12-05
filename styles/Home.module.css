@@ -800,3 +800,8 @@ body::-webkit-scrollbar {
   justify-content: center;
   align-items: center;
 }
+
+.benefit_sebagai_tutor_img,
+.benefit_sebagai_student_img {
+  cursor: pointer;
+}

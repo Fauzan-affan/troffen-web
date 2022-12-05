@@ -442,13 +442,20 @@
 }
 
 .blocks:hover {
-  background-color: #c2edff;
+  background-color: #1ea9e4;
+  color: #fff;
 }
 
 #pagination a#active {
   /* background-color: #4caf50; */
   border: 1px solid #1ea9e4;
   color: #1ea9e4;
+}
+
+#pagination a#active:hover {
+  /* background-color: #4caf50; */
+  background-color: #1ea9e4;
+  color: #fff;
 }
 
 #pagination a#disabled {
