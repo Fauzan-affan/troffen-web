@@ -97,3 +97,35 @@
 .fb {
   cursor: pointer;
 }
+
+/* ------------- responsive section ------------- */
+
+@media screen and (max-width: 1030px) {
+  .footer {
+    text-align: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  .footer_menu,
+  .footer_alamat {
+    display: grid;
+    grid-auto-flow: row;
+
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer_troffen_label,
+  .footer_bantuan_label,
+  .footer_sosial_media_label {
+    margin: 2rem 0 0 0;
+  }
+}

@@ -94,7 +94,6 @@ export default function Home() {
             <div className={styles.benefit_content}>
               <div className={styles.benefit_content_left}>
                 <Image src={Benefit1} priority />
-                {/* <img src="/assets//Troffen - MVP/Work1.svg" alt="an image" /> */}
               </div>
               <div className={styles.benefit_content_right}>
                 <div className={styles.benefit_content_container}>
@@ -360,15 +359,6 @@ export default function Home() {
       </section>
 
       <Footer />
-
-      {/* <footer className={styles.footer}>
-        <a href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app" target="_blank" rel="noopener noreferrer">
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="an imageVercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer> */}
     </>
   );
 }

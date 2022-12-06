@@ -68,6 +68,14 @@
   font-weight: bold;
 }
 
+.navbar_contents_menu1:hover,
+.navbar_contents_menu2:hover,
+.navbar_contents_menu3:hover,
+.navbar_contents_menu4:hover {
+  color: #1ea9e4;
+  font-weight: bold;
+}
+
 .button_submit {
   background: #1ea9e4;
   border-radius: 12px;
@@ -86,10 +94,73 @@
   opacity: 0.9;
 }
 
-.navbar_contents_menu1:hover,
-.navbar_contents_menu2:hover,
-.navbar_contents_menu3:hover,
-.navbar_contents_menu4:hover {
-  color: #1ea9e4;
-  font-weight: bold;
+.navbar_contents_hamburger,
+.container_responsive_menu {
+  display: none;
+}
+
+/* ------------- responsive section ------------- */
+
+@media screen and (max-width: 954px) {
+  .container_navbar {
+    padding: 1rem 0;
+  }
+
+  .navbar_contents {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 2.5rem;
+  }
+
+  .navbar_contents_menu {
+    position: relative;
+  }
+
+  .navbar_contents_menu div:not(:last-child) {
+    display: none;
+  }
+
+  .navbar_contents_hamburger {
+    float: right;
+    display: block;
+
+    position: absolute;
+    right: 0;
+    /* top: 0; */
+
+    font-size: 1.8rem;
+
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.16);
+    border-radius: 8px;
+
+    padding: 0.5rem 0.5rem;
+  }
+}
+
+@media screen and (max-width: 954px) {
+  .container_responsive_menu {
+    display: block;
+  }
+
+  .container_responsive_menu div {
+    display: block;
+    background-color: #fff;
+
+    padding: 1rem 2rem;
+
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    color: #3e3e3e;
+
+    /* border-bottom: 1px solid #3e3e3e; */
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .navbar_contents {
+    grid-template-columns: 20% 80%;
+  }
 }
