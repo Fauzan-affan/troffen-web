@@ -46,20 +46,26 @@ export default function Home() {
             <div className={styles.content}>
               <div className={styles.content1}>Temukan dan belajar dari guru yang sesuai kriteriamu.</div>
               <div className={styles.content2}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</div>
-              <div className={styles.content3}>
-                <div className={styles.search_subject}>
-                  <input type="text" placeholder="Mau belajar apa hari ini?" />
-                </div>
-                <div className={styles.search_location}>
+            </div>
+            <div className={styles.search_box}>
+              <div className={styles.search_subject}>
+                <input type="text" placeholder="Mau belajar apa hari ini?" />
+              </div>
+              <div className={styles.search_location}>
+                <div className={styles.search_location_left}>
                   <Image src={JumbotronLoc} priority />
-                  {/* <img src="/assets/Troffen - MVP/location.svg" alt="an image" /> */}
                   <input type="text" placeholder="Lokasi" />
+                </div>
+                <div className={styles.search_location_right}>
                   <button className={styles.button_search}>Cari Kursus</button>
                 </div>
               </div>
-              <div className={styles.content4}>
-                Belum tahu tentang Troffen <a href="#">Pelajari di sini</a>
+              <div className={styles.search_location_mobile}>
+                <button className={styles.button_search_mobile}>Cari Kursus</button>
               </div>
+            </div>
+            <div className={styles.content4}>
+              Belum tahu tentang Troffen <a href="#">Pelajari di sini</a>
             </div>
           </div>
         </div>
@@ -70,17 +76,14 @@ export default function Home() {
           <div className={styles.banner1_label}>
             <div className={styles.banner1_label1}>
               <Image src={BannerVector} priority />
-              {/* <img src="/assets/Troffen - MVP/Vector.svg" alt="an image" /> */}
               <nav>50+ Subject Kursus</nav>
             </div>
             <div className={styles.banner1_label2}>
               <Image src={BannerVector} priority />
-              {/* <img src="/assets/Troffen - MVP/Vector.svg" alt="an image" /> */}
               <nav>Kursus Online & Offline</nav>
             </div>
             <div className={styles.banner1_label3}>
               <Image src={BannerVector} priority />
-              {/* <img src="/assets/Troffen - MVP/Vector.svg" alt="an image" /> */}
               <nav>Tutor Terpercaya</nav>
             </div>
           </div>
@@ -93,7 +96,7 @@ export default function Home() {
             <div className={styles.benefit_title}>Kursus Online Kini Lebih Menyenangkan</div>
             <div className={styles.benefit_content}>
               <div className={styles.benefit_content_left}>
-                <Image src={Benefit1} priority />
+                <Image className={styles.img} src={Benefit1} priority />
               </div>
               <div className={styles.benefit_content_right}>
                 <div className={styles.benefit_content_container}>
@@ -149,7 +152,6 @@ export default function Home() {
                   <div className={styles.kursus_box_1_left_1}>
                     <div className={styles.kursus_box_1_left_1_title}>
                       <Image src={No1} priority />
-                      {/* <img src="/assets//Troffen - MVP/no1.svg" alt="an image" /> */}
                       <nav>Temukan Guru</nav>
                     </div>
                     <div className={styles.kursus_box_1_left_1_desc}>Cek profil guru dengan bebas dan pilih guru yang kamu inginkan sesuai dengan kebutuhan dan kriteria.</div>
@@ -159,7 +161,6 @@ export default function Home() {
                   <div className={styles.kursus_box_2_left_1}>
                     <div className={styles.kursus_box_2_left_1_title}>
                       <Image src={No2} priority />
-                      {/* <img src="/assets//Troffen - MVP/no2.svg" alt="an image" /> */}
                       <nav>Permintaan Kursus</nav>
                     </div>
                     <div className={styles.kursus_box_2_left_1_desc}>Para guru akan memberikan tanggapan terhadap permintaan kursus kamu dalam beberapa jam!</div>
@@ -169,7 +170,6 @@ export default function Home() {
                   <div className={styles.kursus_box_3_left_1}>
                     <div className={styles.kursus_box_3_left_1_title}>
                       <Image src={No3} priority />
-                      {/* <img src="/assets//Troffen - MVP/no3.svg" alt="an image" /> */}
                       <nav>Atur Jadwal Kursus</nav>
                     </div>
                     <div className={styles.kursus_box_3_left_1_desc}>Atur jadwal kursus Kamu sendiri dengan kursus dan guru yang dipilih.</div>
@@ -178,7 +178,6 @@ export default function Home() {
               </div>
               <div className={styles.kursus_box_right}>
                 <Image src={KursusDesain} priority />
-                {/* <img src="/assets/Troffen - MVP/Group3748.svg" alt="an image" /> */}
                 <nav className={styles.kursus_desain}>KURSUS DESAIN</nav>
                 <nav className={styles.guru_tersedia}>200 GURU TERSEDIA</nav>
               </div>
@@ -195,11 +194,9 @@ export default function Home() {
               <div className={styles.subjek_title_action}>
                 <div className={styles.previous}>
                   <Image src={Previous} priority />
-                  {/* <img src="/assets/Troffen - MVP/Previous.svg" alt="an image" /> */}
                 </div>
                 <div className={styles.next}>
                   <Image src={Next} priority />
-                  {/* <img src="/assets/Troffen - MVP/Next.svg" alt="an image" /> */}
                 </div>
               </div>
             </div>
@@ -209,34 +206,28 @@ export default function Home() {
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
                       <Image src={SubjekThumbnail} priority />
-                      {/* <img src="/assets/Troffen - MVP/subjek-thumbnail.svg" alt="an image" /> */}
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
                           <Image src={Favorite} priority />
-                          {/* <img src="/assets/Troffen - MVP/Fav.svg" alt="an image" /> */}
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
                         <Image src={Verify} priority />
-                        {/* <img src="/assets/Troffen - MVP/Verify.svg" alt="an image" /> */}
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
                           <Image src={Star} priority className={styles.star} />
-                          {/* <img src="/assets/Troffen - MVP/Star.svg" alt="an image" className={styles.star} /> */}
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
                           <Image src={Divider} priority />
-                          {/* <img src="/assets/Troffen - MVP/Line 8.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.group_of_reviewer}>
                           <Image src={GOR} priority />
-                          {/* <img src="/assets/Troffen - MVP/Group of reviewer.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -252,34 +243,28 @@ export default function Home() {
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
                       <Image src={SubjekThumbnail} priority />
-                      {/* <img src="/assets/Troffen - MVP/subjek-thumbnail.svg" alt="an image" /> */}
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
                           <Image src={Favorite} priority />
-                          {/* <img src="/assets/Troffen - MVP/Fav.svg" alt="an image" /> */}
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
                         <Image src={Verify} priority />
-                        {/* <img src="/assets/Troffen - MVP/Verify.svg" alt="an image" /> */}
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
                           <Image src={Star} priority className={styles.star} />
-                          {/* <img src="/assets/Troffen - MVP/Star.svg" alt="an image" className={styles.star} /> */}
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
                           <Image src={Divider} priority />
-                          {/* <img src="/assets/Troffen - MVP/Line 8.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.group_of_reviewer}>
                           <Image src={GOR} priority />
-                          {/* <img src="/assets/Troffen - MVP/Group of reviewer.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -295,34 +280,28 @@ export default function Home() {
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
                       <Image src={SubjekThumbnail} priority />
-                      {/* <img src="/assets/Troffen - MVP/subjek-thumbnail.svg" alt="an image" /> */}
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
                           <Image src={Favorite} priority />
-                          {/* <img src="/assets/Troffen - MVP/Fav.svg" alt="an image" /> */}
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
                         <Image src={Verify} priority />
-                        {/* <img src="/assets/Troffen - MVP/Verify.svg" alt="an image" /> */}
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
                           <Image src={Star} priority className={styles.star} />
-                          {/* <img src="/assets/Troffen - MVP/Star.svg" alt="an image" className={styles.star} /> */}
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
                           <Image src={Divider} priority />
-                          {/* <img src="/assets/Troffen - MVP/Line 8.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.group_of_reviewer}>
                           <Image src={GOR} priority />
-                          {/* <img src="/assets/Troffen - MVP/Group of reviewer.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
