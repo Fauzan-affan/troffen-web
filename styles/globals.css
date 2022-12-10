@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+:root {
+  --color1: #1ea9e4;
+  --green: #01ab71;
+}
+
 html,
 body {
   padding: 0;

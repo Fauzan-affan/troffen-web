@@ -53,6 +53,9 @@ export default function index() {
                   <button className={styles.button_search}>Cari Kursus</button>
                 </div>
               </div>
+              <div className={styles.search_location_mobile}>
+                <button className={styles.button_search_mobile}>Cari Kursus</button>
+              </div>
             </div>
           </div>
         </div>
@@ -70,12 +73,24 @@ export default function index() {
                 <div className={styles.filter}>
                   <Image src={Filter} priority className={styles.filer_icon} />
                   <select name="" id="" className={styles.select_filter}>
-                    <option value="tarif_low_high">Tarif: Low to High</option>
-                    <option value="tarif_high_low">Tarif: High to Low</option>
-                    <option value="postingan_oldes_newest">Postingan: Oldest to Newest</option>
-                    <option value="postingan_newest_oldes">Postingan: Newest to Oldest</option>
-                    <option value="rating_low_high">Rating: Low to High</option>
-                    <option value="rating_high_low">Rating: High to Low</option>
+                    <option id={styles.select_id} value="tarif_low_high">
+                      Tarif: Low to High
+                    </option>
+                    <option id={styles.select_id} value="tarif_high_low">
+                      Tarif: High to Low
+                    </option>
+                    <option id={styles.select_id} value="postingan_oldes_newest">
+                      Postingan: Oldest to Newest
+                    </option>
+                    <option id={styles.select_id} value="postingan_newest_oldes">
+                      Postingan: Newest to Oldest
+                    </option>
+                    <option id={styles.select_id} value="rating_low_high">
+                      Rating: Low to High
+                    </option>
+                    <option id={styles.select_id} value="rating_high_low">
+                      Rating: High to Low
+                    </option>
                   </select>
                 </div>
               </div>
@@ -86,34 +101,28 @@ export default function index() {
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
                       <Image src={SubjekThumbnail} priority />
-                      {/* <img src="/assets/Troffen - MVP/subjek-thumbnail.svg" alt="an image" /> */}
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
                           <Image src={Favorite} priority className={styles.favorite} />
-                          {/* <img src="/assets/Troffen - MVP/Fav.svg" alt="an image" /> */}
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
                         <Image src={Verify} priority />
-                        {/* <img src="/assets/Troffen - MVP/Verify.svg" alt="an image" /> */}
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
                           <Image src={Star} priority className={styles.star} />
-                          {/* <img src="/assets/Troffen - MVP/Star.svg" alt="an image" className={styles.star} /> */}
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
                           <Image src={Divider} priority />
-                          {/* <img src="/assets/Troffen - MVP/Line 8.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.group_of_reviewer}>
                           <Image src={GOR} priority />
-                          {/* <img src="/assets/Troffen - MVP/Group of reviewer.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -129,34 +138,28 @@ export default function index() {
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
                       <Image src={SubjekThumbnail} priority />
-                      {/* <img src="/assets/Troffen - MVP/subjek-thumbnail.svg" alt="an image" /> */}
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
                           <Image src={Favorite} priority className={styles.favorite} />
-                          {/* <img src="/assets/Troffen - MVP/Fav.svg" alt="an image" /> */}
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
                         <Image src={Verify} priority />
-                        {/* <img src="/assets/Troffen - MVP/Verify.svg" alt="an image" /> */}
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
                           <Image src={Star} priority className={styles.star} />
-                          {/* <img src="/assets/Troffen - MVP/Star.svg" alt="an image" className={styles.star} /> */}
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
                           <Image src={Divider} priority />
-                          {/* <img src="/assets/Troffen - MVP/Line 8.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.group_of_reviewer}>
                           <Image src={GOR} priority />
-                          {/* <img src="/assets/Troffen - MVP/Group of reviewer.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -172,34 +175,28 @@ export default function index() {
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
                       <Image src={SubjekThumbnail} priority />
-                      {/* <img src="/assets/Troffen - MVP/subjek-thumbnail.svg" alt="an image" /> */}
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
                           <Image src={Favorite} priority className={styles.favorite} />
-                          {/* <img src="/assets/Troffen - MVP/Fav.svg" alt="an image" /> */}
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
                         <Image src={Verify} priority />
-                        {/* <img src="/assets/Troffen - MVP/Verify.svg" alt="an image" /> */}
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
                           <Image src={Star} priority className={styles.star} />
-                          {/* <img src="/assets/Troffen - MVP/Star.svg" alt="an image" className={styles.star} /> */}
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
                           <Image src={Divider} priority />
-                          {/* <img src="/assets/Troffen - MVP/Line 8.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.group_of_reviewer}>
                           <Image src={GOR} priority />
-                          {/* <img src="/assets/Troffen - MVP/Group of reviewer.svg" alt="an image" /> */}
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
