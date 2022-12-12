@@ -7,7 +7,7 @@ import TroffenLogo1 from "../../assets/img/Rectangle63.svg";
 import TroffenLogo2 from "../../assets/img/T.svg";
 import TroffenLogo3 from "../../assets/img/Troffen.svg";
 
-function Header() {
+function Header({ modalConfig }) {
   const [isClicked, setIsClicked] = useState(false);
   return (
     <section id="navbar">
@@ -37,10 +37,14 @@ function Header() {
               <Link href={"/tentang-kami"}>Tentang Kami</Link>
             </div>
             <div className={styles.navbar_contents_menu4}>
-              <Link href={"/daftar-sebagai-guru"}>Daftar Sebagai Guru</Link>
+              <Link href={"#"} onClick={() => modalConfig("daftar", true)}>
+                Daftar
+              </Link>
             </div>
             <div className={styles.navbar_contents_button}>
-              <button className={styles.button_submit}>Masuk</button>
+              <button className={styles.button_submit} onClick={() => modalConfig("masuk", true)}>
+                Masuk
+              </button>
             </div>
             <div className={styles.navbar_contents_hamburger} style={{ backgroundColor: isClicked ? "white" : "transparent" }} onClick={() => setIsClicked(!isClicked)}>
               &#9776;
@@ -59,11 +63,15 @@ function Header() {
           <Link href={"/tentang-kami"}>
             <div className={styles.responsive_menu3}>Tentang Kami</div>
           </Link>
-          <Link href={"/daftar-sebagai-guru"}>
-            <div className={styles.responsive_menu4}>Daftar Sebagai Guru</div>
+          <Link href={"#"}>
+            <div className={styles.responsive_menu4} onClick={() => modalConfig("daftar", true)}>
+              Daftar
+            </div>
           </Link>
           <Link href={"#"}>
-            <div className={styles.responsive_menu5}>Masuk</div>
+            <div className={styles.responsive_menu5} onClick={() => modalConfig("masuk", true)}>
+              Masuk
+            </div>
           </Link>
         </div>
       ) : (

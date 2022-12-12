@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -29,7 +31,17 @@ import Star from "../assets/img/Star.svg";
 import Divider from "../assets/img/Line8.svg";
 import GOR from "../assets/img/GroupOfReviewer.svg";
 
+import Modal from "../components/core/Modal.js";
+
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
+  const [menu, setMenu] = useState("");
+
+  const modalConfig = (headerMenu, modalStatus) => {
+    setMenu(headerMenu);
+    setShowModal(modalStatus);
+  };
+
   return (
     <>
       <Head>
@@ -38,7 +50,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header modalConfig={modalConfig} />
 
       <section id="jumbotron">
         <div className={styles.jumbotron_content} style={{ backgroundImage: `url(${JumbotronLayout.src})` }}>
@@ -338,6 +350,16 @@ export default function Home() {
       </section>
 
       <Footer />
+
+      <Modal onClose={() => setShowModal(false)} show={showModal} title={menu}>
+        {menu === "daftar" && (
+          <div className={`daftar_modal`}>
+            <button className={`button_murid`}>Daftar Sebagai Murid</button>
+            <nav>atau</nav>
+            <button className={`button_guru`}>Daftar Sebagai Guru</button>
+          </div>
+        )}
+      </Modal>
     </>
   );
 }

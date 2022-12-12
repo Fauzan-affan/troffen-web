@@ -70,10 +70,17 @@
 
 .navbar_contents_menu1:hover,
 .navbar_contents_menu2:hover,
-.navbar_contents_menu3:hover,
-.navbar_contents_menu4:hover {
+.navbar_contents_menu3:hover {
   color: #1ea9e4;
   font-weight: bold;
+}
+
+.navbar_contents_menu4 {
+  color: var(--color1);
+}
+
+.navbar_contents_menu4:hover {
+  color: var(--green);
 }
 
 .button_submit {

@@ -1,10 +1,11 @@
+import { useState } from "react";
+
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/cari-guru/CariGuru.module.css";
 import Header from "../../components/layouts/Header";
 import Footer from "../../components/layouts/Footer";
 
-import JumbotronLayout from "../../assets/img/Group3761.svg";
 import JumbotronLoc from "../../assets/img/location.svg";
 import BgSearch from "../../assets/img/bg-biru.svg";
 import Filter from "../../assets/img/filter.svg";
@@ -15,7 +16,17 @@ import Star from "../../assets/img/Star.svg";
 import Divider from "../../assets/img/Line8.svg";
 import GOR from "../../assets/img/GroupOfReviewer.svg";
 
+import Modal from "../../components/core/Modal";
+
 export default function index() {
+  const [showModal, setShowModal] = useState(false);
+  const [menu, setMenu] = useState("");
+
+  const modalConfig = (headerMenu, modalStatus) => {
+    setMenu(headerMenu);
+    setShowModal(modalStatus);
+  };
+
   return (
     <>
       <Head>
@@ -24,7 +35,7 @@ export default function index() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header />
+      <Header modalConfig={modalConfig} />
 
       <section id="search_bar">
         <div className={styles.search_bar} style={{ backgroundImage: `url(${BgSearch.src})` }}>
@@ -242,6 +253,16 @@ export default function index() {
       </section>
 
       <Footer />
+
+      <Modal onClose={() => setShowModal(false)} show={showModal} title={menu}>
+        {menu === "daftar" && (
+          <div className={`daftar_modal`}>
+            <button className={`button_murid`}>Daftar Sebagai Murid</button>
+            <nav>atau</nav>
+            <button className={`button_guru`}>Daftar Sebagai Guru</button>
+          </div>
+        )}
+      </Modal>
     </>
   );
 }
