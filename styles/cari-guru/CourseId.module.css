@@ -1,0 +1,11 @@
+.container {
+  padding: 1rem 7rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.body_right {
+  width: 100%;
+}

@@ -12,28 +12,57 @@
 
 .modal_daftar {
   background: white;
-  width: 500px;
+  width: 600px;
   height: 410px;
-  border-radius: 15px;
-  padding: 15px;
+  border-radius: 50px;
+  padding: 30px;
 }
 
 .modal_masuk {
   background: white;
   width: 500px;
-  height: 600px;
-  border-radius: 15px;
-  padding: 15px;
+  height: 650px;
+  border-radius: 50px;
+  padding: 30px;
 }
 
-.modal_header {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 25px;
+.modal_footer_daftar {
+  position: absolute;
+  top: 72%;
+}
+
+.modal_footer_masuk {
+  position: absolute;
+  top: 84%;
+}
+
+.modal_close {
+  width: 100%;
+
+  height: 60px;
+  width: 60px;
+
+  border-radius: 70%;
+  border: 1px solid white;
+
+  position: relative;
+
+  cursor: pointer;
+
+  /* background-color: aquamarine; */
+}
+
+.modal_close nav {
+  position: absolute;
+  top: 5%;
+  left: 37%;
+
+  font-size: 32px;
+  color: white;
 }
 
 .modal_body {
-  padding-top: 10px;
+  padding-top: 3rem;
 }
 
 .modal_title {
@@ -45,7 +74,19 @@
 }
 
 @media screen and (max-width: 450px) {
-  .modal_daftar {
-    width: 400px;
+  .modal_daftar,
+  .modal_masuk {
+    max-width: 400px;
+    height: fit-content;
+  }
+
+  .modal_footer_daftar {
+    position: absolute;
+    top: 75%;
+  }
+
+  .modal_footer_masuk {
+    position: absolute;
+    top: 85%;
   }
 }

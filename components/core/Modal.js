@@ -1,4 +1,4 @@
-import styled from "../../styles/core/Modal.module.css";
+import styles from "../../styles/core/Modal.module.css";
 
 function Modal({ show, onClose, children, title }) {
   const handleCloseClick = (e) => {
@@ -9,17 +9,19 @@ function Modal({ show, onClose, children, title }) {
   return (
     <>
       {show && (
-        <div className={styled.modal_overlay}>
-          <div className={title === "daftar" ? styled.modal_daftar : styled.modal_masuk}>
-            <div className={styled.modal_header}>
-              <a href="#" onClick={handleCloseClick}>
-                x
-              </a>
+        <>
+          <div className={styles.modal_overlay}>
+            <div className={title === "daftar" ? styles.modal_daftar : styles.modal_masuk}>
+              {title && <div className={styles.modal_title}>{title}</div>}
+              <div className={styles.modal_body}>{children}</div>
             </div>
-            {title && <div className={styled.modal_title}>{title}</div>}
-            <div className={styled.modal_body}>{children}</div>
+            <div className={title === "daftar" ? styles.modal_footer_daftar : styles.modal_footer_masuk}>
+              <div className={styles.modal_close} onClick={handleCloseClick}>
+                <nav>x</nav>
+              </div>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

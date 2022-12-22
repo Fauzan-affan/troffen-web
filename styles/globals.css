@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 :root {
-  --color1: #1ea9e4;
+  --blue: #1ea9e4;
+  --softBlue: #c9eefe;
   --green: #01ab71;
+  --grey: #c7c9d1;
+  --softGrey: #f7f7f7;
+  --purple: #424782;
 }
 
 html,
@@ -97,6 +101,164 @@ a {
 .button_murid,
 .daftar_modal nav {
   margin-bottom: 1rem;
+}
+
+.mobile_masuk_modal_type {
+  display: none;
+}
+
+.masuk_modal_type {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.masuk_sebagai_murid,
+.masuk_sebagai_guru {
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.masuk_modal_body {
+  width: 100%;
+
+  margin-top: 2rem;
+}
+
+.masuk_email,
+.masuk_password {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 32px;
+}
+
+.masuk_password {
+  margin-top: 1rem;
+}
+
+.masuk_email nav,
+.masuk_password nav {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.16);
+  border-radius: 6px;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  /* background-color: antiquewhite; */
+  padding-right: 1rem;
+}
+
+.masuk_email nav input,
+.masuk_password nav input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border-style: none;
+
+  color: var(--grey);
+}
+
+.masuk_email nav input:focus,
+.masuk_password nav input:focus {
+  outline: none !important;
+}
+
+.masuk_action {
+  margin-top: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.action_ingat_saya {
+  display: flex;
+}
+
+.action_lupa_password {
+  font-weight: 600;
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.masuk_submit {
+  margin-top: 2rem;
+
+  background: #1ea9e4;
+  border-radius: 12px;
+  color: white;
+  border: none;
+
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 34px;
+
+  padding: 0.3em 0;
+  cursor: pointer;
+
+  width: 100%;
+}
+
+.masuk_submit:hover {
+  opacity: 0.9;
+}
+
+.masuk_option_label {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.masuk_options_body {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.masuk_google,
+.masuk_facebook {
+  margin-top: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  border: 1px solid var(--purple);
+  border-radius: 8px;
+
+  width: 10rem;
+  height: 3rem;
+}
+
+.masuk_google nav,
+.masuk_facebook nav {
+  margin-left: 0.5rem;
+}
+
+@media screen and (max-width: 450px) {
+  .masuk_modal_type {
+    display: none;
+  }
+
+  .mobile_masuk_modal_type {
+    display: block;
+    text-align: center;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .masuk_options_body {
+    justify-content: space-between;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

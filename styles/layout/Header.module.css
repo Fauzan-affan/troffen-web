@@ -3,7 +3,11 @@
 }
 
 .container_navbar {
-  padding: 1rem 7rem;
+  padding: 0 7rem;
+
+  height: 5rem;
+
+  display: grid;
 
   box-shadow: 0 1em 1em -1em rgba(0, 0, 0, 0.25);
 }
@@ -76,7 +80,7 @@
 }
 
 .navbar_contents_menu4 {
-  color: var(--color1);
+  color: var(--blue);
 }
 
 .navbar_contents_menu4:hover {
@@ -104,6 +108,82 @@
 .navbar_contents_hamburger,
 .container_responsive_menu {
   display: none;
+}
+
+/* ------------- loggedin menu ------------- */
+
+.loggedin_menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.loggedin_menu:hover {
+  color: var(--blue);
+}
+
+.loggedin_menu:hover > .loggedin_menu_body {
+  display: block;
+}
+
+.loggedin_username {
+  margin-right: 1rem;
+
+  font-weight: bold;
+}
+
+.loggedin_menu_body {
+  display: none;
+
+  width: 18rem;
+
+  padding: 0.7rem;
+
+  z-index: 1;
+
+  position: absolute;
+  top: 4rem;
+  right: 6rem;
+
+  background-color: white;
+}
+
+.dashboard_label,
+.logout_label {
+  color: var(--grey);
+
+  font-size: 12px;
+}
+
+.loggedin_menu_body hr {
+  border: 1px solid var(--grey);
+}
+
+.loggedin_menu_body li {
+  list-style-type: none;
+}
+
+.dashboard_body,
+.logout_body {
+  color: black;
+}
+
+.dashboard_menu,
+.logout_menu {
+  padding: 0.5rem;
+}
+
+.dashboard_menu:hover,
+.logout_menu:hover {
+  background-color: var(--softGrey);
+}
+
+.dashboard_menu:hover .dashboard_body,
+.logout_menu:hover .logout_body {
+  color: var(--blue);
+  font-weight: bold;
 }
 
 /* ------------- responsive section ------------- */
@@ -163,6 +243,10 @@
     color: #3e3e3e;
 
     /* border-bottom: 1px solid #3e3e3e; */
+  }
+
+  .loggedin_menu {
+    display: none;
   }
 }
 
