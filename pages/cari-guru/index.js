@@ -5,7 +5,7 @@ import styles from "../../styles/cari-guru/CariGuru.module.css";
 import JumbotronLoc from "../../assets/img/location.svg";
 import BgSearch from "../../assets/img/bg-biru.svg";
 import Filter from "../../assets/img/filter.svg";
-import SubjekThumbnail from "../../assets/img/subjek-thumbnail.svg";
+import SubjekThumbnail from "../../assets/img/Thumbnail.svg";
 import Favorite from "../../assets/img/Fav.svg";
 import Verify from "../../assets/img/Verify.svg";
 import Star from "../../assets/img/Star.svg";
@@ -37,7 +37,7 @@ export default function index() {
               </div>
               <div className={styles.search_location}>
                 <div className={styles.search_location_left}>
-                  <Image src={JumbotronLoc} priority />
+                  <Image alt="" src={JumbotronLoc} priority />
                   <input type="text" placeholder="Lokasi" />
                 </div>
                 <div className={styles.search_location_right}>
@@ -62,7 +62,7 @@ export default function index() {
                   <p>Urutkan :</p>
                 </div>
                 <div className={styles.filter}>
-                  <Image src={Filter} priority className={styles.filer_icon} />
+                  <Image alt="" src={Filter} priority className={styles.filter_icon} />
                   <select name="" id="" className={styles.select_filter}>
                     <option id={styles.select_id} value="tarif_low_high">
                       Tarif: Low to High
@@ -91,29 +91,29 @@ export default function index() {
                 <div className={styles.subjek_gallery_row} key={i}>
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
-                      <Image src={SubjekThumbnail} priority />
+                      <Image alt="" src={SubjekThumbnail} priority />
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
-                          <Image src={Favorite} priority className={styles.favorite} />
+                          <Image alt="" src={Favorite} priority className={styles.favorite} />
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
-                        <Image src={Verify} priority />
+                        <Image alt="" src={Verify} priority />
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
-                          <Image src={Star} priority className={styles.star} />
+                          <Image alt="" src={Star} priority className={styles.star} />
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
-                          <Image src={Divider} priority />
+                          <Image alt="" src={Divider} priority />
                         </nav>
                         <nav className={styles.group_of_reviewer}>
-                          <Image src={GOR} priority />
+                          <Image alt="" src={GOR} priority />
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -130,29 +130,29 @@ export default function index() {
                   </div>
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
-                      <Image src={SubjekThumbnail} priority />
+                      <Image alt="" src={SubjekThumbnail} priority />
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
-                          <Image src={Favorite} priority className={styles.favorite} />
+                          <Image alt="" src={Favorite} priority className={styles.favorite} />
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
-                        <Image src={Verify} priority />
+                        <Image alt="" src={Verify} priority />
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
-                          <Image src={Star} priority className={styles.star} />
+                          <Image alt="" src={Star} priority className={styles.star} />
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
-                          <Image src={Divider} priority />
+                          <Image alt="" src={Divider} priority />
                         </nav>
                         <nav className={styles.group_of_reviewer}>
-                          <Image src={GOR} priority />
+                          <Image alt="" src={GOR} priority />
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -169,29 +169,29 @@ export default function index() {
                   </div>
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
-                      <Image src={SubjekThumbnail} priority />
+                      <Image alt="" src={SubjekThumbnail} priority />
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
-                          <Image src={Favorite} priority className={styles.favorite} />
+                          <Image alt="" src={Favorite} priority className={styles.favorite} />
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
-                        <Image src={Verify} priority />
+                        <Image alt="" src={Verify} priority />
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
-                          <Image src={Star} priority className={styles.star} />
+                          <Image alt="" src={Star} priority className={styles.star} />
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
-                          <Image src={Divider} priority />
+                          <Image alt="" src={Divider} priority />
                         </nav>
                         <nav className={styles.group_of_reviewer}>
-                          <Image src={GOR} priority />
+                          <Image alt="" src={GOR} priority />
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>

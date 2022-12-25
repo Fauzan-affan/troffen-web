@@ -64,14 +64,14 @@ function ModalPopupLogic({ onClose, show, title }) {
               <label htmlFor="email">Email*</label>
               <nav>
                 <input id="email" type="text" placeholder="example@gmail.com" />
-                <Image src={Email} priority width={20} height={20} />
+                <Image alt="" src={Email} priority width={20} height={20} />
               </nav>
             </div>
             <div className="masuk_password">
               <label htmlFor="password">Password*</label>
               <nav>
                 <input id="password" type="password" placeholder="password" />
-                <Image src={Pass} priority width={20} height={20} />
+                <Image alt="" src={Pass} priority width={20} height={20} />
               </nav>
             </div>
             <div className="masuk_action">
@@ -88,11 +88,11 @@ function ModalPopupLogic({ onClose, show, title }) {
               <div className="masuk_option_label">atau masuk dengan</div>
               <div className="masuk_options_body">
                 <div className="masuk_google">
-                  <Image src={Google} priority width={20} height={20} />
+                  <Image alt="" src={Google} priority width={20} height={20} />
                   <nav>Google</nav>
                 </div>
                 <div className="masuk_facebook">
-                  <Image src={Fb} priority width={20} height={20} />
+                  <Image alt="" src={Fb} priority width={20} height={20} />
                   <nav>Facebook</nav>
                 </div>
               </div>

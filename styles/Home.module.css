@@ -606,6 +606,7 @@
 
 .subjek_content_tutor {
   display: flex;
+  align-items: center;
 
   margin-bottom: 0.5rem;
 }

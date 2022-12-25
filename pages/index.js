@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
@@ -19,7 +21,7 @@ import GuruBenefit from "../assets/img/GuruBenefit.svg";
 import MuridBenefit from "../assets/img/MuridBenefit.svg";
 import Previous from "../assets/img/Previous.svg";
 import Next from "../assets/img/Next.svg";
-import SubjekThumbnail from "../assets/img/subjek-thumbnail.svg";
+import SubjekThumbnail from "../assets/img/Thumbnail.svg";
 import Favorite from "../assets/img/Fav.svg";
 import Verify from "../assets/img/Verify.svg";
 import Star from "../assets/img/Star.svg";
@@ -48,7 +50,7 @@ export default function Home() {
               </div>
               <div className={styles.search_location}>
                 <div className={styles.search_location_left}>
-                  <Image src={JumbotronLoc} priority />
+                  <Image alt="" src={JumbotronLoc} priority />
                   <input type="text" placeholder="Lokasi" />
                 </div>
                 <div className={styles.search_location_right}>
@@ -70,15 +72,15 @@ export default function Home() {
         <div className={styles.banner1} style={{ backgroundImage: `url(${BlueBanner.src})` }}>
           <div className={styles.banner1_label}>
             <div className={styles.banner1_label1}>
-              <Image src={BannerVector} priority />
+              <Image alt="" src={BannerVector} priority />
               <nav>50+ Subject Kursus</nav>
             </div>
             <div className={styles.banner1_label2}>
-              <Image src={BannerVector} priority />
+              <Image alt="" src={BannerVector} priority />
               <nav>Kursus Online & Offline</nav>
             </div>
             <div className={styles.banner1_label3}>
-              <Image src={BannerVector} priority />
+              <Image alt="" src={BannerVector} priority />
               <nav>Tutor Terpercaya</nav>
             </div>
           </div>
@@ -91,38 +93,38 @@ export default function Home() {
             <div className={styles.benefit_title}>Kursus Online Kini Lebih Menyenangkan</div>
             <div className={styles.benefit_content}>
               <div className={styles.benefit_content_left}>
-                <Image className={styles.img} src={Benefit1} priority />
+                <Image alt="" className={styles.img} src={Benefit1} priority />
               </div>
               <div className={styles.benefit_content_right}>
                 <div className={styles.benefit_content_container}>
                   <div className={styles.benefit1}>
                     <div className={styles.image}>
-                      <Image src={BenefitBix} priority className={styles.image_1} />
-                      <Image src={BenefitOnline} priority className={styles.image_2} />
+                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      <Image alt="" src={BenefitOnline} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Online & Offline</div>
                     <div className={styles.text}>Kursus tersedia secara online dan offline sesuai domisili kamu.</div>
                   </div>
                   <div className={styles.benefit2}>
                     <div className={styles.image}>
-                      <Image src={BenefitBix} priority className={styles.image_1} />
-                      <Image src={BenefitPencarian} priority className={styles.image_2} />
+                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      <Image alt="" src={BenefitPencarian} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Pencarian Cepat</div>
                     <div className={styles.text}>Cukup ketik subjek kursus yang kamu inginkan, guru idaman akan muncul!</div>
                   </div>
                   <div className={styles.benefit3}>
                     <div className={styles.image}>
-                      <Image src={BenefitBix} priority className={styles.image_1} />
-                      <Image src={BenefitTarif} priority className={styles.image_2} />
+                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      <Image alt="" src={BenefitTarif} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Tarif Sesuai Preferensi</div>
                     <div className={styles.text}>Pilih guru dengan tarif yang fleksibel sesuai dengan preferensimu.</div>
                   </div>
                   <div className={styles.benefit4}>
                     <div className={styles.image}>
-                      <Image src={BenefitBix} priority className={styles.image_1} />
-                      <Image src={BenefitFleksibel} priority className={styles.image_2} />
+                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      <Image alt="" src={BenefitFleksibel} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Jam Kursus Fleksibel</div>
                     <div className={styles.text}>Atur jam kursus langsung dengan guru tanpa batasan apapun.</div>
@@ -146,7 +148,7 @@ export default function Home() {
                 <div className={styles.kursus_box_1_left}>
                   <div className={styles.kursus_box_1_left_1}>
                     <div className={styles.kursus_box_1_left_1_title}>
-                      <Image src={No1} priority />
+                      <Image alt="" src={No1} priority />
                       <nav>Temukan Guru</nav>
                     </div>
                     <div className={styles.kursus_box_1_left_1_desc}>Cek profil guru dengan bebas dan pilih guru yang kamu inginkan sesuai dengan kebutuhan dan kriteria.</div>
@@ -155,7 +157,7 @@ export default function Home() {
                 <div className={styles.kursus_box_2_left}>
                   <div className={styles.kursus_box_2_left_1}>
                     <div className={styles.kursus_box_2_left_1_title}>
-                      <Image src={No2} priority />
+                      <Image alt="" src={No2} priority />
                       <nav>Permintaan Kursus</nav>
                     </div>
                     <div className={styles.kursus_box_2_left_1_desc}>Para guru akan memberikan tanggapan terhadap permintaan kursus kamu dalam beberapa jam!</div>
@@ -164,7 +166,7 @@ export default function Home() {
                 <div className={styles.kursus_box_3_left}>
                   <div className={styles.kursus_box_3_left_1}>
                     <div className={styles.kursus_box_3_left_1_title}>
-                      <Image src={No3} priority />
+                      <Image alt="" src={No3} priority />
                       <nav>Atur Jadwal Kursus</nav>
                     </div>
                     <div className={styles.kursus_box_3_left_1_desc}>Atur jadwal kursus Kamu sendiri dengan kursus dan guru yang dipilih.</div>
@@ -172,7 +174,7 @@ export default function Home() {
                 </div>
               </div>
               <div className={styles.kursus_box_right}>
-                <Image src={KursusDesain} priority />
+                <Image alt="" src={KursusDesain} priority />
                 <nav className={styles.kursus_desain}>KURSUS DESAIN</nav>
                 <nav className={styles.guru_tersedia}>200 GURU TERSEDIA</nav>
               </div>
@@ -188,10 +190,10 @@ export default function Home() {
               <div className={styles.subjek_title_main}>Temukan subjek dan guru yang sesuai</div>
               <div className={styles.subjek_title_action}>
                 <div className={styles.previous}>
-                  <Image src={Previous} priority />
+                  <Image alt="" src={Previous} priority />
                 </div>
                 <div className={styles.next}>
-                  <Image src={Next} priority />
+                  <Image alt="" src={Next} priority />
                 </div>
               </div>
             </div>
@@ -200,29 +202,29 @@ export default function Home() {
                 <div className={styles.subjek_gallery_row} key={i}>
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
-                      <Image src={SubjekThumbnail} priority />
+                      <Image alt="" src={SubjekThumbnail} priority />
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
-                          <Image src={Favorite} priority />
+                          <Image alt="" src={Favorite} priority />
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
-                        <Image src={Verify} priority />
+                        <Image alt="" src={Verify} priority />
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
-                          <Image src={Star} priority className={styles.star} />
+                          <Image alt="" src={Star} priority className={styles.star} />
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
-                          <Image src={Divider} priority />
+                          <Image alt="" src={Divider} priority />
                         </nav>
                         <nav className={styles.group_of_reviewer}>
-                          <Image src={GOR} priority />
+                          <Image alt="" src={GOR} priority />
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -231,35 +233,37 @@ export default function Home() {
                     <div className={styles.subjek_action}>
                       <div className={styles.subjek_action_harga}>Rp 100.000/jam</div>
                       <div className={styles.subjek_action_action}>
-                        <button className={styles.button_submit}>BOOK</button>
+                        <Link className={styles.button_submit} href={`cari-guru/${1}`}>
+                          BOOK
+                        </Link>
                       </div>
                     </div>
                   </div>
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
-                      <Image src={SubjekThumbnail} priority />
+                      <Image alt="" src={SubjekThumbnail} priority />
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
-                          <Image src={Favorite} priority />
+                          <Image alt="" src={Favorite} priority />
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
-                        <Image src={Verify} priority />
+                        <Image alt="" src={Verify} priority />
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
-                          <Image src={Star} priority className={styles.star} />
+                          <Image alt="" src={Star} priority className={styles.star} />
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
-                          <Image src={Divider} priority />
+                          <Image alt="" src={Divider} priority />
                         </nav>
                         <nav className={styles.group_of_reviewer}>
-                          <Image src={GOR} priority />
+                          <Image alt="" src={GOR} priority />
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -268,35 +272,37 @@ export default function Home() {
                     <div className={styles.subjek_action}>
                       <div className={styles.subjek_action_harga}>Rp 100.000/jam</div>
                       <div className={styles.subjek_action_action}>
-                        <button className={styles.button_submit}>BOOK</button>
+                        <Link className={styles.button_submit} href={`cari-guru/${2}`}>
+                          BOOK
+                        </Link>
                       </div>
                     </div>
                   </div>
                   <div className={styles.subjek_gallery_card}>
                     <div className={styles.subjek_thumbnail}>
-                      <Image src={SubjekThumbnail} priority />
+                      <Image alt="" src={SubjekThumbnail} priority />
                     </div>
                     <div className={styles.subjek_content}>
                       <div className={styles.subjek_content_title}>
                         <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
                         <div className={styles.subjek_content_title_fav}>
-                          <Image src={Favorite} priority />
+                          <Image alt="" src={Favorite} priority />
                         </div>
                       </div>
                       <div className={styles.subjek_content_tutor}>
                         <nav>John Doe</nav>
-                        <Image src={Verify} priority />
+                        <Image alt="" src={Verify} priority />
                       </div>
                       <div className={styles.subjek_content_rating}>
                         <nav className={styles.star}>
-                          <Image src={Star} priority className={styles.star} />
+                          <Image alt="" src={Star} priority className={styles.star} />
                         </nav>
                         <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
                         <nav className={styles.divider}>
-                          <Image src={Divider} priority />
+                          <Image alt="" src={Divider} priority />
                         </nav>
                         <nav className={styles.group_of_reviewer}>
-                          <Image src={GOR} priority />
+                          <Image alt="" src={GOR} priority />
                         </nav>
                         <nav className={styles.murid}>30 Murid</nav>
                       </div>
@@ -305,7 +311,9 @@ export default function Home() {
                     <div className={styles.subjek_action}>
                       <div className={styles.subjek_action_harga}>Rp 100.000/jam</div>
                       <div className={styles.subjek_action_action}>
-                        <button className={styles.button_submit}>BOOK</button>
+                        <Link className={styles.button_submit} href={`cari-guru/${3}`}>
+                          BOOK
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -323,10 +331,10 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.benefit_sebagai}>
             <div className={styles.benefit_sebagai_tutor}>
-              <Image src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
+              <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
             </div>
             <div className={styles.benefit_sebagai_student}>
-              <Image src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
+              <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
             </div>
           </div>
         </div>

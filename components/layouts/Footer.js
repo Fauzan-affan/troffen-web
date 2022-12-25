@@ -12,9 +12,9 @@ function Footer() {
           <div className={styles.footer_menu}>
             <div className={styles.footer_alamat}>
               <div className={styles.footer_alamat_logo}>
-                <Image src={footerLogo1} className={styles.footer_alamat_logo_1} />
-                <Image src={footerLogo2} className={styles.footer_alamat_logo_2} />
-                <Image src={footerLogo3} className={styles.footer_alamat_logo_3} />
+                <Image alt="" src={footerLogo1} className={styles.footer_alamat_logo_1} />
+                <Image alt="" src={footerLogo2} className={styles.footer_alamat_logo_2} />
+                <Image alt="" src={footerLogo3} className={styles.footer_alamat_logo_3} />
               </div>
               <div className={styles.footer_alamat_detail}>
                 <nav>Jln. MH. Thamrin No.8, Kebon Sirih Menteng,</nav>

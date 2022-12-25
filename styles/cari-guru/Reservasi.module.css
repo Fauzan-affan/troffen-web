@@ -1,0 +1,252 @@
+.container {
+  padding: 0 7rem;
+  width: 100%;
+}
+
+#title {
+  margin: 3rem 0;
+}
+
+.container hr {
+  border: var(--hr);
+  margin: 3rem 0;
+}
+
+.title_1 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 60px;
+
+  margin-bottom: 1rem;
+}
+
+.title_2 {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.content_title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+
+  margin-bottom: 1rem;
+}
+
+.content_body {
+  display: flex;
+}
+
+.label,
+.content_body_right_bottom_label {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+
+  color: var(--darkGray);
+}
+
+.content_body_right {
+  margin-left: 2rem;
+}
+
+.content_body_right_top {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+
+  margin-bottom: 2rem;
+}
+
+.content_body_right_top_guru,
+.content_body_right_rating,
+.content_body_right_student {
+  display: flex;
+  align-items: center;
+}
+
+.content_body_right_top_guru img {
+  margin-left: 1rem;
+}
+
+.content_body_right_rating img,
+.content_body_right_student img {
+  margin-right: 1rem;
+}
+
+.content_body_right_bottom_price {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.content_whitelist {
+  display: flex;
+  align-items: center;
+
+  margin-top: 1rem;
+  /* margin-bottom: 3rem; */
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.content_whitelist img {
+  margin-right: 1rem;
+}
+
+#action {
+  margin-bottom: 3rem;
+}
+
+.action_container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 100%;
+  gap: 2rem;
+}
+
+.atur_jadwal_title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+
+  margin-bottom: 3rem;
+}
+
+.atur_jadwal_description_label {
+  margin-bottom: 1rem;
+
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.atur_jadwal_description_info {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+
+  margin-bottom: 0.5rem;
+}
+
+.atur_jadwal_action {
+  width: 100%;
+}
+
+.atur_jadwal_action textarea {
+  display: block;
+
+  border: none;
+  border-radius: 8px 0px 0px 8px;
+
+  padding: 1.5rem;
+
+  box-shadow: var(--shadow);
+
+  margin-bottom: 2rem;
+}
+
+.atur_jadwal_action textarea:hover {
+  outline: none;
+}
+
+.atur_jadwal_action textarea::placeholder {
+  color: var(--gray);
+  opacity: 0.5;
+
+  font-family: "Poppins", sans-serif;
+  color: #3e3e3e;
+}
+
+.action_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  background: #1ea9e4;
+  border-radius: 12px;
+  color: white;
+  border: none;
+
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+
+  text-align: center;
+
+  width: 100%;
+
+  padding: 0.7em 2.5em;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.tips {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.tips_container {
+  background-color: var(--notificationBlue);
+  border-radius: 0.5rem;
+
+  padding: 2rem;
+}
+
+.tips_title {
+  display: flex;
+  align-items: center;
+
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 20px;
+  color: var(--blue);
+
+  margin-bottom: 2rem;
+}
+
+.tips_title img {
+  margin-right: 1rem;
+}
+
+.tips_1 {
+  margin-bottom: 2rem;
+}
+
+.tips_1_title,
+.tips_2_title {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.tips_1_desc,
+.tips_2_desc {
+  /* margin-bottom: 2rem; */
+  color: var(--textGray);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.tips_2 ul {
+  margin: 0 auto;
+  color: var(--textGray);
+}

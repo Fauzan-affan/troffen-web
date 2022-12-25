@@ -5,7 +5,7 @@ import Footer from "./Footer.js";
 
 import ModalPopupLogic from "../../logic/ModalPopupLogic";
 
-const LoginTemplate = ({ title, desc, icon, children }) => {
+const LoginTemplate = ({ title, desc, icon, children, isNavbar }) => {
   const [showModal, setShowModal] = useState(false);
   const [menu, setMenu] = useState("");
 
@@ -21,7 +21,7 @@ const LoginTemplate = ({ title, desc, icon, children }) => {
         <meta name="description" content={desc} />
         <link rel="icon" href={`/${icon}`} />
       </Head>
-      <Header modalConfig={modalConfig} />
+      <Header modalConfig={modalConfig} navbar={isNavbar} />
       {children}
       <Footer />
       <ModalPopupLogic onClose={setShowModal} show={showModal} title={menu} />

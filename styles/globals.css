@@ -3,10 +3,21 @@
 :root {
   --blue: #1ea9e4;
   --softBlue: #c9eefe;
+  --notificationBlue: #f2fbff;
   --green: #01ab71;
-  --grey: #c7c9d1;
-  --softGrey: #f7f7f7;
+  --textGray: #828282;
+  --darkGray: #737373;
+  --gray: #c7c9d1;
+  --softGray: #f7f7f7;
   --purple: #424782;
+  --red: #ff3d00;
+  --yellow: #ffce31;
+
+  --shadow: 0px 0px 2px 2px rgba(125, 125, 125, 0.16);
+
+  --textarea: 1.5px solid #dadbd8;
+
+  --hr: 1px solid #dadbd8;
 }
 
 html,
@@ -17,6 +28,7 @@ body {
   font-family: "Poppins", sans-serif;
   color: #3e3e3e;
   overflow-y: scroll;
+  background-color: white;
 }
 
 html::-webkit-scrollbar,
@@ -157,7 +169,7 @@ a {
   border-radius: 12px;
   border-style: none;
 
-  color: var(--grey);
+  color: var(--gray);
 }
 
 .masuk_email nav input:focus,

@@ -64,6 +64,23 @@
   cursor: pointer;
 }
 
+.logo_back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo_back nav {
+  margin-left: 1rem;
+
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  /* identical to box height */
+
+  letter-spacing: -0.01em;
+}
+
 .navbar_contents_menu1,
 .navbar_contents_menu2,
 .navbar_contents_menu3,
@@ -85,6 +102,10 @@
 
 .navbar_contents_menu4:hover {
   color: var(--green);
+}
+
+.navbar_contents_logo div {
+  cursor: pointer;
 }
 
 .button_submit {
@@ -152,13 +173,13 @@
 
 .dashboard_label,
 .logout_label {
-  color: var(--grey);
+  color: var(--gray);
 
   font-size: 12px;
 }
 
 .loggedin_menu_body hr {
-  border: 1px solid var(--grey);
+  border: 1px solid var(--gray);
 }
 
 .loggedin_menu_body li {
@@ -177,7 +198,7 @@
 
 .dashboard_menu:hover,
 .logout_menu:hover {
-  background-color: var(--softGrey);
+  background-color: var(--softGray);
 }
 
 .dashboard_menu:hover .dashboard_body,
