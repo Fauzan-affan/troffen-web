@@ -1,0 +1,26 @@
+.container {
+  padding: 3rem 7rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper img,
+.progress_label nav {
+  margin-left: 1rem;
+}
+
+.progress_label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.active {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 18px;
+}

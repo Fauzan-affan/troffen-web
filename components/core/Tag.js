@@ -1,9 +1,10 @@
 import styles from "../../styles/core/Tag.module.css";
 
-const Tag = ({ children }) => {
+const Tag = ({ type = "", children }) => {
   return (
     <>
-      <div className={styles.container}>{children}</div>
+      {type === "" && <div className={styles.container}>{children}</div>}
+      {type === "blogTag" && <div className={styles.blog_container}>{children}</div>}
     </>
   );
 };

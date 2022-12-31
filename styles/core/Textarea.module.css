@@ -1,0 +1,37 @@
+.label {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.textarea {
+  display: block;
+
+  border: none;
+  border-radius: 8px 0px 0px 8px;
+
+  padding: 0.8rem;
+
+  box-shadow: var(--shadow);
+
+  margin-bottom: 2rem;
+  color: var(--gray);
+}
+
+.textarea:hover {
+  outline: none;
+}
+
+.textarea::placeholder {
+  color: var(--gray);
+  opacity: 0.5;
+
+  font-family: "Poppins", sans-serif;
+  color: #3e3e3e;
+}
+
+.nav {
+  font-weight: 400;
+  font-size: 14px;
+
+  margin-bottom: 1rem;
+}

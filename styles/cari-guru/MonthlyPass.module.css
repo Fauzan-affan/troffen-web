@@ -1,13 +1,14 @@
 .container {
-  padding: 0 7rem;
-  width: 100%;
+  max-width: 1024px;
+
+  margin: 0 auto;
 }
 
 .content_container {
   display: flex;
+  max-width: 1024px;
 
-  padding: 0 7rem;
-  width: 100%;
+  margin: 0 auto;
 }
 
 #content {
@@ -34,7 +35,6 @@
 
 .content_left {
   display: block;
-  width: 50%;
 }
 
 .content_left_card {

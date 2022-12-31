@@ -1,6 +1,6 @@
 .container {
-  padding: 0 7rem;
-  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 #title {
@@ -142,31 +142,6 @@
   width: 100%;
 }
 
-.atur_jadwal_action textarea {
-  display: block;
-
-  border: none;
-  border-radius: 8px 0px 0px 8px;
-
-  padding: 1.5rem;
-
-  box-shadow: var(--shadow);
-
-  margin-bottom: 2rem;
-}
-
-.atur_jadwal_action textarea:hover {
-  outline: none;
-}
-
-.atur_jadwal_action textarea::placeholder {
-  color: var(--gray);
-  opacity: 0.5;
-
-  font-family: "Poppins", sans-serif;
-  color: #3e3e3e;
-}
-
 .action_container {
   width: 100%;
   display: flex;
@@ -200,6 +175,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+
+  /* max-width: 50%; */
 }
 
 .tips_container {

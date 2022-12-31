@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import styles from "../../styles/layout/Header.module.css";
 import TroffenLogo1 from "../../assets/img/Rectangle63.svg";
@@ -11,25 +10,42 @@ import Back from "../../assets/img/back.svg";
 
 import PP from "../../assets/img/PP.svg";
 
-function Header({ modalConfig, navbar }) {
+function Header({ modalConfig, navbar, handleNavbar }) {
   const [isClicked, setIsClicked] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [isNavbar, setIsNavbar] = useState(true);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    navbar == false ? setIsNavbar(navbar) : "";
-  }, []);
-
-  const handleNavbar = () => {
-    setIsNavbar(true);
-    router.back();
-  };
 
   return (
     <>
-      {!isNavbar && (
+      {navbar == "daftarNavbar" && (
+        <section id="navbar">
+          <div className={styles.container_navbar}>
+            <div className={styles.navbar_contents_member}>
+              <div className={styles.navbar_contents_logo}>
+                <Link href={"/"}>
+                  <nav className={styles.logo1}>
+                    <Image alt="" src={TroffenLogo1} className={styles.logo1_1} priority />
+                    <Image alt="" src={TroffenLogo2} className={styles.logo1_2} priority />
+                  </nav>
+                </Link>
+                <Link href={"/"}>
+                  <nav className={styles.logo2}>
+                    <Image alt="" src={TroffenLogo3} priority />
+                  </nav>
+                </Link>
+              </div>
+              <div className={styles.navbar_contents_menu}>
+                <div className={styles.navbar_contents_button}>
+                  <nav className={styles.navbar_contents_login_text}>
+                    Sudah punya akun? <nav onClick={() => modalConfig("masuk", true)}>Masuk</nav>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {navbar == "backNavbar" && (
         <section id="navbar">
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents}>
@@ -46,7 +62,7 @@ function Header({ modalConfig, navbar }) {
         </section>
       )}
 
-      {isNavbar && (
+      {navbar == "" && (
         <section id="navbar">
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents}>

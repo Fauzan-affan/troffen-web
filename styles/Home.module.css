@@ -1,5 +1,8 @@
 .container {
   padding: 1rem 7rem;
+
+  /* max-width: 1024px;
+    margin: 0 auto; */
 }
 
 /* ------------- jumbotron ------------- */

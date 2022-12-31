@@ -14,7 +14,7 @@ import GOR from "../../assets/img/GroupOfReviewer.svg";
 
 import LoginTemplate from "../../components/layouts/LoginTemplate";
 
-export default function index() {
+export default function Index() {
   return (
     <LoginTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
       <section id="search_bar">
@@ -87,9 +87,9 @@ export default function index() {
               </div>
             </div>
             <div className={styles.subjek_gallery}>
-              {[0, 1, 2].map((i) => (
-                <div className={styles.subjek_gallery_row} key={i}>
-                  <div className={styles.subjek_gallery_card}>
+              <div className={styles.subjek_gallery_row}>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <div className={styles.subjek_gallery_card} key={i}>
                     <div className={styles.subjek_thumbnail}>
                       <Image alt="" src={SubjekThumbnail} priority />
                     </div>
@@ -128,86 +128,8 @@ export default function index() {
                       </div>
                     </div>
                   </div>
-                  <div className={styles.subjek_gallery_card}>
-                    <div className={styles.subjek_thumbnail}>
-                      <Image alt="" src={SubjekThumbnail} priority />
-                    </div>
-                    <div className={styles.subjek_content}>
-                      <div className={styles.subjek_content_title}>
-                        <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
-                        <div className={styles.subjek_content_title_fav}>
-                          <Image alt="" src={Favorite} priority className={styles.favorite} />
-                        </div>
-                      </div>
-                      <div className={styles.subjek_content_tutor}>
-                        <nav>John Doe</nav>
-                        <Image alt="" src={Verify} priority />
-                      </div>
-                      <div className={styles.subjek_content_rating}>
-                        <nav className={styles.star}>
-                          <Image alt="" src={Star} priority className={styles.star} />
-                        </nav>
-                        <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
-                        <nav className={styles.divider}>
-                          <Image alt="" src={Divider} priority />
-                        </nav>
-                        <nav className={styles.group_of_reviewer}>
-                          <Image alt="" src={GOR} priority />
-                        </nav>
-                        <nav className={styles.murid}>30 Murid</nav>
-                      </div>
-                      <hr />
-                    </div>
-                    <div className={styles.subjek_action}>
-                      <div className={styles.subjek_action_harga}>Rp 100.000/jam</div>
-                      <div className={styles.subjek_action_action}>
-                        <Link className={styles.button_submit} href={`cari-guru/${2}`}>
-                          BOOK
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.subjek_gallery_card}>
-                    <div className={styles.subjek_thumbnail}>
-                      <Image alt="" src={SubjekThumbnail} priority />
-                    </div>
-                    <div className={styles.subjek_content}>
-                      <div className={styles.subjek_content_title}>
-                        <div className={styles.subjek_content_title_main}>Basic UI/UX Design</div>
-                        <div className={styles.subjek_content_title_fav}>
-                          <Image alt="" src={Favorite} priority className={styles.favorite} />
-                        </div>
-                      </div>
-                      <div className={styles.subjek_content_tutor}>
-                        <nav>John Doe</nav>
-                        <Image alt="" src={Verify} priority />
-                      </div>
-                      <div className={styles.subjek_content_rating}>
-                        <nav className={styles.star}>
-                          <Image alt="" src={Star} priority className={styles.star} />
-                        </nav>
-                        <nav className={styles.ulasan}>4.5 (5 Ulasan)</nav>
-                        <nav className={styles.divider}>
-                          <Image alt="" src={Divider} priority />
-                        </nav>
-                        <nav className={styles.group_of_reviewer}>
-                          <Image alt="" src={GOR} priority />
-                        </nav>
-                        <nav className={styles.murid}>30 Murid</nav>
-                      </div>
-                      <hr />
-                    </div>
-                    <div className={styles.subjek_action}>
-                      <div className={styles.subjek_action_harga}>Rp 100.000/jam</div>
-                      <div className={styles.subjek_action_action}>
-                        <Link className={styles.button_submit} href={`cari-guru/${3}`}>
-                          BOOK
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
             <div className={styles.subjek_lihat_semua}>
               <div id={styles.pagination}>

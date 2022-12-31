@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "../../../../styles/cari-guru/Reservasi.module.css";
 import LoginTemplate from "../../../../components/layouts/LoginTemplate";
+import Tips from "../../../../components/core/Tips";
+import Textarea from "../../../../components/core/Textarea";
 
 import SubjekThumbnail from "../../../../assets/img/Thumbnail.svg";
 import Divider from "../../../../assets/img/Line8.svg";
@@ -10,14 +12,20 @@ import Verify from "../../../../assets/img/Verify.svg";
 import Star from "../../../../assets/img/rating_star.svg";
 import GOR from "../../../../assets/img/GroupOfReviewer.svg";
 import RedLove from "../../../../assets/img/love_red.svg";
-import Bohlam from "../../../../assets/img/png/idea.png";
 
-const index = () => {
+const Index = () => {
   const router = useRouter();
   const { courseId } = router.query;
 
+  const handleChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    console.log("Anjay keganti", name, value);
+  };
+
   return (
-    <LoginTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={false}>
+    <LoginTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
       <section id={styles.title}>
         <div className={styles.container}>
           <div className={styles.title_1}>Reservasi Kursus Basic UI/UX Design</div>
@@ -73,35 +81,20 @@ const index = () => {
                   <div className={styles.atur_jadwal_description_info}>Ceritakan minat Anda ingin mempelajari kursus ini kepada guru (Opsional)</div>
                 </div>
                 <div className={styles.atur_jadwal_action}>
-                  <textarea name="" id="" cols="60" rows="3" placeholder="Contoh: Saya memiiki ketertarikan kepada UI/UX sejak lama dan ingin belajar lebih banyak kepada Pak John."></textarea>
+                  <Textarea label="" name="ketertarikan" desc="" col={60} row={4} placeholder="Contoh: Saya memiiki ketertarikan kepada UI/UX sejak lama dan ingin belajar lebih banyak kepada Pak John." handleChange={handleChange} />
                   <div className={styles.action_container}>
-                    <Link href={`${courseId}/monthly-pass`} className={styles.button}>
+                    <Link href={`/monthly-pass`} className={styles.button}>
                       Ajukan Kursus
                     </Link>
                   </div>
                 </div>
               </div>
-              <div className={styles.tips}>
-                <div className={styles.tips_container}>
-                  <div className={styles.tips_title}>
-                    <Image alt="tips & trick" src={Bohlam} priority width={30} height={30} />
-                    <nav>Troffen’s Tips</nav>
-                  </div>
-                  <div className={styles.tips_1}>
-                    <div className={styles.tips_1_title}>Isi Data Dengan Valid</div>
-                    <div className={styles.tips_1_desc}>Setiap data yang Anda masukkan di informasi pribadi harus valid dan dapat dipertanggung jawabkan agar profil Anda dapat dilihat dengan baik oleh murid.</div>
-                  </div>
-                  <div className={styles.tips_2}>
-                    <div className={styles.tips_2_title}>Gunakan Foto Profil yang Jelas</div>
-                    <div className={styles.tips_2_desc}>Berikut adalah instruksi untuk foto profil yang baik:</div>
-                    <ul>
-                      <li>Wajah terlihat jelas dan foto tidak blur</li>
-                      <li>Tidak menggunakan logo atau instansi tertentu</li>
-                      <li>Foto profil tidak mengandung SARA</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <Tips
+                tips1_title="Isi Data Dengan Valid"
+                tips1_desc="Setiap data yang Anda masukkan di informasi pribadi harus valid dan dapat dipertanggung jawabkan agar profil Anda dapat dilihat dengan baik oleh murid."
+                tips2_title="Gunakan Foto Profil yang Jelas"
+                tips2_desc="Berikut adalah instruksi untuk foto profil yang baik:"
+              />
             </div>
           </div>
         </section>
@@ -110,4 +103,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

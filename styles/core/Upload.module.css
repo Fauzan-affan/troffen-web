@@ -1,0 +1,98 @@
+.wrapper {
+  margin-bottom: 2rem;
+}
+
+.wrapper label {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.wrapper nav {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.wrapper .input {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.16);
+  border-radius: 6px;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  margin-top: 1rem;
+}
+
+.input_pengalaman {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.16);
+  border-radius: 24px;
+
+  display: flex;
+  justify-items: center;
+  align-items: center;
+
+  margin-top: 1rem;
+
+  text-align: center;
+}
+
+.input_file {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 12px;
+  border-style: none;
+
+  color: var(--gray);
+}
+
+.input_file:focus {
+  outline: none !important;
+}
+
+.custom_file_input {
+  color: transparent;
+
+  padding: 0.8rem;
+  width: 100%;
+
+  text-align: center;
+
+  /* background-color: aquamarine; */
+
+  /* margin-left: 10rem; */
+}
+
+.custom_file_input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom_file_input::before {
+  content: "+ Tambah Pengalaman";
+  color: var(--blue);
+  display: inline-block;
+  outline: none;
+  /* background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer; */
+  /* text-shadow: 1px 1px #fff; */
+  font-weight: 700;
+  font-size: 1 0pt;
+}
+
+.custom_file_input:focus {
+  outline: 0;
+}
+
+.custom_file_input:active {
+  outline: 0;
+}
+
+@media screen and (min-width: 1301px) {
+  .custom_file_input {
+    /* margin-left: 20rem; */
+  }
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 
 import Email from "../assets/img/png/001-mail.png";
@@ -26,6 +27,8 @@ const masukSebagaiSelectedHr = {
 };
 
 function ModalPopupLogic({ onClose, show, title }) {
+  const router = useRouter();
+
   const [masukSebagaiType, setMasukSebagaiType] = useState(1);
 
   const changeLoginType = (type) => {
@@ -36,9 +39,13 @@ function ModalPopupLogic({ onClose, show, title }) {
     <Modal onClose={() => onClose(false)} show={show} title={title}>
       {title === "daftar" && (
         <div className="daftar_modal">
-          <button className="button_murid">Daftar Sebagai Murid</button>
+          <button onClick={() => router.push("/daftar-murid")} className="button_murid">
+            Daftar Sebagai Murid
+          </button>
           <nav>atau</nav>
-          <button className="button_guru">Daftar Sebagai Guru</button>
+          <button onClick={() => router.push("/daftar-guru")} className="button_guru">
+            Daftar Sebagai Guru
+          </button>
         </div>
       )}
       {title === "masuk" && (
