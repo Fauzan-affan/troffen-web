@@ -2,10 +2,7 @@ import { useState } from "react";
 
 import Image from "next/image";
 
-import styles from "../../styles/cari-guru/MonthlyPass.module.css";
-
-import BCA from "../../assets/img/bank/Bank_Central_Asia.svg";
-import Permata from "../../assets/img/bank/permata.svg";
+import styles from "../../styles/MonthlyPass.module.css";
 import Strip from "../../assets/img/strip.svg";
 import Plus from "../../assets/img/plus.svg";
 import QR from "../../assets/img/png/qr.png";
@@ -27,28 +24,123 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-const Tab = () => {
-  const [paymentType, setPaymentType] = useState(1);
+const Tab = ({ tabObj, defaultType = "", isHeader }) => {
+  const [paymentType, setPaymentType] = useState(defaultType);
   const [toogleBCA, setToogleBCA] = useState(true);
   const [tooglePermata, setTooglePermata] = useState(false);
+  const [toogleFAQ1, setToogleFAQ1] = useState(true);
+  const [toogleFAQ2, setToogleFAQ2] = useState(false);
+  const [toogleFAQ3, setToogleFAQ3] = useState(false);
 
   const changePaymentType = (type) => {
     setPaymentType(type);
   };
+
+  const handleToogle = (val) => {
+    val === "BCA" && setToogleBCA(!toogleBCA);
+    val === "Bank Permata" && setTooglePermata(!tooglePermata);
+
+    // FAQ
+    val === "Apa itu Troffen?" && setToogleFAQ1(!toogleFAQ1);
+    val === "Bagaimana Cara Menjadi Guru di Troffen?" && setToogleFAQ2(!toogleFAQ2);
+    val === "Bagaimana Cara Memesan Kursus di Troffen?" && setToogleFAQ3(!toogleFAQ3);
+  };
+
   return (
     <>
-      <div className="masuk_modal_type">
-        <div className="masuk_sebagai_murid" onClick={() => changePaymentType(1)}>
-          <nav style={paymentType === 1 ? masukSebagaiSelectedLabel : masukSebagaiLabel}>Virtual Account</nav>
-          <hr style={paymentType === 1 ? masukSebagaiSelectedHr : masukSebagaiHr} />
+      {isHeader && (
+        <div className="masuk_modal_type">
+          {tabObj.map((obj, i) => (
+            <div className="masuk_sebagai_murid" onClick={() => changePaymentType(obj.id)} key={obj.id}>
+              <nav style={paymentType === obj.id ? masukSebagaiSelectedLabel : masukSebagaiLabel}>{obj.title}</nav>
+              <hr style={paymentType === obj.id ? masukSebagaiSelectedHr : masukSebagaiHr} />
+            </div>
+          ))}
         </div>
-        <div className="masuk_sebagai_guru" onClick={() => changePaymentType(2)}>
-          <nav style={paymentType === 2 ? masukSebagaiSelectedLabel : masukSebagaiLabel}>QR</nav>
-          <hr style={paymentType === 2 ? masukSebagaiSelectedHr : masukSebagaiHr} />
-        </div>
-      </div>
+      )}
 
-      {paymentType === 1 && (
+      {paymentType === tabObj[0].id &&
+        tabObj.map((obj, i) => (
+          <div className={styles.payment_container} key={obj.id}>
+            <div className={styles.option_1}>
+              <div className={styles.option_1_header} onClick={() => handleToogle(obj.optionName)}>
+                <div className={styles.option_1_header_top}>
+                  <div className={styles.option_1_header_left}>
+                    {obj.optionImg && (
+                      <nav className={styles.img_container_1}>
+                        <Image alt="" src={obj.optionImg} priority width={100} height={100} />
+                      </nav>
+                    )}
+                    <nav>{obj.optionName}</nav>
+                  </div>
+                  <div className={styles.option_1_header_right}>
+                    {(obj.optionName === "BCA" && toogleBCA) ||
+                    (obj.optionName === "Bank Permata" && tooglePermata) ||
+                    (obj.optionName === "Apa itu Troffen?" && toogleFAQ1) ||
+                    (obj.optionName === "Bagaimana Cara Menjadi Guru di Troffen?" && toogleFAQ2) ||
+                    (obj.optionName === "Bagaimana Cara Memesan Kursus di Troffen?" && toogleFAQ3) ? (
+                      <Image alt="" src={Strip} priority />
+                    ) : (
+                      <Image alt="" src={Plus} priority />
+                    )}
+                  </div>
+                </div>
+              </div>
+              <hr />
+              {obj.optionName === "BCA" && toogleBCA && (
+                <div className={styles.option_1_body}>
+                  <ol>
+                    {obj.desc.map((desc) => (
+                      <li key={desc.descId}>{desc.val}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+              {obj.optionName === "Bank Permata" && tooglePermata && (
+                <div className={styles.option_1_body}>
+                  <ol>
+                    {obj.desc.map((desc) => (
+                      <li key={desc.descId}>{desc.val}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+              {/* FAQ */}
+              {obj.optionName === "Apa itu Troffen?" && toogleFAQ1 && (
+                <div className={styles.option_1_body}>
+                  {obj.desc.map((desc) => (
+                    <nav key={desc.id}>{desc.val}</nav>
+                  ))}
+                </div>
+              )}
+              {obj.optionName === "Bagaimana Cara Menjadi Guru di Troffen?" && toogleFAQ2 && (
+                <div className={styles.option_1_body}>
+                  {obj.desc.map((desc) => (
+                    <nav key={desc.id}>{desc.val}</nav>
+                  ))}
+                </div>
+              )}
+              {obj.optionName === "Bagaimana Cara Memesan Kursus di Troffen?" && toogleFAQ3 && (
+                <div className={styles.option_1_body}>
+                  {obj.desc.map((desc) => (
+                    <nav key={desc.id}>{desc.val}</nav>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+
+      {paymentType === tabObj[1].id && (
+        <div className={styles.payment_container}>
+          <div className={styles.QR}>
+            <Image alt="" src={QR} priority width={300} height={300} />
+            <nav>Transfer melalui QRIS a/n Troffen.</nav>
+          </div>
+        </div>
+      )}
+
+      {/* {paymentType === 1 && (
         <div className={styles.payment_container}>
           <div className={styles.option_1}>
             <div className={styles.option_1_header} onClick={() => setToogleBCA(!toogleBCA)}>
@@ -102,16 +194,7 @@ const Tab = () => {
             )}
           </div>
         </div>
-      )}
-
-      {paymentType === 2 && (
-        <div className={styles.payment_container}>
-          <div className={styles.QR}>
-            <Image alt="" src={QR} priority width={300} height={300} />
-            <nav>Transfer melalui QRIS a/n Troffen.</nav>
-          </div>
-        </div>
-      )}
+      )} */}
     </>
   );
 };

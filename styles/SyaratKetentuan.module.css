@@ -1,0 +1,22 @@
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.body {
+  min-height: 40rem;
+}
+
+.title {
+  text-align: center;
+
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+
+  margin-bottom: 3rem;
+}
+
+.content {
+  margin-bottom: 6rem;
+}

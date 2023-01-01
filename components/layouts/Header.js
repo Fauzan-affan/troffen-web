@@ -16,7 +16,7 @@ function Header({ modalConfig, navbar, handleNavbar }) {
 
   return (
     <>
-      {navbar == "daftarNavbar" && (
+      {navbar === "daftarNavbar" && (
         <section id="navbar">
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents_member}>
@@ -107,7 +107,7 @@ function Header({ modalConfig, navbar, handleNavbar }) {
 
                 {isLogin && (
                   <>
-                    <ul>
+                    <ul className={styles.ul}>
                       <li className={styles.loggedin_menu}>
                         <div className={styles.loggedin_username}>Fauzan Affan</div>
                         <Image alt="" src={PP} priority />

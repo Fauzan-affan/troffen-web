@@ -1,6 +1,6 @@
 import Image from "next/image";
 import LoginTemplate from "../../components/layouts/LoginTemplate";
-import styles from "../../styles/cari-guru/MonthlyPass.module.css";
+import styles from "../../styles/MonthlyPass.module.css";
 
 import Tab from "../../components/core/Tab";
 
@@ -8,7 +8,41 @@ import PriceIcon from "../../assets/img/priceIcon.svg";
 import E1 from "../../assets/img/e1.svg";
 import E2 from "../../assets/img/e2.svg";
 
+import BCA from "../../assets/img/bank/Bank_Central_Asia.svg";
+import Permata from "../../assets/img/bank/permata.svg";
+
+const tabObj = [
+  {
+    id: "bank1",
+    title: "Virtual Account",
+    optionName: "BCA",
+    optionImg: BCA,
+    desc: [
+      { descId: "desc1", val: "Instruksi 1" },
+      { descId: "desc2", val: "Instruksi 2" },
+      { descId: "desc3", val: "Instruksi 3" },
+      { descId: "desc4", val: "Instruksi 4" },
+      { descId: "desc5", val: "Instruksi 5" },
+    ],
+  },
+  {
+    id: "bank2",
+    title: "QR",
+    optionName: "Bank Permata",
+    optionImg: Permata,
+    desc: [
+      { descId: "desc1", val: "Instruksi 1" },
+      { descId: "desc2", val: "Instruksi 2" },
+      { descId: "desc3", val: "Instruksi 3" },
+      { descId: "desc4", val: "Instruksi 4" },
+      { descId: "desc5", val: "Instruksi 5" },
+    ],
+  },
+];
+
 const index = () => {
+  const defaultType = tabObj[0].id;
+
   return (
     <LoginTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
       <section id={styles.title}>
@@ -70,7 +104,7 @@ const index = () => {
           <hr className={styles.vertical_hr} />
           <div className={styles.content_right}>
             <div className={styles.title}>Tipe Pembayaran</div>
-            <Tab />
+            <Tab tabObj={tabObj} defaultType={defaultType} isHeader={true} />
           </div>
         </div>
       </section>
