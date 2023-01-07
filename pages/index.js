@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css";
 
 import JumbotronLayout from "../assets/img/Group3761.svg";
 import JumbotronLoc from "../assets/img/location.svg";
-import BlueBanner from "../assets/img/BlueBanner.svg";
+import BlueBanner from "../assets/img/Bluebanner.svg";
 import BannerVector from "../assets/img/Vector.svg";
 import Benefit1 from "../assets/img/Work1.svg";
 // import BenefitBix from "../assets/img/benefit/01.svg";
