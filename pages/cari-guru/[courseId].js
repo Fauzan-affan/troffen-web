@@ -39,9 +39,9 @@ const CourseId = () => {
                   <Image alt="" src={Verify} priority />
                 </div>
               </div>
-              <Link href={"#"} className={styles.view_profile}>
+              {/* <Link href={"#"} className={styles.view_profile}>
                 Lihat Profil Lengkap
-              </Link>
+              </Link> */}
               <div className={styles.tarif_kursus}>
                 <div className={styles.label_tarif_guru}>Tarif kursus &#x28;persesi&#x29;</div>
                 <div className={styles.nominal_tarif_guru}>Rp 100.000/jam</div>

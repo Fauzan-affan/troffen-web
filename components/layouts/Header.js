@@ -45,7 +45,7 @@ function Header({ modalConfig, navbar, handleNavbar }) {
         </section>
       )}
 
-      {navbar == "backNavbar" && (
+      {navbar === "backNavbar" && (
         <section id="navbar">
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents}>
@@ -62,7 +62,7 @@ function Header({ modalConfig, navbar, handleNavbar }) {
         </section>
       )}
 
-      {navbar == "" && (
+      {navbar === "" && (
         <section id="navbar">
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents}>
@@ -127,13 +127,13 @@ function Header({ modalConfig, navbar, handleNavbar }) {
                   </>
                 )}
 
-                <div className={styles.navbar_contents_hamburger} style={{ backgroundColor: isClicked ? "white" : "transparent" }} onClick={() => setIsClicked(!isClicked)}>
+                {/* <div className={styles.navbar_contents_hamburger} style={{ backgroundColor: isClicked ? "white" : "transparent" }} onClick={() => setIsClicked(!isClicked)}>
                   &#9776;
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
-          {isClicked ? (
+          {/* {isClicked ? (
             <div className={styles.container_responsive_menu}>
               <Link href={"/cari-guru"}>
                 <div className={styles.responsive_menu1}>Cari Guru</div>
@@ -157,7 +157,7 @@ function Header({ modalConfig, navbar, handleNavbar }) {
             </div>
           ) : (
             ""
-          )}
+          )} */}
         </section>
       )}
     </>

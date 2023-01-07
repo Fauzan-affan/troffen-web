@@ -58,7 +58,7 @@ const tags = [
   { id: 9, name: "art", status: 0 },
 ];
 
-const index = () => {
+const Index = () => {
   const router = useRouter();
   const { articleId } = router.query;
 
@@ -109,7 +109,7 @@ const index = () => {
                       Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard. We know you’re
                       dealing in stolen ore. But I wanna talk about the assassination attempt on Lieutenant Worf. Could someone survive inside a transporter buffer for 75 years? Fate. It protects fools, little children, and ships.
                     </nav>
-                    <h1>I Created a Developer Rap Video - Here's What I Learned</h1>
+                    <h1>I Created a Developer Rap Video - Here{"'"}s What I Learned</h1>
                     <nav>
                       Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard. We know you’re
                       dealing in stolen ore. But I wanna talk about the assassination attempt. Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to
@@ -125,7 +125,7 @@ const index = () => {
                       </nav>
                     </nav>
                     <nav>Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard.</nav>
-                    <h1>I Created a Developer Rap Video - Here's What I Learned</h1>
+                    <h1>I Created a Developer Rap Video - Here{"'"}s What I Learned</h1>
                     <nav className={styles.ol}>
                       Did you come here for something in particular or just general Riker-bashing? And blowing into maximum warp speed, you appeared for an instant to be in two places at once. We have a saboteur aboard.
                       <ol>
@@ -226,4 +226,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

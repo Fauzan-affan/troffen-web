@@ -9,11 +9,11 @@ import JumbotronLoc from "../assets/img/location.svg";
 import BlueBanner from "../assets/img/BlueBanner.svg";
 import BannerVector from "../assets/img/Vector.svg";
 import Benefit1 from "../assets/img/Work1.svg";
-import BenefitBix from "../assets/img/benefit/01/Rectangle71.svg";
-import BenefitOnline from "../assets/img/benefit/01/Outline.svg";
-import BenefitPencarian from "../assets/img/benefit/02/Vector.svg";
-import BenefitTarif from "../assets/img/benefit/03/Vector.svg";
-import BenefitFleksibel from "../assets/img/benefit/04/Vector.svg";
+// import BenefitBix from "../assets/img/benefit/01.svg";
+import BenefitOnline from "../assets/img/benefit/01.svg";
+import BenefitPencarian from "../assets/img/benefit/02.svg";
+import BenefitTarif from "../assets/img/benefit/03.svg";
+import BenefitFleksibel from "../assets/img/benefit/04.svg";
 import No1 from "../assets/img/no1.svg";
 import No2 from "../assets/img/no2.svg";
 import No3 from "../assets/img/no3.svg";
@@ -51,7 +51,7 @@ export default function Home() {
       desc={`Bingung Cara Belajar Skill Baru? atau Kesulitan Nemuin Pengajar Berkualitas? Tinggal cari aja di Troffen, Platform Belajar Skill Baru Dengan Mudah`}
       icon={`troffen.ico`}
     >
-      <section id="jumbotron">
+      <section id={styles.jumbotron}>
         <div className={styles.jumbotron_content} style={{ backgroundImage: `url(${JumbotronLayout.src})` }}>
           <div className={styles.container}>
             <div className={styles.content}>
@@ -73,6 +73,34 @@ export default function Home() {
               </div>
               <div className={styles.search_location_mobile}>
                 <button className={styles.button_search_mobile}>Cari Kursus</button>
+              </div>
+            </div>
+            <div className={styles.content4}>
+              Belum tahu tentang Troffen <a href="#">Pelajari di sini</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id={styles.jumbotron_mobile}>
+        <div className={styles.jumbotron_content} style={{ backgroundImage: `url(${JumbotronLayout.src})` }}>
+          <div className={styles.container}>
+            <div className={styles.content}>
+              <div className={styles.content1}>Temukan dan belajar dari guru yang sesuai kriteriamu.</div>
+              <div className={styles.content2}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</div>
+            </div>
+            <div className={styles.search_box}>
+              <div className={styles.search_subject}>
+                <input type="text" placeholder="Mau belajar apa hari ini?" />
+              </div>
+              <div className={styles.search_location}>
+                <div className={styles.search_location_left}>
+                  <Image alt="" src={JumbotronLoc} priority />
+                  <input type="text" placeholder="Mau belajar apa hari ini?" />
+                </div>
+                <div className={styles.search_location_right}>
+                  <button className={styles.button_search}>Cari</button>
+                </div>
               </div>
             </div>
             <div className={styles.content4}>
@@ -115,7 +143,7 @@ export default function Home() {
                 <div className={styles.benefit_content_container}>
                   <div className={styles.benefit1}>
                     <div className={styles.image}>
-                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      {/* <Image alt="" src={BenefitBix} priority className={styles.image_1} /> */}
                       <Image alt="" src={BenefitOnline} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Online & Offline</div>
@@ -123,7 +151,7 @@ export default function Home() {
                   </div>
                   <div className={styles.benefit2}>
                     <div className={styles.image}>
-                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      {/* <Image alt="" src={BenefitBix} priority className={styles.image_1} /> */}
                       <Image alt="" src={BenefitPencarian} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Pencarian Cepat</div>
@@ -131,7 +159,7 @@ export default function Home() {
                   </div>
                   <div className={styles.benefit3}>
                     <div className={styles.image}>
-                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      {/* <Image alt="" src={BenefitBix} priority className={styles.image_1} /> */}
                       <Image alt="" src={BenefitTarif} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Tarif Sesuai Preferensi</div>
@@ -139,7 +167,7 @@ export default function Home() {
                   </div>
                   <div className={styles.benefit4}>
                     <div className={styles.image}>
-                      <Image alt="" src={BenefitBix} priority className={styles.image_1} />
+                      {/* <Image alt="" src={BenefitBix} priority className={styles.image_1} /> */}
                       <Image alt="" src={BenefitFleksibel} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Jam Kursus Fleksibel</div>
@@ -160,6 +188,11 @@ export default function Home() {
               <div className={styles.kursus_title_2}>Cukup 3 langkah untuk mendapatkan guru sesuai kriteria yang kamu inginkan!</div>
             </div>
             <div className={styles.kursus_box}>
+              <div className={styles.kursus_box_img_mobile}>
+                {isClick === 1 && <Image alt="" src={KursusDesain} priority />}
+                {isClick === 2 && <Image alt="" src={Book} priority />}
+                {isClick === 3 && <Image alt="" src={Cal} priority />}
+              </div>
               <div className={styles.kursus_box_left}>
                 <div className={styles.kursus_box_1_left_1} style={{ opacity: isClick === 1 ? "1" : "0.5" }} onClick={() => handleClick(1)}>
                   <div className={styles.kursus_box_1_left_1_title}>

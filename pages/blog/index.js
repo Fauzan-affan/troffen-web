@@ -32,7 +32,7 @@ const articles = [
   { id: 5, tag: "travel", title: "set video playback speed with javascript", img: artickle5, creator: "Jesica koli", articleCreated: "02 december 2022", desc: "Did you come here for something in particular or just general Riker-bashing" },
 ];
 
-export default function index() {
+export default function Index() {
   const [catActive, setCatActive] = useState(1);
 
   const router = useRouter();

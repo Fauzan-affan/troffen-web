@@ -21,6 +21,8 @@
 
   align-items: center;
 
+  height: 5rem;
+
   /* font-weight: 500;
   font-size: 16px;
   line-height: 24px; */
@@ -283,6 +285,23 @@
     padding: 0.5rem 0.5rem;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .loggedin_menu {
+    display: none;
+  }
+
+  .container_navbar {
+    padding: 0;
+    margin: 0 auto !important;
+    max-width: 280px;
+  }
+
+  .navbar_contents {
+    padding: 0;
+  }
+}
+
 /* 
 @media screen and (max-width: 954px) {
   .container_responsive_menu {
