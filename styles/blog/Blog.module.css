@@ -168,6 +168,10 @@
 
 /* ----------------------------- */
 
+.image_highlight {
+  cursor: pointer;
+}
+
 .highlight {
   display: flex;
 
@@ -190,7 +194,7 @@
 
   text-transform: capitalize;
 
-  /* margin-bottom: 1rem; */
+  cursor: pointer;
 }
 
 .content_creator_container {

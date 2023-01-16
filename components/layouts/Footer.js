@@ -77,7 +77,7 @@ function Footer() {
           <hr />
           <div className={styles.footer_copyright}>
             Copyright Troffen
-            <script>{new Date().getFullYear()}</script>
+            {` ${new Date().getFullYear()} `}
             All rights reserved.
           </div>
         </div>

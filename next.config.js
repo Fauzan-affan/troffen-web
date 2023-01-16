@@ -4,6 +4,14 @@ const nextConfig = {
   // images: {
   //   unoptimized: true,
   // },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/:path*",
+  //       destination: "https://api.troffen.com/:path*",
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import styles from "../../styles/layout/Header.module.css";
 import TroffenLogo1 from "../../assets/img/Rectangle63.svg";
@@ -10,9 +10,15 @@ import Back from "../../assets/img/back.svg";
 
 import PP from "../../assets/img/PP.svg";
 
-function Header({ modalConfig, navbar, handleNavbar }) {
+function Header({ modalConfig, navbar, handleNavbar, session, signOut }) {
   const [isClicked, setIsClicked] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (session) {
+      setIsLogin(session);
+    }
+  }, [session]);
 
   return (
     <>
@@ -113,12 +119,12 @@ function Header({ modalConfig, navbar, handleNavbar }) {
                         <Image alt="" src={PP} priority />
                         <ul className={styles.loggedin_menu_body}>
                           <li className={styles.dashboard_menu}>
-                            <div className={styles.dashboard_label}>Content</div>
+                            {/* <div className={styles.dashboard_label}>Content</div> */}
                             <div className={styles.dashboard_body}>Dashbor</div>
                           </li>
                           <hr />
-                          <li className={styles.logout_menu} onClick={() => setIsLogin(false)}>
-                            <div className={styles.logout_label}>Content</div>
+                          <li className={styles.logout_menu} onClick={() => signOut()}>
+                            {/* <div className={styles.logout_label}>Content</div> */}
                             <div className={styles.logout_body}>Logout</div>
                           </li>
                         </ul>

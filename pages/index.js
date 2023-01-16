@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -296,7 +296,9 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.benefit_sebagai}>
             <div className={styles.benefit_sebagai_tutor}>
-              <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
+              <Link href={`daftar-guru`}>
+                <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
+              </Link>
             </div>
             <div className={styles.benefit_sebagai_student}>
               <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />

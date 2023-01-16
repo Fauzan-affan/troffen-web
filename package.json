@@ -13,8 +13,15 @@
     "@netlify/plugin-nextjs": "^4.29.4",
     "eslint": "8.29.0",
     "eslint-config-next": "13.0.6",
+    "gray-matter": "^4.0.3",
+    "js-cookie": "^3.0.1",
+    "markdown-it": "^13.0.1",
     "next": "13.0.6",
+    "next-auth": "^4.18.8",
+    "nodemailer": "^6.9.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-markdown": "^8.0.4",
+    "react-share": "^4.4.1"
   }
 }

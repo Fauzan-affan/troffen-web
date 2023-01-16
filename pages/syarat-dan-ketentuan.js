@@ -6,7 +6,7 @@ import styles from "../styles/SyaratKetentuan.module.css";
 const index = () => {
   return (
     <LoginTemplate title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
-      <Jumbotron title="Syarat & Ketentuan" desc="Diperbarui pada: 12 November 2022" />
+      <Jumbotron type="info" title="Syarat & Ketentuan" desc="Diperbarui pada: 12 November 2022" />
       <div className={styles.container}>
         <div className={styles.body}>
           {/* <div className={styles.title}>Frequently Asked Questions</div> */}

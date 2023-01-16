@@ -5,6 +5,18 @@
   margin: 0 auto;
 }
 
+.container_info {
+  max-width: 1024px;
+  margin: 0 auto;
+  height: 100%;
+
+  /* background-color: antiquewhite; */
+}
+
+.container_search_info {
+  /* background-color: aquamarine; */
+}
+
 .search_bar {
   width: 100%;
   background-size: cover;
@@ -15,6 +27,23 @@
 
   padding-top: 2.5rem;
   margin-bottom: 3rem;
+}
+
+.search_title_info {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.search_title_info p {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 48px;
+  /* identical to box height */
+
+  margin: 0;
+
+  letter-spacing: -0.01em;
+  color: #ffffff;
 }
 
 .search_title {

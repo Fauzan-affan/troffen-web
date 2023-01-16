@@ -1,7 +1,11 @@
+import fs from "fs";
+import matter from "gray-matter";
+import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/image";
+import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from "react-share";
 
 import LoginTemplate from "../../components/layouts/LoginTemplate";
 import Tag from "../../components/core/Tag";
@@ -16,29 +20,70 @@ import ig1 from "../../assets/img/blog/icon/ig1.svg";
 import ig2 from "../../assets/img/blog/icon/ig2.svg";
 import Previous from "../../assets/img/Previous.svg";
 import Next from "../../assets/img/Next.svg";
-import artickle1 from "../../assets/img/blog/artickles/artickle1.svg";
-import artickle2 from "../../assets/img/blog/artickles/artickle2.svg";
-import artickle3 from "../../assets/img/blog/artickles/artickle3.svg";
-import artickle4 from "../../assets/img/blog/artickles/artickle4.svg";
-import artickle5 from "../../assets/img/blog/artickles/artickle5.svg";
+import article1 from "../../assets/img/blog/artickles/artickle1.svg";
 
 import styles from "../../styles/blog/Blog.module.css";
 
-const articles = [
-  { id: 1, tag: "travel", title: "set video playback speed with javascript", img: artickle1, creator: "Jesica koli", articleCreated: "02 december 2022", desc: "Did you come here for something in particular or just general Riker-bashing" },
-  { id: 2, tag: "travel", title: "set video playback speed with javascript", img: artickle2, creator: "Jesica koli", articleCreated: "02 december 2022", desc: "Did you come here for something in particular or just general Riker-bashing" },
-  { id: 3, tag: "travel", title: "set video playback speed with javascript", img: artickle3, creator: "Jesica koli", articleCreated: "02 december 2022", desc: "Did you come here for something in particular or just general Riker-bashing" },
-  { id: 4, tag: "travel", title: "set video playback speed with javascript", img: artickle4, creator: "Jesica koli", articleCreated: "02 december 2022", desc: "Did you come here for something in particular or just general Riker-bashing" },
-  { id: 5, tag: "travel", title: "set video playback speed with javascript", img: artickle5, creator: "Jesica koli", articleCreated: "02 december 2022", desc: "Did you come here for something in particular or just general Riker-bashing" },
-];
+export const getStaticProps = async () => {
+  // get list of files from the posts folder
+  const files = fs.readdirSync("assets/posts");
 
-export default function Index() {
-  const [catActive, setCatActive] = useState(1);
+  // get frontmatter & slug from each post
+  const posts = files.map((fileName) => {
+    const slug = fileName.replace(".md", "");
+    const readFile = fs.readFileSync(`assets/posts/${fileName}`, "utf-8");
+    const { data: frontmatter, content } = matter(readFile);
 
+    return {
+      slug,
+      frontmatter,
+      content,
+    };
+  });
+
+  // Return the pages static props
+  return {
+    props: {
+      posts,
+    },
+  };
+};
+
+export default function Index({ posts }) {
   const router = useRouter();
 
-  const handleClick = (article) => {
-    router.push(`/blog/${article.id}`);
+  const [catActive, setCatActive] = useState("new");
+  const [highlight, setHighlight] = useState(1);
+
+  const alltags = posts.map((val) => val.frontmatter.tags[0]);
+
+  let filteredTag = [...new Set(alltags)];
+
+  const handleClick = (slug) => {
+    router.push(`/blog/${slug}`);
+  };
+
+  const truncate = (str, n) => {
+    return str.length > n ? str.slice(0, n - 1) + " ...." : str;
+  };
+
+  const handleHighlight = (val) => {
+    let total = posts.length - 1;
+    if (val === "next") {
+      if (highlight === total) {
+        setHighlight(0);
+      } else {
+        setHighlight(highlight + 1);
+      }
+    } else if (val === "prev") {
+      if (highlight < 1) {
+        setHighlight(total);
+      } else {
+        setHighlight(highlight - 1);
+      }
+    } else {
+      setHighlight(1);
+    }
   };
 
   return (
@@ -57,15 +102,11 @@ export default function Index() {
               <div className={styles.search_box}>
                 <div className={styles.search_location}>
                   <div className={styles.search_location_left}>
-                    {/* <Image alt="" src={JumbotronLoc} priority /> */}
-                    <input type="text" placeholder="Cari artikel" />
+                    <input type="text" name="cariArticle" placeholder="Cari artikel" />
                   </div>
                   <div className={styles.search_location_right}>
                     <button className={styles.button_search}>Cari Artikel</button>
                   </div>
-                </div>
-                <div className={styles.search_location_mobile}>
-                  <button className={styles.button_search_mobile}>Cari Kursus</button>
                 </div>
               </div>
             </div>
@@ -76,47 +117,52 @@ export default function Index() {
       <section id="content">
         <div className={styles.container}>
           <div className={styles.highlight}>
-            <div className={styles.image_highlight}>
+            <div className={styles.image_highlight} onClick={() => handleClick(posts[highlight].slug)}>
               <Image alt="" src={Blog} />
             </div>
             <div className={styles.content_highlight}>
               <nav>
-                <Tag type="blogTag">Travel</Tag>
+                <Tag type="blogTag">{posts[highlight].frontmatter.tags}</Tag>
               </nav>
-              <div className={styles.content_title}>Title</div>
+              <div className={styles.content_title} onClick={() => handleClick(posts[highlight].slug)}>
+                {posts[highlight].slug}
+              </div>
               <div className={styles.content_creator_container}>
                 <div className={styles.content_creator}>
                   <Image alt="" src={j} priority width={20} />
-                  <nav>Jesica koli</nav>
+                  <nav>{posts[highlight].frontmatter.author}</nav>
                 </div>
                 <Image alt="" src={Line} />
                 <div className={styles.content_created}>
                   <Image alt="" src={DateCreated} />
-                  <nav>02 december 2022</nav>
+                  <nav>{posts[highlight].frontmatter.date}</nav>
                 </div>
               </div>
               <div className={styles.content_desc}>
                 <div className={styles.content_desc_main}>
-                  Dynamically underwhelm integrated outsourcing via timely models. Rapidiously reconceptualize visionary imperatives without 24/365 catalysts for change. Completely streamline functionalized models and out-of-the-box
-                  functionalities. Authoritatively target proactive vortals vis-a-vis exceptional results. Compellingly brand emerging sources and compelling materials. Globally iterate parallel content
+                  <ReactMarkdown>{truncate(posts[highlight].content.replace(/<[^>]+>/g, ""), 300)}</ReactMarkdown>
                 </div>
-                <div className={styles.content_desc_essence}>The best ideas can change who we are.</div>
-                <div className={styles.content_desc_secondary}>Dynamically underwhelm integrated outsourcing via timely models. Rapidiously reconceptualize visionary imperatives without 24/365 catalysts for</div>
               </div>
               <div className={styles.content_share}>
                 <nav>Share via:</nav>
                 <div className={styles.content_share_icon}>
-                  <Image alt="" src={fb} />
-                  <Image alt="" src={twitter} width={25} height={25} />
-                  <nav>
-                    <Image alt="" src={ig1} className={styles.img1} />
-                    <Image alt="" src={ig2} className={styles.img2} />
-                  </nav>
+                  <FacebookShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "%20")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
+                    <Image alt="" src={fb} />
+                  </FacebookShareButton>
+                  <TwitterShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "%20")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
+                    <Image alt="" src={twitter} width={25} height={25} />
+                  </TwitterShareButton>
+                  <InstapaperShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "%20")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
+                    <nav>
+                      <Image alt="" src={ig1} className={styles.img1} />
+                      <Image alt="" src={ig2} className={styles.img2} />
+                    </nav>
+                  </InstapaperShareButton>
                 </div>
               </div>
               <div className={styles.content_actions}>
-                <Image alt="" src={Previous} width={25} height={25} />
-                <Image alt="" src={Next} width={25} height={25} />
+                <Image alt="" src={Previous} width={25} height={25} onClick={() => handleHighlight("prev")} />
+                <Image alt="" src={Next} width={25} height={25} onClick={() => handleHighlight("next")} />
               </div>
             </div>
           </div>
@@ -127,34 +173,18 @@ export default function Index() {
         <div className={styles.container}>
           <div className={styles.category_menu}>
             <ul>
-              <li className={(catActive === 1 && styles.active) || styles.negatif} onClick={() => setCatActive(1)}>
+              <li className={(catActive === "new" && styles.active) || styles.negatif} onClick={() => setCatActive("new")}>
                 <nav>Terbaru</nav>
-                {catActive === 1 && <hr />}
+                {catActive === "new" && <hr />}
               </li>
-              <li className={(catActive === 2 && styles.active) || styles.negatif} onClick={() => setCatActive(2)}>
-                <nav>Design & Art</nav>
-                {catActive === 2 && <hr />}
-              </li>
-              <li className={(catActive === 3 && styles.active) || styles.negatif} onClick={() => setCatActive(3)}>
-                <nav>Akademik</nav>
-                {catActive === 3 && <hr />}
-              </li>
-              <li className={(catActive === 4 && styles.active) || styles.negatif} onClick={() => setCatActive(4)}>
-                <nav>Musik</nav>
-                {catActive === 4 && <hr />}
-              </li>
-              <li className={(catActive === 5 && styles.active) || styles.negatif} onClick={() => setCatActive(5)}>
-                <nav>Sport</nav>
-                {catActive === 5 && <hr />}
-              </li>
-              <li className={(catActive === 6 && styles.active) || styles.negatif} onClick={() => setCatActive(6)}>
-                <nav>Teknologi</nav>
-                {catActive === 6 && <hr />}
-              </li>
-              <li className={(catActive === 7 && styles.active) || styles.negatif} onClick={() => setCatActive(7)}>
-                <nav>Gaya Hidup</nav>
-                {catActive === 7 && <hr />}
-              </li>
+              {filteredTag.map((val, i) => {
+                return (
+                  <li className={(catActive === val && styles.active) || styles.negatif} onClick={() => setCatActive(val)} key={i}>
+                    <nav>{val}</nav>
+                    {catActive === val && <hr />}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -165,35 +195,81 @@ export default function Index() {
           <div className={styles.artikel_baru}>
             <div className={styles.artikel_baru_title}>Artikel Terbaru</div>
             <div className={styles.artikel_baru_card_container}>
-              {articles.map((article) => {
-                // console.log(img);
-                return (
-                  <div className={styles.artikel_baru_card} key={article.id} onClick={() => handleClick(article)}>
-                    <div className={styles.artikel_baru_card_img}>
-                      <Image alt="" src={article.img} />
-                    </div>
-                    <div className={styles.content_highlight}>
-                      <nav>
-                        <Tag type="blogTag">{article.tag}</Tag>
-                      </nav>
-                      <div className={styles.content_title}>{article.title}</div>
-                      <div className={styles.content_creator_container}>
-                        <div className={styles.content_creator}>
-                          <Image alt="" src={j} priority width={20} />
-                          <nav>{article.creator}</nav>
+              {catActive === "new" &&
+                posts.map((article, i) => {
+                  //extract slug and frontmatter
+                  const { slug, frontmatter, content } = article;
+                  //extract frontmatter properties
+                  const { title, tags, author, date } = frontmatter;
+                  // console.log(tags[0], catActive);
+                  return (
+                    <div className={styles.artikel_baru_card} key={slug} onClick={() => handleClick(slug)}>
+                      <div className={styles.artikel_baru_card_img}>
+                        <Image alt="" src={article1} />
+                      </div>
+                      <div className={styles.content_highlight}>
+                        <nav>
+                          <Tag type="blogTag">{tags}</Tag>
+                        </nav>
+                        <div className={styles.content_title}>{title}</div>
+                        <div className={styles.content_creator_container}>
+                          <div className={styles.content_creator}>
+                            <Image alt="" src={j} priority width={20} />
+                            <nav>{author}</nav>
+                          </div>
+                          <Image alt="" src={Line} />
+                          <div className={styles.content_created}>
+                            <Image alt="" src={DateCreated} />
+                            <nav>{date}</nav>
+                          </div>
                         </div>
-                        <Image alt="" src={Line} />
-                        <div className={styles.content_created}>
-                          <Image alt="" src={DateCreated} />
-                          <nav>{article.articleCreated}</nav>
+                        <div className={styles.content_desc}>
+                          <div className={styles.content_desc_main}>
+                            <ReactMarkdown>{truncate(content.replace(/<[^>]+>/g, ""), 300)}</ReactMarkdown>
+                          </div>
                         </div>
                       </div>
-                      <div className={styles.content_desc}>
-                        <div className={styles.content_desc_main}>{article.desc}</div>
+                    </div>
+                  );
+                })}
+
+              {posts.map((article, i) => {
+                //extract slug and frontmatter
+                const { slug, frontmatter, content } = article;
+                //extract frontmatter properties
+                const { title, tags, author, date } = frontmatter;
+                // console.log(tags[0], catActive);
+                if (tags[0] === catActive) {
+                  return (
+                    <div className={styles.artikel_baru_card} key={slug} onClick={() => handleClick(slug)}>
+                      <div className={styles.artikel_baru_card_img}>
+                        <Image alt="" src={article1} />
+                      </div>
+                      <div className={styles.content_highlight}>
+                        <nav>
+                          <Tag type="blogTag">{tags}</Tag>
+                        </nav>
+                        <div className={styles.content_title}>{title}</div>
+                        <div className={styles.content_creator_container}>
+                          <div className={styles.content_creator}>
+                            <Image alt="" src={j} priority width={20} />
+                            <nav>{author}</nav>
+                          </div>
+                          <Image alt="" src={Line} />
+                          <div className={styles.content_created}>
+                            <Image alt="" src={DateCreated} />
+                            <nav>{date}</nav>
+                          </div>
+                        </div>
+                        <div className={styles.content_desc}>
+                          <div className={styles.content_desc_main}>
+                            <ReactMarkdown>{truncate(content.replace(/<[^>]+>/g, ""), 300)}</ReactMarkdown>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
+                  );
+                }
               })}
             </div>
           </div>
