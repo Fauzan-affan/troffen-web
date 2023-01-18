@@ -1057,3 +1057,418 @@
     margin-bottom: 1rem;
   }
 }
+
+/* ------------- responsive section 1100------------- */
+
+@media screen and (max-width: 1100px) {
+  #jumbotron {
+    display: none;
+  }
+
+  #jumbotron_mobile {
+    display: block;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .jumbotron_content {
+    background-size: 0;
+    display: block;
+
+    height: fit-content;
+  }
+
+  .content {
+    max-width: 100%;
+
+    margin-top: 3rem;
+  }
+
+  .content1 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+
+    text-align: center;
+  }
+
+  .content2 {
+    text-align: center;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 24px;
+  }
+
+  .search_box {
+    display: none;
+
+    /* position: relative; */
+    /* margin-bottom: 3rem; */
+  }
+
+  .search_subject {
+    display: none;
+  }
+
+  .search_location_left {
+    padding-left: 0;
+    display: flex;
+  }
+
+  /* .search_location_left img {
+    display: none;
+  } */
+
+  .search_subject input {
+    width: 100%;
+  }
+
+  .search_subject,
+  .search_location {
+    min-width: auto !important;
+  }
+
+  .search_location_right {
+    padding-right: 0;
+  }
+
+  .search_location input {
+    margin-right: 0 !important;
+    font-weight: 500;
+    /* font-size: 14px; */
+    line-height: 21px;
+
+    width: 100%;
+  }
+
+  .search_location_mobile {
+    display: block;
+  }
+
+  .search_location {
+    border-radius: 8px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .button_search {
+    padding: 0.5em 1em;
+    cursor: pointer;
+
+    width: fit-content;
+  }
+
+  .button_search_mobile {
+    background: #1ea9e4;
+    border-radius: 12px;
+    color: white;
+    border: none;
+
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+
+    padding: 1em 2em;
+    cursor: pointer;
+
+    width: 100%;
+  }
+
+  .button_search_mobile:hover {
+    opacity: 0.9;
+  }
+
+  .content4 {
+    display: none;
+    /* background-color: #fff; */
+  }
+
+  /* banner */
+
+  .banner1_label {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3rem;
+  }
+
+  .banner1_label1,
+  .banner1_label2,
+  .banner1_label3 {
+    /* margin-bottom: 2rem; */
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  /* .banner1_label2,
+  .banner1_label3 {
+    display: none;
+  } */
+
+  /* benefit */
+
+  .benefit_title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .benefit_content {
+    display: block;
+
+    width: 100%;
+  }
+
+  .benefit_content .img {
+    width: 100%;
+
+    margin-top: -9rem;
+  }
+
+  .benefit_content_left {
+    display: none;
+  }
+
+  .benefit_content_right {
+    margin-top: -2rem;
+  }
+
+  .benefit_content_container {
+    display: grid;
+    grid-area: content;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+  }
+
+  .benefit1,
+  .benefit2,
+  .benefit3,
+  .benefit4 {
+    text-align: center;
+  }
+
+  /* kursus */
+
+  .kursus {
+    margin: 3rem 1rem;
+  }
+
+  .kursus_title_1 {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .kursus_title_2 {
+    display: none;
+  }
+
+  .kursus_box_1_left_1,
+  .kursus_box_2_left_1,
+  .kursus_box_3_left_1 {
+    width: fit-content;
+    text-align: center;
+  }
+
+  .kursus_box {
+    padding: 3rem 1.5rem;
+
+    display: block;
+  }
+
+  .kursus_box_left {
+    display: block;
+  }
+
+  .kursus_box_1_left_1_desc {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  .kursus_box_1_left_1_title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .kursus_box_1_left_1_title img {
+    height: 1.5rem;
+  }
+
+  .kursus_box_1_left_1_desc {
+    width: 100%;
+  }
+
+  .kursus_box_1_left_1_title nav {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .kursus_box_2_left_1,
+  .kursus_box_3_left_1 {
+    display: none;
+  }
+
+  .kursus_box_right {
+    display: none;
+  }
+
+  .kursus_box_img_mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: antiquewhite; */
+  }
+
+  .kursus_box_img_mobile img {
+    width: 12rem;
+    margin-top: -8rem;
+    margin-bottom: -5rem;
+  }
+
+  .kursus_box_1_left,
+  .kursus_box_2_left {
+    padding-bottom: 3rem;
+  }
+
+  .kursus_box_1_left,
+  .kursus_box_2_left,
+  .kursus_box_3_left {
+    width: 100%;
+  }
+
+  .kursus_box_2_left,
+  .kursus_box_3_left {
+    opacity: 1;
+  }
+
+  /* subjek */
+
+  .subjek {
+    padding: 0 1rem;
+
+    margin: 0;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+
+    display: block;
+  }
+
+  .subjek_title_action {
+    display: none;
+  }
+
+  .subjek_title_main {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+
+    text-align: center;
+  }
+
+  .subjek_gallery_row {
+    /* display: block; */
+    /* gap: 1rem; */
+  }
+
+  .subjek_gallery_card {
+    margin: 1rem 0;
+  }
+
+  .subjek_content_title_main {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+  }
+
+  .subjek_content_title_fav img {
+    width: 1rem;
+
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .subjek_content_tutor nav {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+  }
+
+  .subjek_action_harga {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .button_submit {
+    background: #1ea9e4;
+    border-radius: 12px;
+    color: white;
+    border: none;
+
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+
+    padding: 0.7em 1em;
+    cursor: pointer;
+  }
+
+  .subjek_lihat_semua {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+  }
+
+  .button_lihat_semua {
+    background: none;
+    border-radius: 12px;
+    color: #1ea9e4;
+    border: 1.5px solid #1ea9e4;
+
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 34px;
+
+    padding: 0.4rem 2rem;
+    cursor: pointer;
+
+    width: fit-content;
+  }
+
+  .button_lihat_semua:hover {
+    opacity: 0.9;
+
+    background: #1ea9e4;
+    border-radius: 12px;
+    color: #fff;
+    border: 1.5px solid #1ea9e4;
+  }
+
+  /* benefit sebagai */
+
+  .benefit_sebagai {
+    display: block;
+  }
+
+  .benefit_sebagai_tutor_img,
+  .benefit_sebagai_student_img {
+    display: block;
+    height: fit-content;
+
+    margin-bottom: 1rem;
+  }
+}

@@ -87,7 +87,7 @@ export default function Home() {
           <div className={styles.container}>
             <div className={styles.content}>
               <div className={styles.content1}>Temukan dan belajar dari guru yang sesuai kriteriamu.</div>
-              <div className={styles.content2}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</div>
+              <div className={styles.content2}>Apa yang ingin kamu pelajari? Dengan Troffen cukup ketik topik yang kamu minati dan juga ketik lokasi pilihanmu, untuk mendapatkan kursus yang sesuai untuk kamu.</div>
             </div>
             <div className={styles.search_box}>
               <div className={styles.search_subject}>
