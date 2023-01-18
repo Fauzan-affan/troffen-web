@@ -276,9 +276,12 @@ export default function Home() {
                     <div className={styles.subjek_action}>
                       <div className={styles.subjek_action_harga}>Rp 100.000/jam</div>
                       <div className={styles.subjek_action_action}>
-                        <Link className={styles.button_submit} href={`cari-guru/${no}`}>
+                        <Link className={styles.button_submit} href={`/coming-soon`}>
                           BOOK
                         </Link>
+                        {/* <Link className={styles.button_submit} href={`cari-guru/${no}`}>
+                          BOOK
+                        </Link> */}
                       </div>
                     </div>
                   </div>
@@ -296,9 +299,12 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.benefit_sebagai}>
             <div className={styles.benefit_sebagai_tutor}>
-              <Link href={`daftar-guru`}>
+              <Link href={`/coming-soon`}>
                 <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
               </Link>
+              {/* <Link href={`daftar-guru`}>
+                <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
+              </Link> */}
             </div>
             <div className={styles.benefit_sebagai_student}>
               <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
