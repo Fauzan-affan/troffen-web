@@ -1,0 +1,47 @@
+.background {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  height: 700px;
+  width: 100%;
+  /* background-color: antiquewhite; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+
+  display: flex;
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  /* background-color: azure; */
+}
+
+.content {
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 120px;
+  /* identical to box height */
+
+  letter-spacing: -0.01em;
+}
+
+.desc {
+  font-weight: 400;
+  font-size: 24px;
+  /* line-height: 36px; */
+  /* identical to box height */
+
+  letter-spacing: -0.01em;
+}

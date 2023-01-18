@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-// import axios from "axios";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 
 import Head from "next/head";
 import Header from "./Header";
@@ -12,7 +11,7 @@ import ModalPopupLogic from "../../logic/ModalPopupLogic";
 
 const LoginTemplate = ({ title, desc, icon, children, isNavbar }) => {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const [showModal, setShowModal] = useState(false);
   const [menu, setMenu] = useState("");
@@ -42,8 +41,6 @@ const LoginTemplate = ({ title, desc, icon, children, isNavbar }) => {
     const value = target.value;
     const name = target.name;
 
-    // console.log(target);
-
     setState((state) => ({
       ...state,
       [name]: value,
@@ -52,49 +49,36 @@ const LoginTemplate = ({ title, desc, icon, children, isNavbar }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // masuk sebagai murid
-    if (masukSebagaiType === 1 && state.email.length !== 0 && state.password.length !== 0) {
-      console.log(state, "masuk sebagai: " + masukSebagaiType);
-      // let email = state.email;
-      // let pass = state.password;
-      // let email = "email1@email.com";
-      // let pass = "password";
+    // email: email1@gmail.com, pass: password
+    // email: email2@email.com, pass: password
+    if (state.email.length !== 0 && state.password.length !== 0) {
+      try {
+        const res = await fetch("https://api.troffen-api.com/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          // credentials: "include",
+          body: JSON.stringify(state),
+        });
 
-      // console.log(token);
-
-      // try {
-      //   const res = await axios
-      //     .post(
-      //       "https://api.troffen.com/api/login",
-      //       {
-      //         email: "email1@email.com",
-      //         password: "password",
-      //       },
-      //       {
-      //         headers: {
-      //           "Content-Type": "application/json",
-      //           "Access-Control-Allow-Origin": "*",
-      //         },
-      //       }
-      //     )
-      //     .then((res) => {
-      //       //set token on cookies
-      //       // console.log(res);
-      //       Cookies.set("token", res.data.token);
-      //     });
-      //   // console.log(res); //check now
-      // } catch (e) {}
-
-      const res = await fetch("https://api.troffen.com/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email: "email1@email.com", password: "password" }),
-      });
-
-      const data = await res.json();
-      console.log(data);
+        const data = await res.json();
+        if (data.meta.code === 200) {
+          Cookies.set("token", data.data.token);
+          Cookies.set("firstName", data.data.user.first_name);
+          setShowModal(false);
+        }
+      } catch (error) {
+        console.log(error);
+        if (error.meta.code === 422) {
+          console.log(error);
+        }
+      }
     }
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("token");
+    Cookies.remove("firstName");
+    signOut();
   };
 
   useEffect(() => {
@@ -108,21 +92,10 @@ const LoginTemplate = ({ title, desc, icon, children, isNavbar }) => {
         <meta name="description" content={desc} />
         <link rel="icon" href={`/${icon}`} />
       </Head>
-      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} session={session} signOut={signOut} />
+      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} session={session} handleLogout={handleLogout} />
       {children}
       <Footer />
-      <ModalPopupLogic
-        onClose={setShowModal}
-        show={showModal}
-        title={menu}
-        status={status}
-        session={session}
-        signIn={signIn}
-        masukSebagaiType={masukSebagaiType}
-        changeLoginType={changeLoginType}
-        handleLogin={handleLogin}
-        handleChange={handleChange}
-      />
+      <ModalPopupLogic onClose={setShowModal} show={showModal} title={menu} session={session} signIn={signIn} masukSebagaiType={masukSebagaiType} changeLoginType={changeLoginType} handleLogin={handleLogin} handleChange={handleChange} />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 import styles from "../../styles/layout/Header.module.css";
 import TroffenLogo1 from "../../assets/img/Rectangle63.svg";
@@ -10,8 +11,8 @@ import Back from "../../assets/img/back.svg";
 
 import PP from "../../assets/img/PP.svg";
 
-function Header({ modalConfig, navbar, handleNavbar, session, signOut }) {
-  const [isClicked, setIsClicked] = useState(false);
+function Header({ modalConfig, navbar, handleNavbar, session, handleLogout }) {
+  // const [isClicked, setIsClicked] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -39,13 +40,15 @@ function Header({ modalConfig, navbar, handleNavbar, session, signOut }) {
                   </nav>
                 </Link>
               </div>
-              <div className={styles.navbar_contents_menu}>
-                <div className={styles.navbar_contents_button}>
-                  <nav className={styles.navbar_contents_login_text}>
-                    Sudah punya akun? <nav onClick={() => modalConfig("masuk", true)}>Masuk</nav>
-                  </nav>
+              {!isLogin && Cookies.get("token") === undefined && (
+                <div className={styles.navbar_contents_menu}>
+                  <div className={styles.navbar_contents_button}>
+                    <nav className={styles.navbar_contents_login_text}>
+                      Sudah punya akun? <nav onClick={() => modalConfig("masuk", true)}>Masuk</nav>
+                    </nav>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
@@ -87,16 +90,22 @@ function Header({ modalConfig, navbar, handleNavbar, session, signOut }) {
               </div>
               <div className={styles.navbar_contents_menu}>
                 <div className={styles.navbar_contents_menu1}>
-                  <Link href={"/cari-guru"}>Cari Guru</Link>
+                  <Link href={"/coming-soon"}>Cari Guru</Link>
                 </div>
+                {/* <div className={styles.navbar_contents_menu1}>
+                  <Link href={"/cari-guru"}>Cari Guru</Link>
+                </div> */}
                 <div className={styles.navbar_contents_menu2}>
                   <Link href={"/blog"}>Blog</Link>
                 </div>
                 <div className={styles.navbar_contents_menu3}>
-                  <Link href={"/tentang-kami"}>Tentang Kami</Link>
+                  <Link href={"/coming-soon"}>Tentang Kami</Link>
                 </div>
+                {/* <div className={styles.navbar_contents_menu3}>
+                  <Link href={"/tentang-kami"}>Tentang Kami</Link>
+                </div> */}
 
-                {!isLogin && (
+                {!isLogin && Cookies.get("token") === undefined && (
                   <>
                     <div className={styles.navbar_contents_menu4}>
                       <Link href={"#"} onClick={() => modalConfig("daftar", true)}>
@@ -111,20 +120,18 @@ function Header({ modalConfig, navbar, handleNavbar, session, signOut }) {
                   </>
                 )}
 
-                {isLogin && (
+                {(isLogin || (Cookies.get("token") !== undefined && Cookies.get("token"))) && (
                   <>
                     <ul className={styles.ul}>
                       <li className={styles.loggedin_menu}>
-                        <div className={styles.loggedin_username}>Fauzan Affan</div>
+                        <div className={styles.loggedin_username}>{Cookies.get("firstName") !== undefined && Cookies.get("firstName")}</div>
                         <Image alt="" src={PP} priority />
                         <ul className={styles.loggedin_menu_body}>
                           <li className={styles.dashboard_menu}>
-                            {/* <div className={styles.dashboard_label}>Content</div> */}
                             <div className={styles.dashboard_body}>Dashbor</div>
                           </li>
                           <hr />
-                          <li className={styles.logout_menu} onClick={() => signOut()}>
-                            {/* <div className={styles.logout_label}>Content</div> */}
+                          <li className={styles.logout_menu} onClick={() => handleLogout()}>
                             <div className={styles.logout_body}>Logout</div>
                           </li>
                         </ul>
@@ -132,38 +139,9 @@ function Header({ modalConfig, navbar, handleNavbar, session, signOut }) {
                     </ul>
                   </>
                 )}
-
-                {/* <div className={styles.navbar_contents_hamburger} style={{ backgroundColor: isClicked ? "white" : "transparent" }} onClick={() => setIsClicked(!isClicked)}>
-                  &#9776;
-                </div> */}
               </div>
             </div>
           </div>
-          {/* {isClicked ? (
-            <div className={styles.container_responsive_menu}>
-              <Link href={"/cari-guru"}>
-                <div className={styles.responsive_menu1}>Cari Guru</div>
-              </Link>
-              <Link href={"/blog"}>
-                <div className={styles.responsive_menu2}>Blog</div>
-              </Link>
-              <Link href={"/tentang-kami"}>
-                <div className={styles.responsive_menu3}>Tentang Kami</div>
-              </Link>
-              <Link href={"#"}>
-                <div className={styles.responsive_menu4} onClick={() => modalConfig("daftar", true)}>
-                  Daftar
-                </div>
-              </Link>
-              <Link href={"#"}>
-                <div className={styles.responsive_menu5} onClick={() => modalConfig("masuk", true)}>
-                  Masuk
-                </div>
-              </Link>
-            </div>
-          ) : (
-            ""
-          )} */}
         </section>
       )}
     </>

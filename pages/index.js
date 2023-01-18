@@ -58,7 +58,7 @@ export default function Home() {
               <div className={styles.content1}>Temukan dan belajar dari guru yang sesuai kriteriamu.</div>
               <div className={styles.content2}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</div>
             </div>
-            <div className={styles.search_box}>
+            {/* <div className={styles.search_box}>
               <div className={styles.search_subject}>
                 <input type="text" placeholder="Mau belajar apa hari ini?" />
               </div>
@@ -74,7 +74,7 @@ export default function Home() {
               <div className={styles.search_location_mobile}>
                 <button className={styles.button_search_mobile}>Cari Kursus</button>
               </div>
-            </div>
+            </div> */}
             <div className={styles.content4}>
               Belum tahu tentang Troffen <a href="#">Pelajari di sini</a>
             </div>

@@ -99,7 +99,7 @@ export default function Index({ posts }) {
               <div className={styles.search_title}>
                 <p>Perluas Wawasan Anda Dengan Artikel di Troffen</p>
               </div>
-              <div className={styles.search_box}>
+              {/* <div className={styles.search_box}>
                 <div className={styles.search_location}>
                   <div className={styles.search_location_left}>
                     <input type="text" name="cariArticle" placeholder="Cari artikel" />
@@ -108,7 +108,7 @@ export default function Index({ posts }) {
                     <button className={styles.button_search}>Cari Artikel</button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

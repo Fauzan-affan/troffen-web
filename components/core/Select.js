@@ -17,6 +17,7 @@ const Select = ({ label, optionLabel, desc, name, options = [], handleChange }) 
           <option value="" selected disabled>
             {optionLabel}
           </option>
+          {/* {console.log(options)} */}
           {options.map((option, i) => (
             <option key={i} value={option.value}>
               {option.name}

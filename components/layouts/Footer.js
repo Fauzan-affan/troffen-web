@@ -34,9 +34,12 @@ function Footer() {
             <div className={styles.footer_troffen}>
               <div className={styles.footer_troffen_label}>Troffen</div>
               <div className={styles.footer_troffen_detail}>
-                <div className={styles.tentang_kami} onClick={() => handleRedirect("/tentang-kami")}>
+                <div className={styles.tentang_kami} onClick={() => handleRedirect("/coming-soon")}>
                   Tentang Kami
                 </div>
+                {/* <div className={styles.tentang_kami} onClick={() => handleRedirect("/tentang-kami")}>
+                  Tentang Kami
+                </div> */}
                 <div className={styles.jadi_guru} onClick={() => handleRedirect("/daftar-guru")}>
                   Jadi Guru
                 </div>
@@ -48,7 +51,19 @@ function Footer() {
             <div className={styles.footer_bantuan}>
               <div className={styles.footer_bantuan_label}>Bantuan</div>
               <div className={styles.footer_bantuan_detail}>
-                <div className={styles.FAQ} onClick={() => handleRedirect("/FAQ")}>
+                <div className={styles.FAQ} onClick={() => handleRedirect("/coming-soon")}>
+                  FAQ
+                </div>
+                <div className={styles.syarat_dan_ketentuan} onClick={() => handleRedirect("/coming-soon")}>
+                  Syarat & Ketentuan
+                </div>
+                <div className={styles.kebijakan_privasi} onClick={() => handleRedirect("/coming-soon")}>
+                  Kebijakan Privasi
+                </div>
+                <div className={styles.hubungi_kami} onClick={() => handleRedirect("/coming-soon")}>
+                  Hubungi Kami
+                </div>
+                {/* <div className={styles.FAQ} onClick={() => handleRedirect("/FAQ")}>
                   FAQ
                 </div>
                 <div className={styles.syarat_dan_ketentuan} onClick={() => handleRedirect("/syarat-dan-ketentuan")}>
@@ -59,7 +74,7 @@ function Footer() {
                 </div>
                 <div className={styles.hubungi_kami} onClick={() => handleRedirect("/tentang-kami")}>
                   Hubungi Kami
-                </div>
+                </div> */}
               </div>
             </div>
             <div className={styles.footer_sosial_media}>
@@ -68,9 +83,12 @@ function Footer() {
                 <div className={styles.ig} onClick={() => handleRedirect("https://www.instagram.com/troffen.co/")}>
                   Instagram
                 </div>
-                <div className={styles.fb} onClick={() => handleRedirect("https://www.facebook.com/Jokowi")}>
+                <div className={styles.fb} onClick={() => handleRedirect("/coming-soon")}>
                   Facebook
                 </div>
+                {/* <div className={styles.fb} onClick={() => handleRedirect("https://www.facebook.com/Jokowi")}>
+                  Facebook
+                </div> */}
               </div>
             </div>
           </div>

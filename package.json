@@ -18,10 +18,13 @@
     "markdown-it": "^13.0.1",
     "next": "13.0.6",
     "next-auth": "^4.18.8",
+    "nextjs-progressbar": "0.0.16",
     "nodemailer": "^6.9.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.4",
-    "react-share": "^4.4.1"
+    "react-share": "^4.4.1",
+    "react-toastify": "^9.1.1",
+    "territory-indonesia": "^0.1.4"
   }
 }

@@ -25,12 +25,12 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-function ModalPopupLogic({ onClose, show, title, status, session, signIn, masukSebagaiType, changeLoginType, handleLogin, handleChange }) {
+function ModalPopupLogic({ onClose, show, title, session, signIn, masukSebagaiType, changeLoginType, handleLogin, handleChange }) {
   const router = useRouter();
 
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
+  // if (status === "loading") {
+  //   return <p>Loading...</p>;
+  // }
 
   if (!session) {
     return (
