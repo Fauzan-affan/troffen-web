@@ -124,7 +124,7 @@ function Header({ modalConfig, navbar, handleNavbar, session, handleLogout }) {
                   <>
                     <ul className={styles.ul}>
                       <li className={styles.loggedin_menu}>
-                        <div className={styles.loggedin_username}>{Cookies.get("firstName") !== undefined && Cookies.get("firstName")}</div>
+                        <div className={styles.loggedin_username}>{(Cookies.get("firstName") !== undefined && Cookies.get("firstName")) || "Fauzan-Affan"}</div>
                         <Image alt="" src={PP} priority />
                         <ul className={styles.loggedin_menu_body}>
                           <li className={styles.dashboard_menu}>
