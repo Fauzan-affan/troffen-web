@@ -282,7 +282,7 @@ const DaftarMurid = () => {
               <div className={styles.body_right}>
                 <div className={styles.body_right_container}>
                   <div className={styles.title}>Daftar Sebagai Murid</div>
-                  <div className={styles.desc}>Temukan guru sesuai keahlian yang Anda inginkan. Melalui Troffen, Anda dapat mengembangkan keahlian lebih baik.</div>
+                  <div className={styles.desc}>Temukan guru sesuai keahlian yang kamu inginkan. Melalui Troffen, kamu bisa mengembangkan keahlian dengan lebih baik.</div>
 
                   <form onSubmit={handleRegister}>
                     <div className="masuk_modal_body">
@@ -430,7 +430,7 @@ const DaftarMurid = () => {
               <div className={styles.po_body_right}>
                 <Tips
                   tips1_title="Isi Data Dengan Valid"
-                  tips1_desc="Setiap data pengalaman yang Anda masukkan d harus valid dan dapat dipertanggung jawabkan agar profil Anda dapat dilihat dengan baik oleh murid."
+                  tips1_desc="Setiap data yang kamu masukkan di informasi pribadi harus valid dan dapat dipertanggung jawabkan agar profil kamu dapat dilihat baik dengan guru."
                   tips2_title="Sertifikat Untuk Menambah Daya Jual"
                   tips2_desc="Dengan mengupload sertifikat keahlian, kemungkinan murid memilih Anda akan lebih besar dibanding guru lain yang tidak memiliki sertifikat keahlian."
                 />
@@ -451,7 +451,7 @@ const DaftarMurid = () => {
               Selamat! Temukan dan reservasi kursus sesuai dengan guru pilihanmu. Langganan <b>Monthly Pass</b> sekarang hanya dengan <b>Rp 15rb/bulan</b> untuk dapat melakukan reservasi kursus.
             </nav>
             <div className={styles.done_action}>
-              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/cari-guru")}>
+              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/coming-soon")}>
                 Langganan Sekarang
               </button>
               <button type="submit" className={styles.button_home} onClick={() => handleRedirect("/")}>

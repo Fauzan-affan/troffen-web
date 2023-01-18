@@ -56,7 +56,7 @@ export default function Home() {
           <div className={styles.container}>
             <div className={styles.content}>
               <div className={styles.content1}>Temukan dan belajar dari guru yang sesuai kriteriamu.</div>
-              <div className={styles.content2}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</div>
+              <div className={styles.content2}>Apa yang ingin kamu pelajari? Dengan Troffen cukup ketik topik yang kamu minati dan juga ketik lokasi pilihanmu, untuk mendapatkan kursus yang sesuai untuk kamu.</div>
             </div>
             {/* <div className={styles.search_box}>
               <div className={styles.search_subject}>
@@ -147,7 +147,7 @@ export default function Home() {
                       <Image alt="" src={BenefitOnline} priority className={styles.image_2} />
                     </div>
                     <div className={styles.title}>Online & Offline</div>
-                    <div className={styles.text}>Kursus tersedia secara online dan offline sesuai domisili kamu.</div>
+                    <div className={styles.text}>Kursus tersedia secara online dan offline, tinggal disesuaikan dengan lokasi kamu.</div>
                   </div>
                   <div className={styles.benefit2}>
                     <div className={styles.image}>
@@ -199,21 +199,21 @@ export default function Home() {
                     <Image alt="" src={No1} priority />
                     <nav>Temukan Guru</nav>
                   </div>
-                  <div className={styles.kursus_box_1_left_1_desc}>Cek profil guru dengan bebas dan pilih guru yang kamu inginkan sesuai dengan kebutuhan dan kriteria.</div>
+                  <div className={styles.kursus_box_1_left_1_desc}>Temukan Guru : Cek profil guru dengan bebas dan pilih guru yang kamu inginkan, sesuai dengan kebutuhan dan kriteria kamu</div>
                 </div>
                 <div className={styles.kursus_box_2_left_1} style={{ opacity: isClick === 2 ? "1" : "0.5" }} onClick={() => handleClick(2)}>
                   <div className={styles.kursus_box_2_left_1_title}>
                     <Image alt="" src={No2} priority />
                     <nav>Permintaan Kursus</nav>
                   </div>
-                  <div className={styles.kursus_box_2_left_1_desc}>Para guru akan memberikan tanggapan terhadap permintaan kursus kamu dalam beberapa jam!</div>
+                  <div className={styles.kursus_box_2_left_1_desc}>Permintaan kursus: Para guru akan memberikan tanggapan terhadap permintaan kursus kamu dalam beberapa jam!</div>
                 </div>
                 <div className={styles.kursus_box_3_left_1} style={{ opacity: isClick === 3 ? "1" : "0.5" }} onClick={() => handleClick(3)}>
                   <div className={styles.kursus_box_3_left_1_title}>
                     <Image alt="" src={No3} priority />
                     <nav>Atur Jadwal Kursus</nav>
                   </div>
-                  <div className={styles.kursus_box_3_left_1_desc}>Atur jadwal kursus Kamu sendiri dengan kursus dan guru yang dipilih.</div>
+                  <div className={styles.kursus_box_3_left_1_desc}>Atur Jadwal Kursus: Atur jadwal kursus kamu sendiri dengan kursus dari guru yang dipilih.</div>
                 </div>
               </div>
               <div className={styles.kursus_box_right}>

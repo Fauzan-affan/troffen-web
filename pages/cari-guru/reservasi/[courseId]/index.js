@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../../../styles/cari-guru/Reservasi.module.css";
@@ -15,13 +16,22 @@ import RedLove from "../../../../assets/img/love_red.svg";
 
 const Index = () => {
   const router = useRouter();
-  const { courseId } = router.query;
+  // const { courseId } = router.query;
+
+  const [state, useState] = useState({
+    ketertarikan: "",
+  });
 
   const handleChange = (e) => {
     const target = e.target;
     const value = target.value;
     const name = target.name;
-    console.log("Anjay keganti", name, value);
+    // console.log("Anjay keganti", name, value);
+
+    setState((state) => ({
+      ...state,
+      [name]: value,
+    }));
   };
 
   return (
@@ -78,7 +88,7 @@ const Index = () => {
                 <div className={styles.atur_jadwal_title}>Atur Jadwal Dengan Guru</div>
                 <div className={styles.atur_jadwal_description}>
                   <div className={styles.atur_jadwal_description_label}>Deskripsikan Diri Anda</div>
-                  <div className={styles.atur_jadwal_description_info}>Ceritakan minat Anda ingin mempelajari kursus ini kepada guru (Opsional)</div>
+                  <div className={styles.atur_jadwal_description_info}>Dekripsikan Dirimu. Ceritakan minat kamu ingiin mempelajari kursus ini kepada guru (Opsional)</div>
                 </div>
                 <div className={styles.atur_jadwal_action}>
                   <Textarea label="" name="ketertarikan" desc="" col={60} row={4} placeholder="Contoh: Saya memiiki ketertarikan kepada UI/UX sejak lama dan ingin belajar lebih banyak kepada Pak John." handleChange={handleChange} />
@@ -91,7 +101,7 @@ const Index = () => {
               </div>
               <Tips
                 tips1_title="Isi Data Dengan Valid"
-                tips1_desc="Setiap data yang Anda masukkan di informasi pribadi harus valid dan dapat dipertanggung jawabkan agar profil Anda dapat dilihat dengan baik oleh murid."
+                tips1_desc="Setiap data yang kamu masukkan di informasi pribadi harus valid dan dapat dipertanggung jawabkan agar profilmu dapat dilihat dengan baik oleh tutor."
                 tips2_title="Gunakan Foto Profil yang Jelas"
                 tips2_desc="Berikut adalah instruksi untuk foto profil yang baik:"
               />

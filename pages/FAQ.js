@@ -8,7 +8,12 @@ const tabObj = [
   {
     id: "FAQ1",
     optionName: "Apa itu Troffen?",
-    desc: [{ descId: "desc1", val: "Nibh quisque suscipit fermentum netus nulla cras porttitor euismod nulla. Orci, dictumst nec aliquet id ullamcorper venenatis. Fermentum sulla craspor ttitore  ismod nulla." }],
+    desc: [
+      {
+        descId: "desc1",
+        val: "Troffen adalah tempat kamu bisa belajar skill apapun dari tutor yang terpecaya. Melalui Troffen kita membuat akses kelas yang fleksibel karena tersedia kelas offline atau online. semua ini bisa dicapai dengan satu web, yaitu melalui Troffen. ",
+      },
+    ],
   },
   {
     id: "FAQ2",

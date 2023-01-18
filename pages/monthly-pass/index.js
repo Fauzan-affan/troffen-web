@@ -95,9 +95,9 @@ const index = () => {
             </div>
             <div className={styles.content_left_info}>
               <ul>
-                <li>Monthly Pass dibutuhkan untuk reservasi semua kursus di Troffen.</li>
-                <li>Berlaku selama 30 hari dan perpeanjangan dilakukan secara manual.</li>
-                <li>Tidak dapat memberhentikan Monthly Pass sewaktu-waktu saat sudah aktif, kecuali masa berlaku sudah berakhir.</li>
+                <li>Monthly pass dibutuhkan untuk reservasi semua kursus di Troffen.</li>
+                <li>Berlaku selama 30 hari dan perpanjangan dilakukan secara manual.</li>
+                <li>Tidak dapat memberhentikan Monthly Pass sewaktu- waktu saat sudah aktif, kecuali masa berlaku sudah berakhir.</li>
               </ul>
             </div>
           </div>

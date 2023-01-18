@@ -330,7 +330,7 @@ const DaftarGuru = () => {
               <div className={styles.body_right}>
                 <div className={styles.body_right_container}>
                   <div className={styles.title}>Daftar Sebagai Guru</div>
-                  <div className={styles.desc}>Dapatkan penghasilan tambahan dengan menjadi guru di Troffen. Berikan kursus terbaik kepada murid sesuai bidang keahlian Anda.</div>
+                  <div className={styles.desc}>Dapatkan penghasilan tambahan dengan menjadi guru Troffen. Berikan kursus terbaik kepada murid sesuai bidang keahlian kamu.</div>
 
                   <form onSubmit={handleRegister}>
                     <div className="masuk_modal_body">
@@ -389,7 +389,7 @@ const DaftarGuru = () => {
                         </div>
                         <div className={styles.content_1_right_title_}>Buat Kursus Anda Secara Gratis</div>
                       </div>
-                      <div className={styles.content_1_right_desc}>Di Troffen, Kamu bisa membuat kursus secara gratis dan bagikan passion anda sesegera mungkin.</div>
+                      <div className={styles.content_1_right_desc}>Di Troffen, kamu bisa membuat kursus secara gratis dan membagikan passion kamu sesegera mungkin.</div>
                     </div>
                   </div>
                 </div>
@@ -401,9 +401,9 @@ const DaftarGuru = () => {
                         <div className={styles.content_2_left_title_img}>
                           <Image alt="" src={no2} />
                         </div>
-                        <div className={styles.content_2_left_title_}>Buat Kursus Anda Secara Gratis</div>
+                        <div className={styles.content_2_left_title_}>Tentukan Syarat dan ketentuan Kursus yang Kamu berikan</div>
                       </div>
-                      <div className={styles.content_2_left_desc}>Di Troffen, Kamu bisa membuat kursus secara gratis dan bagikan passion anda sesegera mungkin.</div>
+                      <div className={styles.content_2_left_desc}>Kamu bisa mengatur jadwal, tarif dan metode pembelajaran sesuai dengan keinginanmu</div>
                     </div>
                   </div>
                   <div className={styles.body_footer_content_2_right}>
@@ -500,7 +500,7 @@ const DaftarGuru = () => {
                     </div>
                     <nav>Pengalaman</nav>
                   </div>
-                  <div className={styles.po_desc}>Informasi mengenai pengalaman sangat menentukan tingkat ketertarikan murid melakukan reservasi terhadap iklan dari judul subjek Anda.</div>
+                  <div className={styles.po_desc}>Informasi mengenai pengalaman sangat menentukan tingkat ketertarikan murid untuk melakukan reservasi kursus. Judul subjek yang menarik juga bisa membantu.</div>
                 </div>
                 <form onSubmit={handleRegister}>
                   <Upload stage={state.stage} label="Pengalaman Pendidikan" desc="Masukkan pengalaman pendidikan Anda (maksimal 3)" name="pengalamanPendidikan" handleChange={handleChange} />
@@ -521,9 +521,9 @@ const DaftarGuru = () => {
               <div className={styles.po_body_right}>
                 <Tips
                   tips1_title="Isi Data Dengan Valid"
-                  tips1_desc="Setiap data pengalaman yang Anda masukkan d harus valid dan dapat dipertanggung jawabkan agar profil Anda dapat dilihat dengan baik oleh murid."
+                  tips1_desc="Supaya profil kamu dapat dilihat baik oleh murid, pastikan setiap data pengalaman yang kamu masukan harus valid dan dapat dipertanggung jawabkan."
                   tips2_title="Sertifikat Untuk Menambah Daya Jual"
-                  tips2_desc="Dengan mengupload sertifikat keahlian, kemungkinan murid memilih Anda akan lebih besar dibanding guru lain yang tidak memiliki sertifikat keahlian."
+                  tips2_desc="Dengan mengupload sertifikat keahlian, kemungkinan murid memilih kamu akan lebih besar dibanding guru lain yang tidak mengupload sertifikat mereka."
                 />
               </div>
             </div>
@@ -546,7 +546,7 @@ const DaftarGuru = () => {
                     </div>
                     <nav>Subjek Kursus</nav>
                   </div>
-                  <div className={styles.po_desc}>Pilih subjek kursus yang sesuai dengan bidang keahlianmu. Anda hanya dapat memilih 1 subjek kursus.</div>
+                  <div className={styles.po_desc}>Pilih subjek kursus yang sesuai dengan bidang keahlianmu. Kamu hanya dapat memilih 1 subjek kursus</div>
                 </div>
                 <form onSubmit={handleRegister}>
                   <Select label="Subjek Kursus" optionLabel="Pilih subjek kursus" desc="" name="subjekKursus" options={subjekOption} handleChange={handleChange} />
@@ -611,10 +611,10 @@ const DaftarGuru = () => {
             </div>
             <div className={styles.done_title}>Iklan Sukses Dibuat!</div>
             <nav className={styles.done_desc}>
-              Selamat! Kini murid dapat melakukan reservasi terhadap iklan Anda. Tingkatkan visibilitas iklan dengan mengubah ke Professional Plan hanya mulai dari <b>Rp 100rb/bulan</b> saja!
+              Selamat! Sekarang murid dapat melakukan reservasi terhadap iklan kamu. Tingkatkan visibilitas iklan dengan mengubah ke Professional Plan, hanya mulai dari <b>Rp 100rb/bulan</b> saja!
             </nav>
             <div className={styles.done_action}>
-              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/cari-guru")}>
+              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/coming-soon")}>
                 Upgrade
               </button>
               <button type="submit" className={styles.button_home} onClick={() => handleRedirect("/")}>
