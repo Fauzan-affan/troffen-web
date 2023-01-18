@@ -18,7 +18,7 @@ const Index = () => {
   const router = useRouter();
   // const { courseId } = router.query;
 
-  const [state, useState] = useState({
+  const [state, setState] = useState({
     ketertarikan: "",
   });
 

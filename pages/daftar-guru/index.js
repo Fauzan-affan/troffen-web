@@ -271,7 +271,7 @@ const DaftarGuru = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(state);
+    // console.log(state);
 
     const { namaDepan, namaBelakang, namaLengkap, tempatLahir, tahunLahir, bulanLahir, tanggalLahir, alamatLengkap, fotoProfil, gender, noHP, email, password } = state;
 
@@ -303,7 +303,7 @@ const DaftarGuru = () => {
         // Cookies.set("token", data.data.token);
         // Cookies.set("firstName", data.data.user.first_name);
         // setShowModal(false);
-        console.log(data);
+        // console.log(data);
       }
     } catch (error) {
       console.log(error);
