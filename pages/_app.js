@@ -6,9 +6,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   return (
     <SessionProvider session={session}>
       <NextNProgress />
-      <div style={{ backgroundColor: "white" }}>
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </SessionProvider>
   );
 }
