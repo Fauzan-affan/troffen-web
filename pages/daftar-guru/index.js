@@ -229,7 +229,12 @@ const DaftarGuru = () => {
       }));
     }
 
-    if (state.stage === "Experiences" && state.pengalamanPendidikan.length !== 0 && state.pengalamanPekerjaan.length !== 0 && state.sertifikat.length !== 0) {
+    if (
+      state.stage === "Experiences" &&
+      state.pengalamanPendidikan.length !== 0 &&
+      state.pengalamanPekerjaan.length !== 0
+      // && state.sertifikat.length !== 0
+    ) {
       setState((state) => ({
         ...state,
         ["stage"]: "Subjek Kursus",

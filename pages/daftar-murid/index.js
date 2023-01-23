@@ -203,7 +203,11 @@ const DaftarMurid = () => {
       }));
     }
 
-    if (state.stage === "Experiences" && state.pengalamanPendidikan.length !== 0 && state.pengalamanPekerjaan.length !== 0) {
+    if (
+      state.stage === "Experiences"
+      // && state.pengalamanPendidikan.length !== 0
+      // && state.pengalamanPekerjaan.length !== 0
+    ) {
       setState((state) => ({
         ...state,
         ["stage"]: "Done",
@@ -414,9 +418,9 @@ const DaftarMurid = () => {
                   <div className={styles.po_desc}>Informasi mengenai pengalaman sangat menentukan tingkat ketertarikan murid melakukan reservasi terhadap iklan dari judul subjek Anda.</div>
                 </div>
                 <form onSubmit={handleRegister}>
-                  <Upload stage={state.stage} label="Pengalaman Pendidikan" desc="Masukkan pengalaman pendidikan Anda (maksimal 3)" name="pengalamanPendidikan" handleChange={handleChange} />
+                  <Upload stage={state.stage} label="Pengalaman Pendidikan (Opsional)" desc="Masukkan pengalaman pendidikan Anda (maksimal 3)" name="pengalamanPendidikan" handleChange={handleChange} />
                   <hr className={styles.hr} />
-                  <Upload stage={state.stage} label="Pengalaman Pekerjaan" desc="Masukkan pengalaman pekerjaan Anda (maksimal 3)" name="pengalamanPekerjaan" handleChange={handleChange} />
+                  <Upload stage={state.stage} label="Pengalaman Pekerjaan (Opsional)" desc="Masukkan pengalaman pekerjaan Anda (maksimal 3)" name="pengalamanPekerjaan" handleChange={handleChange} />
                   <div className={styles.button_container}>
                     <button type="submit" className={styles.button_kembali} onClick={() => handleBack("Personal Info")}>
                       Kembali
