@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import fs from "fs";
+import matter from "gray-matter";
+import ReactMarkdown from "react-markdown";
 
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+
+import Tag from "../components/core/Tag";
 
 import JumbotronLayout from "../assets/img/Group3761.svg";
 import JumbotronLoc from "../assets/img/location.svg";
@@ -24,18 +30,62 @@ import GuruBenefit from "../assets/img/GuruBenefit.svg";
 import MuridBenefit from "../assets/img/MuridBenefit.svg";
 import Previous from "../assets/img/Previous.svg";
 import Next from "../assets/img/Next.svg";
-import SubjekThumbnail from "../assets/img/Thumbnail.svg";
-import Favorite from "../assets/img/Fav.svg";
-import Verify from "../assets/img/Verify.svg";
-import Star from "../assets/img/Star.svg";
-import Divider from "../assets/img/Line8.svg";
-import GOR from "../assets/img/GroupOfReviewer.svg";
+import article1 from "../assets/img/blog/artickles/artickle1.svg";
+import j from "../assets/img/blog/girl.png";
+import Line from "../assets/img/blog/line.svg";
+import DateCreated from "../assets/img/blog/date.svg";
+// import SubjekThumbnail from "../assets/img/Thumbnail.svg";
+// import Favorite from "../assets/img/Fav.svg";
+// import Verify from "../assets/img/Verify.svg";
+// import Star from "../assets/img/Star.svg";
+// import Divider from "../assets/img/Line8.svg";
+// import GOR from "../assets/img/GroupOfReviewer.svg";
 
 import LoginTemplate from "../components/layouts/LoginTemplate";
 
-export default function Home() {
+export const getStaticProps = async () => {
+  // get list of files from the posts folder
+  const files = fs.readdirSync("assets/posts");
+
+  // get frontmatter & slug from each post
+  const posts = files.map((fileName) => {
+    const slug = fileName.replace(".md", "");
+    const readFile = fs.readFileSync(`assets/posts/${fileName}`, "utf-8");
+    const { data: frontmatter, content } = matter(readFile);
+
+    return {
+      slug,
+      frontmatter,
+      content,
+    };
+  });
+
+  // Return the pages static props
+  return {
+    props: {
+      posts,
+    },
+  };
+};
+
+export default function Home({ posts }) {
+  const router = useRouter();
   const [isClick, setIsClick] = useState(1);
   const [list, setList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 16, 17]);
+
+  const [catActive, setCatActive] = useState("new");
+
+  const alltags = posts.map((val) => val.frontmatter.tags[0]);
+
+  let filteredTag = [...new Set(alltags)];
+
+  const handleArticleClick = (slug) => {
+    router.push(`/blog/${slug}`);
+  };
+
+  const truncate = (str, n) => {
+    return str.length > n ? str.slice(0, n - 1) + " ...." : str;
+  };
 
   let cardLists = [];
 
@@ -230,7 +280,7 @@ export default function Home() {
         <div className={styles.container}>
           <div className={styles.subjek}>
             <div className={styles.subjek_title}>
-              <div className={styles.subjek_title_main}>Temukan subjek dan guru yang sesuai</div>
+              <div className={styles.subjek_title_main}>Artikel Menarik Dari Troffen</div>
               <div className={styles.subjek_title_action}>
                 <div className={styles.previous}>
                   <Image alt="" src={Previous} priority />
@@ -241,7 +291,7 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.subjek_gallery}>
-              <div className={styles.subjek_gallery_row}>
+              {/* <div className={styles.subjek_gallery_row}>
                 {cardLists.map((no, i) => (
                   <div className={styles.subjek_gallery_card} key={i}>
                     <div className={styles.subjek_thumbnail}>
@@ -279,13 +329,48 @@ export default function Home() {
                         <Link className={styles.button_submit} href={`/coming-soon`}>
                           BOOK
                         </Link>
-                        {/* <Link className={styles.button_submit} href={`cari-guru/${no}`}>
-                          BOOK
-                        </Link> */}
                       </div>
                     </div>
                   </div>
                 ))}
+              </div> */}
+
+              <div className={styles.artikel_baru_card_container}>
+                {posts.map((article, i) => {
+                  //extract slug and frontmatter
+                  const { slug, frontmatter, content } = article;
+                  //extract frontmatter properties
+                  const { title, tags, author, date } = frontmatter;
+                  return (
+                    <div className={styles.artikel_baru_card} key={slug} onClick={() => handleArticleClick(slug)}>
+                      <div className={styles.artikel_baru_card_img}>
+                        <Image alt="" src={article1} />
+                      </div>
+                      <div className={styles.content_highlight}>
+                        <nav>
+                          <Tag type="blogTag">{tags}</Tag>
+                        </nav>
+                        <div className={styles.content_title}>{title}</div>
+                        <div className={styles.content_creator_container}>
+                          <div className={styles.content_creator}>
+                            <Image alt="" src={j} priority width={20} />
+                            <nav>{author}</nav>
+                          </div>
+                          <Image alt="" src={Line} />
+                          <div className={styles.content_created}>
+                            <Image alt="" src={DateCreated} />
+                            <nav>{date}</nav>
+                          </div>
+                        </div>
+                        <div className={styles.content_desc}>
+                          <div className={styles.content_desc_main}>
+                            <ReactMarkdown>{truncate(content.replace(/<[^>]+>/g, ""), 300)}</ReactMarkdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             <div className={styles.subjek_lihat_semua}>

@@ -13,7 +13,7 @@
 .modal_daftar {
   background: white;
   width: 600px;
-  height: 410px;
+  height: 440px;
   border-radius: 50px;
   padding: 30px;
 }
@@ -26,18 +26,8 @@
   padding: 30px;
 }
 
-.modal_footer_daftar {
-  position: absolute;
-  top: 75%;
-}
-
-.modal_footer_masuk {
-  position: absolute;
-  top: 88%;
-}
-
 .modal_close {
-  width: 100%;
+  /* width: 100%;
 
   height: 60px;
   width: 60px;
@@ -47,18 +37,22 @@
 
   position: relative;
 
-  cursor: pointer;
-
-  /* background-color: aquamarine; */
+  cursor: pointer; */
+  /* background-color: aqua; */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.modal_close nav {
-  position: absolute;
+.modal_close img {
+  /* position: absolute;
   top: 5%;
-  left: 37%;
+  left: 37%; */
+
+  cursor: pointer;
 
   font-size: 32px;
-  color: white;
+  /* color: white; */
 }
 
 .modal_body {
@@ -78,15 +72,5 @@
   .modal_masuk {
     max-width: 400px;
     height: fit-content;
-  }
-
-  .modal_footer_daftar {
-    position: absolute;
-    top: 75%;
-  }
-
-  .modal_footer_masuk {
-    position: absolute;
-    top: 85%;
   }
 }
