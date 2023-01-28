@@ -73,12 +73,6 @@ export default function Home({ posts }) {
   const [isClick, setIsClick] = useState(1);
   const [list, setList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 16, 17]);
 
-  const [catActive, setCatActive] = useState("new");
-
-  const alltags = posts.map((val) => val.frontmatter.tags[0]);
-
-  let filteredTag = [...new Set(alltags)];
-
   const handleArticleClick = (slug) => {
     router.push(`/blog/${slug}`);
   };
