@@ -1,6 +1,6 @@
-import styles from "../../styles/core/Modal.module.css";
-import CloseIcon from "../../assets/img/Close.svg";
 import Image from "next/image";
+import styles from "../../styles/core/Modal.module.css";
+import CloseIcon from "../../assets/img/close.svg";
 
 function Modal({ show, onClose, children, title }) {
   const handleCloseClick = (e) => {
