@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoginTemplate from "../../components/layouts/LoginTemplate";
+import WrapperController from "../../controller/WrapperController";
 import styles from "../../styles/MonthlyPass.module.css";
 
 import Tab from "../../components/core/Tab";
@@ -44,7 +44,7 @@ const index = () => {
   const defaultType = tabObj[0].id;
 
   return (
-    <LoginTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
+    <WrapperController title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
       <section id={styles.title}>
         <div className={styles.container}>
           <div className={styles.title_1}>LANGGANAN MONTHLY PASS</div>
@@ -108,7 +108,7 @@ const index = () => {
           </div>
         </div>
       </section>
-    </LoginTemplate>
+    </WrapperController>
   );
 };
 

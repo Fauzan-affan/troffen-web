@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from "react-share";
 
-import LoginTemplate from "../../components/layouts/LoginTemplate";
+import WrapperController from "../../controller/WrapperController";
 import Tag from "../../components/core/Tag";
 import Blog from "../../assets/img/blog/blog.svg";
 import j from "../../assets/img/blog/girl.png";
@@ -87,7 +87,7 @@ export default function Index({ posts }) {
   };
 
   return (
-    <LoginTemplate
+    <WrapperController
       title={`Kumpulan Artikel, Tips Karir Serta Informasi Terbaru - Troffen Blog`}
       desc={`Cek berbagai artikel menarik tentang berbagai tips & trik, high demand skills dan kumpulan informasi mengenai dunia karir disini!`}
       icon={`troffen.ico`}
@@ -275,6 +275,6 @@ export default function Index({ posts }) {
           </div>
         </div>
       </section>
-    </LoginTemplate>
+    </WrapperController>
   );
 }

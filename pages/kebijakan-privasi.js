@@ -1,11 +1,11 @@
 import Jumbotron from "../components/core/Jumbotron";
-import LoginTemplate from "../components/layouts/LoginTemplate";
+import WrapperController from "../controller/WrapperController";
 
 import styles from "../styles/SyaratKetentuan.module.css";
 
 const index = () => {
   return (
-    <LoginTemplate title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
+    <WrapperController title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
       <Jumbotron type="info" title="Kebijakan Privasi" desc="Diperbarui pada: 12 November 2022" />
       <div className={styles.container}>
         <div className={styles.body}>
@@ -36,7 +36,7 @@ const index = () => {
           </div>
         </div>
       </div>
-    </LoginTemplate>
+    </WrapperController>
   );
 };
 

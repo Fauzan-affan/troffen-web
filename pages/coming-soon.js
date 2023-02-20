@@ -1,11 +1,11 @@
 import comingSoon from "../assets/img/comingSoon.svg";
-import LoginTemplate from "../components/layouts/LoginTemplate";
+import WrapperController from "../controller/WrapperController";
 
 import styles from "../styles/ComingSoon.module.css";
 
 const ComingSoon = () => {
   return (
-    <LoginTemplate title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
+    <WrapperController title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
       <div className={styles.background} style={{ backgroundImage: `url(${comingSoon.src})` }}>
         <div className={styles.container}>
           {/* <div className={styles.title}>Frequently Asked Questions</div> */}
@@ -17,7 +17,7 @@ const ComingSoon = () => {
           </div>
         </div>
       </div>
-    </LoginTemplate>
+    </WrapperController>
   );
 };
 

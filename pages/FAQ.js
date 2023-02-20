@@ -1,6 +1,6 @@
 import Jumbotron from "../components/core/Jumbotron";
 import Tab from "../components/core/Tab";
-import LoginTemplate from "../components/layouts/LoginTemplate";
+import WrapperController from "../controller/WrapperController";
 
 import styles from "../styles/FAQ.module.css";
 
@@ -30,7 +30,7 @@ const tabObj = [
 const FAQ = () => {
   const defaultType = tabObj[0].id;
   return (
-    <LoginTemplate title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
+    <WrapperController title={`Ketahui Lebih Banyak Tentang Kami - Troffen`} desc={`Kenali Lebih Dalam Tentang Kami. Visi, Misi dan Berbagai Informasi Layanan Terbaru Mengenai Troffen Disini!`} icon={`troffen.ico`}>
       <Jumbotron title="Butuh bantuan?" placeholder="Cari informasi disini..." buttonLabel="Cari" />
       <div className={styles.container}>
         <div className={styles.body}>
@@ -40,7 +40,7 @@ const FAQ = () => {
           </div>
         </div>
       </div>
-    </LoginTemplate>
+    </WrapperController>
   );
 };
 

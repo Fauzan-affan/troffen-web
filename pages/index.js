@@ -41,7 +41,7 @@ import DateCreated from "../assets/img/blog/date.svg";
 // import Divider from "../assets/img/Line8.svg";
 // import GOR from "../assets/img/GroupOfReviewer.svg";
 
-import LoginTemplate from "../components/layouts/LoginTemplate";
+import WrapperController from "../controller/WrapperController";
 
 export const getStaticProps = async () => {
   // get list of files from the posts folder
@@ -90,7 +90,7 @@ export default function Home({ posts }) {
   };
 
   return (
-    <LoginTemplate
+    <WrapperController
       title={`Platform Belajar High Demand Skill Dengan Mudah - Troffen`}
       desc={`Bingung Cara Belajar Skill Baru? atau Kesulitan Nemuin Pengajar Berkualitas? Tinggal cari aja di Troffen, Platform Belajar Skill Baru Dengan Mudah`}
       icon={`troffen.ico`}
@@ -391,6 +391,6 @@ export default function Home({ posts }) {
           </div>
         </div>
       </section>
-    </LoginTemplate>
+    </WrapperController>
   );
 }

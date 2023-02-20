@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-import Email from "../assets/img/png/001-mail.png";
-import Pass from "../assets/img/png/002-eye.png";
-import Google from "../assets/img/png/002-search.png";
-import Fb from "../assets/img/png/001-facebook.png";
+import Email from "../../../assets/img/png/001-mail.png";
+import Pass from "../../../assets/img/png/002-eye.png";
+import Google from "../../../assets/img/png/002-search.png";
+import Fb from "../../../assets/img/png/001-facebook.png";
 
-import Modal from "../components/core/Modal.js";
+import Modal from "../modal/Modal.js";
 
 const masukSebagaiLabel = {
   fontWeight: 400,

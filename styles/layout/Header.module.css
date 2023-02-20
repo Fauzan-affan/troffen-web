@@ -10,8 +10,21 @@
   box-shadow: 0 1em 1em -1em rgba(0, 0, 0, 0.25);
 }
 
+.container_dashboard {
+  width: 100%;
+
+  /* box-shadow: 0 1em 1em -1em rgba(0, 0, 0, 0.25); */
+}
+
+.hr {
+  border: var(--hr);
+}
+
 .ul {
   padding-left: 0;
+  margin: 0;
+
+  /* background-color: antiquewhite; */
 }
 
 .navbar_contents_member {
@@ -61,12 +74,92 @@
   letter-spacing: -0.01em;
 }
 
-.navbar_contents_menu {
-  /* display: grid;
-  grid-auto-flow: column; */
+.navbar_content_ds {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 0.5fr 0.5fr;
+  /* grid-gap: 1rem; */
 
+  /* padding: 0.5rem 0; */
+
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  letter-spacing: -0.01em;
+
+  /* background-color: aquamarine; */
+}
+
+.ds_header_info {
+  /* background-color: bisque; */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds_header_info_name {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.ds_header_info_date_time {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height */
+
+  letter-spacing: -0.01em;
+}
+
+.ds_header_search {
   /* background-color: antiquewhite; */
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds_header_search > div {
+  width: 100%;
+  height: fit-content;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+
+  display: flex;
+
+  border: 1.5px solid #1ea9e4;
+  border-radius: 8px 8px 8px 8px;
+}
+
+.ds_header_search > div > input {
+  margin-left: 0.5rem;
+  width: 100%;
+  border: none;
+}
+
+.ds_header_search > div > input:focus {
+  outline: none !important;
+}
+
+.ds_header_notif {
+  /* background-color: aquamarine; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds_header_notif > img {
+  cursor: pointer;
+}
+
+.ds_ul {
+  margin-left: -3rem;
+}
+
+.navbar_contents_menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -188,6 +281,10 @@
   display: block;
 }
 
+.loggedin_menu:hover > .ds_loggedin_menu_body {
+  display: block;
+}
+
 .loggedin_username {
   margin-right: 1rem;
 
@@ -210,6 +307,22 @@
   background-color: white;
 }
 
+.ds_loggedin_menu_body {
+  display: none;
+
+  width: 11.7rem;
+
+  padding: 0.7rem;
+
+  z-index: 1;
+
+  position: absolute;
+  top: 4rem;
+  right: 27rem;
+
+  background-color: white;
+}
+
 .dashboard_label,
 .logout_label {
   color: var(--gray);
@@ -221,7 +334,15 @@
   border: 1px solid var(--gray);
 }
 
+.ds_loggedin_menu_body hr {
+  border: 1px solid var(--gray);
+}
+
 .loggedin_menu_body li {
+  list-style-type: none;
+}
+
+.ds_loggedin_menu_body li {
   list-style-type: none;
 }
 
