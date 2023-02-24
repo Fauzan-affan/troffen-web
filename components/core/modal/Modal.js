@@ -1,11 +1,17 @@
 import Image from "next/image";
 import styles from "../../../styles/core/Modal.module.css";
 import CloseIcon from "../../../assets/img/close.svg";
+import Progres50 from "../../../assets/img/dashboard/50persen.svg";
 
-function Modal({ show, onClose, children, title }) {
+function Modal({ show, modalInfo, onClose, handleModal, children, title, isSticky = false }) {
   const handleCloseClick = (e) => {
     e.preventDefault();
     onClose();
+  };
+
+  const handleCloseModal = (e) => {
+    e.preventDefault();
+    handleModal();
   };
 
   return (
@@ -25,6 +31,36 @@ function Modal({ show, onClose, children, title }) {
                 <nav>x</nav>
               </div>
             </div> */}
+          </div>
+        </>
+      )}
+
+      {isSticky && (
+        <div className={styles.modal_sticky}>
+          <div className={styles.modal_sticky_left}>
+            <Image src={Progres50} alt="" />
+          </div>
+          <div className={styles.modal_sticky_center}>
+            <div>
+              <div className={styles.modal_sticky_center_title}>Lengkapi Profil Anda</div>
+              <div className={styles.modal_sticky_center_desc}>Dapatkan kemudahan dalam mendapatkan murid dengan melengkapi data di profil kamu.</div>
+            </div>
+          </div>
+          <div className={styles.modal_sticky_right}>
+            <Image src={CloseIcon} width={10} alt="" onClick={() => onClose()} />
+          </div>
+        </div>
+      )}
+
+      {modalInfo && (
+        <>
+          <div className={styles.modal_overlay}>
+            <div className={styles.modal_info}>
+              <div className={styles.modal_close} onClick={handleCloseModal}>
+                <Image alt="" src={CloseIcon} />
+              </div>
+              <div>{children}</div>
+            </div>
           </div>
         </>
       )}

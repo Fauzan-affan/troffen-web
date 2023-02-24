@@ -12,11 +12,11 @@ import Star from "../../assets/img/Star.svg";
 import Divider from "../../assets/img/Line8.svg";
 import GOR from "../../assets/img/GroupOfReviewer.svg";
 
-import WrapperController from "../../controller/WrapperController";
+import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 
 export default function Index() {
   return (
-    <WrapperController title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
+    <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
       <section id="search_bar">
         <div className={styles.search_bar} style={{ backgroundImage: `url(${BgSearch.src})` }}>
           <div className={styles.container}>
@@ -159,6 +159,6 @@ export default function Index() {
           </div>
         </div>
       </section>
-    </WrapperController>
+    </GeneralTemplate>
   );
 }

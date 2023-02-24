@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-import WrapperController from "../../controller/WrapperController";
+import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Tag from "../../components/core/Tag";
 
 import styles from "../../styles/cari-guru/DetailCourse.module.css";
@@ -26,7 +26,7 @@ const CourseId = () => {
   const { courseId } = router.query;
 
   return (
-    <WrapperController title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
+    <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
       <div className={styles.container}>
         <div className={styles.body_left}>
           <div className={styles.card}>
@@ -161,7 +161,7 @@ const CourseId = () => {
           ))}
         </div>
       </section>
-    </WrapperController>
+    </GeneralTemplate>
   );
 };
 

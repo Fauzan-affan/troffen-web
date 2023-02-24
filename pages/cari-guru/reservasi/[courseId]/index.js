@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../../../styles/cari-guru/Reservasi.module.css";
-import WrapperController from "../../../../controller/WrapperController";
+import GeneralTemplate from "../../../../components/layouts/GeneralTemplate";
 import Tips from "../../../../components/core/Tips";
 import Textarea from "../../../../components/core/Textarea";
 
@@ -35,7 +35,7 @@ const Index = () => {
   };
 
   return (
-    <WrapperController title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
+    <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
       <section id={styles.title}>
         <div className={styles.container}>
           <div className={styles.title_1}>Reservasi Kursus Basic UI/UX Design</div>
@@ -109,7 +109,7 @@ const Index = () => {
           </div>
         </section>
       </section>
-    </WrapperController>
+    </GeneralTemplate>
   );
 };
 

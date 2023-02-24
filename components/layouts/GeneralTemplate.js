@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Cookies from "js-cookie";
 
-import LoginTemplate from "../components/layouts/LoginTemplate";
-import DashboardTemplate from "../components/layouts/DashboardTemplate";
+import Head from "next/head";
+import Header from "./Header";
+import Footer from "./Footer.js";
 
-const WrapperController = ({ component, title, desc, icon, children, isNavbar }) => {
-  //   console.log(children);
+import ModalPopupLogic from "../core/modal/ModalPopupLogic";
 
+const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
   const router = useRouter();
   // session google & FB
   const { data: session } = useSession();
@@ -109,32 +110,19 @@ const WrapperController = ({ component, title, desc, icon, children, isNavbar })
     }
   }, [isNavbar, isLogin, token, firstname]);
 
-  return component === "dashboard" ? (
-    <DashboardTemplate modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} children={children} />
-  ) : (
-    <LoginTemplate
-      title={title}
-      desc={desc}
-      icon={icon}
-      children={children}
-      modalConfig={modalConfig}
-      navbar={navbar}
-      handleNavbar={handleNavbar}
-      isLogin={isLogin}
-      token={token}
-      firstname={firstname}
-      handleLogout={handleLogout}
-      setShowModal={setShowModal}
-      showModal={showModal}
-      menu={menu}
-      session={session}
-      masukSebagaiType={masukSebagaiType}
-      changeLoginType={changeLoginType}
-      handleLogin={handleLogin}
-      handleChange={handleChange}
-      signIn={signIn}
-    />
+  return (
+    <div>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={desc} />
+        <link rel="icon" href={`/${icon}`} />
+      </Head>
+      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} />
+      {children}
+      <Footer />
+      <ModalPopupLogic onClose={setShowModal} show={showModal} title={menu} session={session} signIn={signIn} masukSebagaiType={masukSebagaiType} changeLoginType={changeLoginType} handleLogin={handleLogin} handleChange={handleChange} />
+    </div>
   );
 };
 
-export default WrapperController;
+export default GeneralTemplate;

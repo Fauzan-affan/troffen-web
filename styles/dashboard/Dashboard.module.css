@@ -1,0 +1,144 @@
+.course_request_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 5rem;
+  /* background-color: antiquewhite; */
+}
+
+.course_request_header_group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 32rem;
+
+  /* background-color: aliceblue; */
+}
+
+.course_request_header_title {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+}
+
+.course_request_header_notif {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+
+  color: #eb5757;
+}
+
+.murid_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.murid_detail_name {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.murid_detail_age {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 0.01em;
+
+  /* Gray 3 */
+
+  color: #828282;
+}
+
+.course_request_body {
+  display: block;
+  max-width: 100%;
+
+  display: block;
+  max-width: 100%;
+  /* overflow-x: scroll;
+  overflow-y: hidden; */
+  /* border-bottom: 1px solid black; */
+}
+
+.course_request_header_search {
+  border: solid 1px #1ea9e4;
+  padding: 0.5rem;
+  border-radius: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.course_request_header_search img {
+  margin-right: 0.5rem;
+}
+
+.course_request_header_search input {
+  border-style: none;
+}
+
+.course_request_header_search input:focus {
+  outline: none !important;
+}
+
+.table {
+  /* Make sure the inner table is always as wide as needed */
+  width: 100%;
+  border-spacing: 0;
+}
+
+.respons_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.respons_yes {
+  display: flex;
+  align-items: center;
+  color: #27d32e;
+  cursor: pointer;
+}
+
+.respons_yes img,
+.respons_no img {
+  margin-right: 0.5rem;
+}
+
+.respons_no {
+  display: flex;
+  align-items: center;
+  color: #ff3d00;
+  cursor: pointer;
+}
+
+.respon_reject {
+  color: #1ea9e4;
+  cursor: pointer;
+}
+
+.respon_approved {
+  color: #1ea9e4;
+  cursor: pointer;
+}
+
+.hr {
+  border: var(--hr);
+}
+
+.table_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table_footer_total {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+}

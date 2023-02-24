@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "../../styles/blog/Slug.module.css";
 
-import WrapperController from "../../controller/WrapperController";
+import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Breadcrumb from "../../components/core/Breadcrumb";
 import Tag from "../../components/core/Tag";
 import j from "../../assets/img/blog/girl.png";
@@ -91,7 +91,7 @@ const Index = ({ frontmatter, content, allTags }) => {
   };
 
   return (
-    <WrapperController title={title} desc={metaDesc} icon={`troffen.ico`}>
+    <GeneralTemplate title={title} desc={metaDesc} icon={`troffen.ico`}>
       <section id="article_detail">
         <div className={styles.container}>
           <div className={styles.article_detail}>
@@ -222,7 +222,7 @@ const Index = ({ frontmatter, content, allTags }) => {
           </div>
         </div>
       </section>
-    </WrapperController>
+    </GeneralTemplate>
   );
 };
 

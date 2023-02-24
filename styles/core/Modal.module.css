@@ -10,6 +10,55 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+.modal_sticky {
+  background-color: #fef3b8;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+
+  border-radius: 0.5rem;
+
+  height: 6rem;
+
+  padding: 1rem;
+  margin: 2rem 0;
+}
+
+.modal_sticky_center {
+  padding: 0 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal_sticky_center_title {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.modal_sticky_center_desc {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.modal_sticky_left {
+  display: flex;
+  align-items: center;
+}
+
+.modal_sticky_right {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.modal_sticky_right img {
+  cursor: pointer;
+}
+
 .modal_daftar {
   background: white;
   width: 600px;
@@ -26,33 +75,24 @@
   padding: 30px;
 }
 
+.modal_info {
+  background: white;
+  width: 400px;
+  height: 300px;
+  border-radius: 50px;
+  padding: 30px;
+}
+
 .modal_close {
-  /* width: 100%;
-
-  height: 60px;
-  width: 60px;
-
-  border-radius: 70%;
-  border: 1px solid white;
-
-  position: relative;
-
-  cursor: pointer; */
-  /* background-color: aqua; */
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
 
 .modal_close img {
-  /* position: absolute;
-  top: 5%;
-  left: 37%; */
-
   cursor: pointer;
 
   font-size: 32px;
-  /* color: white; */
 }
 
 .modal_body {

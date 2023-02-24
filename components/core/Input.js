@@ -1,6 +1,6 @@
 import styles from "../../styles/core/Input.module.css";
 
-const Input = ({ type = "", label, desc, name, placeholder, inputLabel = "", handleChange }) => {
+const Input = ({ type = "", label = "", desc = "", name, placeholder, inputLabel = "", handleChange }) => {
   return (
     <>
       {type === "" && (

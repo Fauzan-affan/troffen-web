@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import indonesia from "territory-indonesia";
 
 import Image from "next/image";
-import WrapperController from "../../controller/WrapperController";
+import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Progress from "../../components/core/Progress";
 import Tips from "../../components/core/Tips";
 import Input from "../../components/core/Input";
@@ -319,7 +319,7 @@ const DaftarGuru = () => {
   };
 
   return (
-    <WrapperController
+    <GeneralTemplate
       title={`Platform Belajar High Demand Skill Dengan Mudah - Troffen`}
       desc={`Bingung Cara Belajar Skill Baru? atau Kesulitan Nemuin Pengajar Berkualitas? Tinggal cari aja di Troffen, Platform Belajar Skill Baru Dengan Mudah`}
       icon={`troffen.ico`}
@@ -629,7 +629,7 @@ const DaftarGuru = () => {
           </div>
         </div>
       )}
-    </WrapperController>
+    </GeneralTemplate>
   );
 };
 

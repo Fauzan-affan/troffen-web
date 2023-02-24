@@ -24,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-markdown": "^8.0.4",
     "react-share": "^4.4.1",
+    "react-table": "^7.8.0",
     "react-toastify": "^9.1.1",
     "territory-indonesia": "^0.1.4"
   }

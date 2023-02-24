@@ -19,10 +19,16 @@
   /* background-color: aquamarine; */
 
   box-shadow: 1rem 1em 1em -1em rgba(0, 0, 0, 0.25);
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
 }
 
 .sidebar_wrapper {
+  /* height: 100%; */
   padding: 0.5rem;
+  /* background-color: aquamarine; */
 }
 
 .sidebar_menu {
@@ -65,6 +71,19 @@
   /* box-shadow: 0 1em 1em -1em rgba(0, 0, 0, 0.25); */
 }
 
+.sidebar_upgrade {
+  /* background-color: antiquewhite; */
+  /* height: 100%; */
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.sidebar_upgrade img {
+  cursor: pointer;
+}
+
 .hr {
   border: var(--hr);
 }
@@ -73,8 +92,4 @@
   margin-left: 14rem;
   width: 100%;
   /* background-color: aquamarine; */
-}
-
-.right_content_section {
-  padding: 1rem;
 }
