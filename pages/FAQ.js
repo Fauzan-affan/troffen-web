@@ -36,7 +36,7 @@ const FAQ = () => {
         <div className={styles.body}>
           <div className={styles.title}>Frequently Asked Questions</div>
           <div className={styles.content}>
-            <Tab tabObj={tabObj} defaultType={defaultType} />
+            <Tab tabObj={tabObj} defaultType={defaultType} isBody={true} />
           </div>
         </div>
       </div>

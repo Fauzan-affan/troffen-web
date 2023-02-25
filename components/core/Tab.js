@@ -3,9 +3,13 @@ import { useState } from "react";
 import Image from "next/image";
 
 import styles from "../../styles/MonthlyPass.module.css";
+import sc from "../../styles/core/Tab.module.css";
 import Strip from "../../assets/img/strip.svg";
 import Plus from "../../assets/img/plus.svg";
 import QR from "../../assets/img/png/qr.png";
+import ToogleActive from "../../assets/img/dashboard/ToggleActive.svg";
+import pp_iklan from "../../assets/img/dashboard/pp_iklan.svg";
+import star from "../../assets/img/dashboard/star.svg";
 
 const masukSebagaiLabel = {
   fontWeight: 400,
@@ -24,16 +28,16 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-const Tab = ({ tabObj, defaultType = "", isHeader }) => {
-  const [paymentType, setPaymentType] = useState(defaultType);
+const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, Courses, handleBuatIklan }) => {
+  const [headerType, setheaderType] = useState(defaultType);
   const [toogleBCA, setToogleBCA] = useState(true);
   const [tooglePermata, setTooglePermata] = useState(false);
   const [toogleFAQ1, setToogleFAQ1] = useState(true);
   const [toogleFAQ2, setToogleFAQ2] = useState(false);
   const [toogleFAQ3, setToogleFAQ3] = useState(false);
 
-  const changePaymentType = (type) => {
-    setPaymentType(type);
+  const changeHeaderType = (type) => {
+    setheaderType(type);
   };
 
   const handleToogle = (val) => {
@@ -51,15 +55,32 @@ const Tab = ({ tabObj, defaultType = "", isHeader }) => {
       {isHeader && (
         <div className="masuk_modal_type">
           {tabObj.map((obj, i) => (
-            <div className="masuk_sebagai_murid" onClick={() => changePaymentType(obj.id)} key={obj.id}>
-              <nav style={paymentType === obj.id ? masukSebagaiSelectedLabel : masukSebagaiLabel}>{obj.title}</nav>
-              <hr style={paymentType === obj.id ? masukSebagaiSelectedHr : masukSebagaiHr} />
+            <div className="masuk_sebagai_murid" onClick={() => changeHeaderType(obj.id)} key={obj.id}>
+              <nav style={headerType === obj.id ? masukSebagaiSelectedLabel : masukSebagaiLabel}>{obj.title}</nav>
+              <hr style={headerType === obj.id ? masukSebagaiSelectedHr : masukSebagaiHr} />
             </div>
           ))}
         </div>
       )}
 
-      {paymentType === tabObj[0].id &&
+      {isCard && (
+        <div className={sc.header_container}>
+          <div className={sc.header}>
+            {tabObj.map((obj, i) => (
+              <div className={sc.header_tab} onClick={() => changeHeaderType(obj.id)} key={obj.id}>
+                <nav style={headerType === obj.id ? masukSebagaiSelectedLabel : masukSebagaiLabel}>{obj.title}</nav>
+                <hr style={headerType === obj.id ? masukSebagaiSelectedHr : masukSebagaiHr} />
+              </div>
+            ))}
+          </div>
+          <div className={sc.button}>
+            <button onClick={() => handleBuatIklan("daftar iklan")}>Buat Iklan</button>
+          </div>
+        </div>
+      )}
+
+      {isBody &&
+        headerType === tabObj[0].id &&
         tabObj.map((obj, i) => (
           <div className={styles.payment_container} key={obj.id}>
             <div className={styles.option_1}>
@@ -131,7 +152,7 @@ const Tab = ({ tabObj, defaultType = "", isHeader }) => {
           </div>
         ))}
 
-      {paymentType === tabObj[1].id && (
+      {isBody && headerType === tabObj[1].id && (
         <div className={styles.payment_container}>
           <div className={styles.QR}>
             <Image alt="" src={QR} priority width={300} height={300} />
@@ -140,7 +161,59 @@ const Tab = ({ tabObj, defaultType = "", isHeader }) => {
         </div>
       )}
 
-      {/* {paymentType === 1 && (
+      {isCard && (
+        <div className={sc.container_card}>
+          {Courses.map((course, i) => {
+            if (headerType === "Semua") {
+              return (
+                <div className={sc.card} key={i}>
+                  <div className={sc.card_status}>
+                    <Image alt="" src={ToogleActive} />
+                    <nav>{course.status}</nav>
+                  </div>
+                  <div className={sc.card_image}>
+                    <Image alt="" src={pp_iklan} />
+                  </div>
+                  <div className={sc.card_kursus}>{course.kursus}</div>
+                  <div className={sc.card_rating}>
+                    <div className={sc.card_rating_img}>
+                      <Image alt="" src={star} />
+                    </div>
+                    <nav className={sc.card_rating_rt}>{course.rating}</nav>
+                    <nav>{`(${course.totalUlasan} Ulasan)`}</nav>
+                  </div>
+                </div>
+              );
+            }
+          })}
+
+          {Courses.map((course, i) => {
+            if (headerType === course.status) {
+              return (
+                <div className={sc.card} key={i}>
+                  <div className={sc.card_status}>
+                    <Image alt="" src={ToogleActive} />
+                    <nav>{course.status}</nav>
+                  </div>
+                  <div className={sc.card_image}>
+                    <Image alt="" src={pp_iklan} />
+                  </div>
+                  <div className={sc.card_kursus}>{course.kursus}</div>
+                  <div className={sc.card_rating}>
+                    <div className={sc.card_rating_img}>
+                      <Image alt="" src={star} />
+                    </div>
+                    <nav className={sc.card_rating_rt}>{course.rating}</nav>
+                    <nav>{`(${course.totalUlasan} Ulasan)`}</nav>
+                  </div>
+                </div>
+              );
+            }
+          })}
+        </div>
+      )}
+
+      {/* {headerType === 1 && (
         <div className={styles.payment_container}>
           <div className={styles.option_1}>
             <div className={styles.option_1_header} onClick={() => setToogleBCA(!toogleBCA)}>

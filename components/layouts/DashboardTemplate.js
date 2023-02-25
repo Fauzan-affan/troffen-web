@@ -22,6 +22,7 @@ import Ulasan1 from "../../assets/img/dashboard/sidebar/menu/ulasan01.svg";
 import Statistik0 from "../../assets/img/dashboard/sidebar/menu/statistik00.svg";
 import Pengaturan0 from "../../assets/img/dashboard/sidebar/menu/pengaturan00.svg";
 import Pengaturan1 from "../../assets/img/dashboard/sidebar/menu/pengaturan01.svg";
+import Pro from "../../assets/img/dashboard/sidebar/menu/pro.svg";
 
 import UpgradeIcon from "../../assets/img/dashboard/sidebar/Upgrade.svg";
 
@@ -163,11 +164,13 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                       <>
                         <Image src={Statistik0} alt={"image"} />
                         <nav style={{ color: "#1EA9E4" }}>Statistik</nav>
+                        <Image src={Pro} alt="" className={styles.pro} />
                       </>
                     ) : (
                       <>
                         <Image src={Statistik0} alt={"image"} />
                         <nav>Statistik</nav>
+                        <Image src={Pro} alt="" className={styles.pro} />
                       </>
                     )}
                   </li>

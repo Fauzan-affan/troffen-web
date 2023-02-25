@@ -1,0 +1,77 @@
+.ulasan_title {
+  margin: 2rem 0;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+}
+
+.ulasan_card {
+  box-shadow: 0px 0px 2px 2px rgba(125, 125, 125, 0.16);
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  margin-bottom: 1rem;
+
+  height: 15rem;
+}
+
+.ulasan_card_section_1 {
+  /* width: 100%; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ulasan_card_section_2 {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 1rem;
+}
+
+.ulasan_card_section_3_text {
+  display: flex;
+}
+
+.ulasan_card_section_3_text nav {
+  margin-right: 0.5rem;
+
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.ulasan_card_section_1_kursus_value {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 36px;
+}
+
+.ulasan_card_section_1_rating_value {
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.ulasan_card_section_1_rating_value img {
+  margin-right: 0.5rem;
+}
+
+.ulasan_card_section_1_rating_value_given {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 48px;
+  letter-spacing: -0.01em;
+}
+
+.ulasan_card_section_2_pemberi {
+  margin-right: 3rem;
+}
+
+.ulasan_card_section_2_pemberi_label,
+.ulasan_card_section_2_label {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+}

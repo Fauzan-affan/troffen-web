@@ -60,31 +60,36 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // email: email1@gmail.com, pass: password
-    // email: email2@email.com, pass: password
+    // tutor => email: fabian@gmail.com, pass: password
+    // student => email: student@gmail.com, pass: password
     if (state.email.length !== 0 && state.password.length !== 0) {
-      try {
-        const res = await fetch("https://api.troffen-api.com/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          // credentials: "include",
-          body: JSON.stringify(state),
-        });
+      Cookies.set("token", 123);
+      state.email === "fabian@gmail.com" && Cookies.set("firstName", "fabian");
+      state.email === "student@gmail.com" && Cookies.set("firstName", "student");
+      setShowModal(false);
+      router.reload();
 
-        const data = await res.json();
-        // console.log(data.data);
-        if (data.meta.code === 200) {
-          Cookies.set("token", data.data.token);
-          Cookies.set("firstName", data.data.user.first_name);
-          setShowModal(false);
-          router.reload();
-        }
-      } catch (error) {
-        console.log(error);
-        if (error.meta.code === 422) {
-          console.log(error);
-        }
-      }
+      // try {
+      //   const res = await fetch("https://api.troffen-api.com/api/login", {
+      //     method: "POST",
+      //     headers: { "Content-Type": "application/json" },
+      //     // credentials: "include",
+      //     body: JSON.stringify(state),
+      //   });
+      //   const data = await res.json();
+      //   // console.log(data.data);
+      //   if (data.meta.code === 200) {
+      //     Cookies.set("token", data.data.token);
+      //     Cookies.set("firstName", data.data.user.first_name);
+      //     setShowModal(false);
+      //     router.reload();
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      //   if (error.meta.code === 422) {
+      //     console.log(error);
+      //   }
+      // }
     }
   };
 

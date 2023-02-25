@@ -104,7 +104,7 @@ const index = () => {
           <hr className={styles.vertical_hr} />
           <div className={styles.content_right}>
             <div className={styles.title}>Tipe Pembayaran</div>
-            <Tab tabObj={tabObj} defaultType={defaultType} isHeader={true} />
+            <Tab tabObj={tabObj} defaultType={defaultType} isHeader={true} isBody={true} />
           </div>
         </div>
       </section>
