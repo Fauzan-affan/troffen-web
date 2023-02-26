@@ -95,7 +95,7 @@ const Index = () => {
     checkbox: 1,
   });
 
-  const handleBuatIklan = (nextStage) => {
+  const handleStage = (nextStage) => {
     setStage(nextStage);
   };
 
@@ -221,7 +221,7 @@ const Index = () => {
 
   return (
     <div>
-      {stage === "iklan saya" && <Tab tabObj={tabObj} defaultType={defaultType} isCard={true} Courses={Courses} handleBuatIklan={handleBuatIklan} />}
+      {stage === "iklan saya" && <Tab tabObj={tabObj} defaultType={defaultType} isCard={true} isCardBody={true} Courses={Courses} handleStage={handleStage} />}
       {stage === "daftar iklan" && (
         <div className={styles.container_body}>
           <div className={styles.po_body}>

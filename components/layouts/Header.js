@@ -12,6 +12,9 @@ import ActiveNotif from "../../assets/img/dashboard/ic_notif.svg";
 import Search from "../../assets/img/dashboard/search.png";
 
 import PP from "../../assets/img/PP.svg";
+import ProfileIcon from "../../assets/img/dashboard/header/profile.svg";
+import UpgradeIcon from "../../assets/img/dashboard/header/upgrade.svg";
+import LogoutIcon from "../../assets/img/dashboard/header/logout.svg";
 
 function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, handleLogout }) {
   const date = new Date();
@@ -53,7 +56,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
               {/* search */}
               <div className={styles.ds_header_search}>
                 <div>
-                  <Image src={Search} width={20} alt />
+                  <Image src={Search} width={20} alt="" />
                   <input type="text" placeholder="Lihat Kursus Lain" />
                 </div>
               </div>
@@ -69,11 +72,18 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                       <div className={styles.loggedin_username}>{(firstname !== undefined && firstname) || "Fauzan-Affan"}</div>
                       <Image alt="" src={PP} priority />
                       <ul className={styles.ds_loggedin_menu_body}>
-                        <li className={styles.dashboard_menu} onClick={() => handleNavbar("home")}>
-                          <div className={styles.dashboard_body}>Home</div>
+                        <li className={styles.dashboard_menu} onClick={() => handleNavbar("profile")}>
+                          <Image src={ProfileIcon} alt={""} />
+                          <div className={styles.dashboard_body}>Profile</div>
                         </li>
                         <hr />
-                        <li className={styles.logout_menu} onClick={() => handleLogout()}>
+                        <li className={styles.upgrade_menu} onClick={() => handleNavbar("upgrade")}>
+                          <Image src={UpgradeIcon} alt={""} />
+                          <div className={styles.upgrade_body}>Upgrade ke Pro</div>
+                        </li>
+                        <hr />
+                        <li className={styles.logout_menu} onClick={() => handleLogout("dashboard")}>
+                          <Image src={LogoutIcon} alt={""} />
                           <div className={styles.logout_body}>Logout</div>
                         </li>
                       </ul>

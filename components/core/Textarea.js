@@ -1,6 +1,6 @@
 import styles from "../../styles/core/Textarea.module.css";
 
-const Textarea = ({ label, desc = "", name, col, row, placeholder, handleChange }) => {
+const Textarea = ({ label = "", desc = "", name, col, row, placeholder, handleChange, value }) => {
   return (
     <>
       {label.length > 0 && (
@@ -9,7 +9,7 @@ const Textarea = ({ label, desc = "", name, col, row, placeholder, handleChange 
         </div>
       )}
       {desc.length > 0 && <nav className={styles.nav}>{desc}</nav>}
-      <textarea className={styles.textarea} name={name} id={name} cols={col} rows={row} placeholder={placeholder} onChange={handleChange}></textarea>
+      <textarea className={styles.textarea} name={name} id={name} cols={col} rows={row} value={value} placeholder={placeholder} onChange={handleChange}></textarea>
     </>
   );
 };

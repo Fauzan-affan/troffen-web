@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { Logout } from "../../functions/logout";
 import Cookies from "js-cookie";
 
 import Head from "next/head";
@@ -38,8 +39,9 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     } else if (nav === "dashboardNavbar") {
       router.push("/dashboard");
     } else if (nav === "home") {
-      // console.log("anjay");
       router.replace("/");
+    } else if (nav === "profile") {
+      router.replace("/profile");
     }
   };
 
@@ -64,8 +66,9 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     // student => email: student@gmail.com, pass: password
     if (state.email.length !== 0 && state.password.length !== 0) {
       Cookies.set("token", 123);
-      state.email === "fabian@gmail.com" && Cookies.set("firstName", "fabian");
-      state.email === "student@gmail.com" && Cookies.set("firstName", "student");
+      Cookies.set("email", state.email);
+      state.email === "fabian@gmail.com" && Cookies.set("firstName", "fabian") && Cookies.set("role", "tutor");
+      state.email === "student@gmail.com" && Cookies.set("firstName", "student") && Cookies.set("role", "student");
       setShowModal(false);
       router.reload();
 
@@ -93,12 +96,6 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     }
   };
 
-  const handleLogout = () => {
-    Cookies.remove("token");
-    Cookies.remove("firstName");
-    signOut();
-  };
-
   useEffect(() => {
     isNavbar ? setNavbar(isNavbar) : "";
 
@@ -113,7 +110,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     if (Cookies.get("token") !== undefined && Cookies.get("token").length > 0) {
       setToken(Cookies.get("token"));
     }
-  }, [isNavbar, isLogin, token, firstname]);
+  }, [isNavbar, isLogin, token, firstname, session]);
 
   return (
     <div>
@@ -122,7 +119,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         <meta name="description" content={desc} />
         <link rel="icon" href={`/${icon}`} />
       </Head>
-      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} />
+      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={Logout} />
       {children}
       <Footer />
       <ModalPopupLogic onClose={setShowModal} show={showModal} title={menu} session={session} signIn={signIn} masukSebagaiType={masukSebagaiType} changeLoginType={changeLoginType} handleLogin={handleLogin} handleChange={handleChange} />

@@ -310,7 +310,7 @@
 .ds_loggedin_menu_body {
   display: none;
 
-  width: 11.7rem;
+  width: 13rem;
 
   padding: 0.7rem;
 
@@ -347,22 +347,38 @@
 }
 
 .dashboard_body,
-.logout_body {
+.logout_body,
+.upgrade_body {
   color: black;
 }
 
 .dashboard_menu,
+.upgrade_menu,
 .logout_menu {
+  display: flex;
+}
+
+.dashboard_menu img,
+.upgrade_menu img,
+.logout_menu img {
+  margin-right: 1rem;
+}
+
+.dashboard_menu,
+.logout_menu,
+.upgrade_menu {
   padding: 0.5rem;
 }
 
 .dashboard_menu:hover,
-.logout_menu:hover {
+.logout_menu:hover,
+.upgrade_menu:hover {
   background-color: var(--softGray);
 }
 
 .dashboard_menu:hover .dashboard_body,
-.logout_menu:hover .logout_body {
+.logout_menu:hover .logout_body,
+.upgrade_menu:hover .upgrade_body {
   color: var(--blue);
   font-weight: bold;
 }

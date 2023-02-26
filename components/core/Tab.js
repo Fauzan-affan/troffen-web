@@ -28,7 +28,7 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, Courses, handleBuatIklan }) => {
+const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, isProfile, Courses, handleStage }) => {
   const [headerType, setheaderType] = useState(defaultType);
   const [toogleBCA, setToogleBCA] = useState(true);
   const [tooglePermata, setTooglePermata] = useState(false);
@@ -38,6 +38,9 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, Courses, hand
 
   const changeHeaderType = (type) => {
     setheaderType(type);
+    if (isProfile) {
+      handleStage(type);
+    }
   };
 
   const handleToogle = (val) => {
@@ -73,8 +76,23 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, Courses, hand
               </div>
             ))}
           </div>
-          <div className={sc.button}>
-            <button onClick={() => handleBuatIklan("daftar iklan")}>Buat Iklan</button>
+          {isCardBody && (
+            <div className={sc.button}>
+              <button onClick={() => handleStage("daftar iklan")}>Buat Iklan</button>
+            </div>
+          )}
+        </div>
+      )}
+
+      {isProfile && (
+        <div className={sc.header_container}>
+          <div className={sc.header}>
+            {tabObj.map((obj, i) => (
+              <div className={sc.header_tab} onClick={() => changeHeaderType(obj.id)} key={obj.id}>
+                <nav style={headerType === obj.id ? masukSebagaiSelectedLabel : masukSebagaiLabel}>{obj.title}</nav>
+                <hr style={headerType === obj.id ? masukSebagaiSelectedHr : masukSebagaiHr} />
+              </div>
+            ))}
           </div>
         </div>
       )}
@@ -161,7 +179,7 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, Courses, hand
         </div>
       )}
 
-      {isCard && (
+      {isCardBody && (
         <div className={sc.container_card}>
           {Courses.map((course, i) => {
             if (headerType === "Semua") {

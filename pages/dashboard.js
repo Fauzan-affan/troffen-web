@@ -1,470 +1,135 @@
-import { useState, useMemo } from "react";
-import { useTable, useFilters, usePagination } from "react-table";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-
+import Cookies from "js-cookie";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
 import styles from "../styles/dashboard/Dashboard.module.css";
 
 import Modal from "../components/core/modal/Modal";
+import Textarea from "../components/core/Textarea";
+import Stars from "../components/core/Star";
+import Tutor from "../components/dashboard/Tutor";
+import Student from "../components/dashboard/Student";
 
-import Search from "../assets/img/dashboard/search.png";
-import NoChat from "../assets/img/dashboard/no_chat.svg";
-import NewChat from "../assets/img/dashboard/chat_new.svg";
-import PP from "../assets/img/dashboard/PP.svg";
-import Yes from "../assets/img/dashboard/yes.svg";
-import No from "../assets/img/dashboard/no.svg";
+import GreenChecklist from "../assets/img/dashboard/greenchecklist.svg";
 
 const Dashboard = () => {
+  const [modal, setModal] = useState(false);
+  const [ulasan, setUlasan] = useState("");
+  const [isUlasanTerkirim, setIsUlasanTerkirim] = useState(false);
   const [stickyActive, setStickyActive] = useState(true);
-  const [isNewChat, setIsNewChat] = useState(false);
+  const [isNewChat, setIsNewChat] = useState(true);
   const [filterInput, setFilterInput] = useState("");
+  const [role, setRole] = useState("");
 
   const closeStickyModal = () => {
     setStickyActive(false);
   };
 
-  const DataMurid = ({ murid }) => {
-    return (
-      <>
-        <div className={styles.murid_container}>
-          <Image src={murid.img} alt="" style={{ borderRadius: "50%", marginRight: "0.5rem" }} />
-          <div className={styles.murid_detail}>
-            <div className={styles.murid_detail_name}>{murid.name}</div>
-            <div className={styles.murid_detail_age}>{murid.age}th</div>
-          </div>
-        </div>
-      </>
-    );
+  const handleModalUlasan = () => {
+    setModal(!modal);
   };
 
-  const handleFilterChange = (e) => {
-    const value = e.target.value || undefined;
-    setFilter("Kursus", value);
-    setFilterInput(value);
+  const handleChange = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+
+    setUlasan((state) => ({
+      ...state,
+      [name]: value,
+    }));
   };
 
-  const data = useMemo(
-    () => [
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Programmer",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Database Design",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Diterima",
-        Area: "Online",
-        Kursus: "UX Researcher",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-    ],
-    []
-  );
+  const handleKirim = () => {
+    setIsUlasanTerkirim(true);
+  };
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: () => null, // No header
-        id: "chatStatus", // It needs an ID
-        Cell: ({ val }) => <>{isNewChat ? <Image src={NewChat} alt="" style={{ cursor: "pointer" }} /> : <Image src={NoChat} alt="" style={{ cursor: "pointer" }} />}</>,
-      },
-      {
-        Header: () => "Murid",
-        accessor: "Murid",
-        Cell: ({ cell: { value } }) => <DataMurid murid={value} />,
-      },
-      {
-        Header: "Pengalaman",
-        accessor: "Pengalaman",
-      },
-      {
-        Header: "Status",
-        accessor: "Status",
-      },
-      {
-        Header: "Area",
-        accessor: "Area",
-      },
-      {
-        Header: "Kursus",
-        accessor: "Kursus",
-      },
-      {
-        Header: () => "Respon",
-        id: "Respon", // It needs an ID
-        Cell: ({ row }) => (
-          <>
-            {row.original.Status === "Ditolak" && <div className={styles.respon_reject}>Lihat profil murid</div>}
-            {row.original.Status === "Diterima" && <div className={styles.respon_approved}>Selesaikan Kursus</div>}
-            {row.original.Status === "Menunggu konfirmasi" && (
-              <div className={styles.respons_container}>
-                <div className={styles.respons_yes}>
-                  <Image src={Yes} alt="" />
-                  <nav>Terima</nav>
-                </div>
-                <div className={styles.respons_no}>
-                  <Image src={No} />
-                  <nav>Tolak</nav>
-                </div>
-              </div>
-            )}
-          </>
-        ),
-      },
-    ],
-    []
-  );
+  // const ratingStars = {
+  //   size: 50,
+  //   count: 10,
+  //   color: "black",
+  //   activeColor: "red",
+  //   value: 7.5,
+  //   a11y: true,
+  //   isHalf: true,
+  //   emptyIcon: <i className="far fa-star" />,
+  //   halfIcon: <i className="fa fa-star-half-alt" />,
+  //   filledIcon: <i className="fa fa-star" />,
+  //   onChange: (newValue) => {
+  //     console.log(`Example 2: new value is ${newValue}`);
+  //   },
+  // };
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    setFilter,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable({ columns, data }, useFilters, usePagination);
+  useEffect(() => {
+    Cookies.get("role").length > 0 && setRole(Cookies.get("role"));
+  }, [role]);
 
   return (
     <section id="container">
       <div className={styles.container}>
         <Modal onClose={closeStickyModal} isSticky={stickyActive} />
-        <div className={styles.course_request}>
-          <div className={styles.course_request_header}>
-            <div className={styles.course_request_header_group}>
-              <div className={styles.course_request_header_title}>Permintaan Kursus</div>
-              <div>|</div>
-              <div className={styles.course_request_header_notif}>{3} permintaan menunggu respon</div>
+        {role === "tutor" && <Tutor filterInput={filterInput} isNewChat={isNewChat} setFilterInput={setFilterInput} />}
+        {role === "student" && <Student filterInput={filterInput} isNewChat={isNewChat} setFilterInput={setFilterInput} onOpenModal={handleModalUlasan} />}
+        <Modal onClose={handleModalUlasan} modalUlasan={modal}>
+          {!isUlasanTerkirim && (
+            <div className={styles.ulasan_container}>
+              <form onSubmit={""}>
+                <div className={styles.ulasan_title}>Form Ulasan Kursus</div>
+                <div className={styles.ulasan_comment}>
+                  <div className={styles.ulasan_comment_title}>Ulasan Tentang Kursus & Guru</div>
+                  <div className={styles.ulasan_comment_desc}>Berikan ulasan Anda seputar kursus bersama guru.</div>
+                  <div className={styles.ulasan_comment_textarea}>
+                    <Textarea
+                      // label="Keterangan Kursus"
+                      name="ulasan"
+                      // desc="Contoh: Bahasa Inggris Dasar untuk pemula. Materi akan membahas Grammar, Vocabulary dan Speaking."
+                      col={59}
+                      row={4}
+                      placeholder="Tulis ulasan..."
+                      handleChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className={styles.ulasan_rating}>
+                  <div className={styles.ulasan_rating_title}>Rating Kursus</div>
+                  <div className={styles.ulasan_rating_stars}>
+                    <Stars />
+                  </div>
+                </div>
+                <div className={styles.ulasan_actions}>
+                  <div className={styles.ulasan_kirim}>
+                    <button onClick={() => handleKirim()}>Kirim Ulasan</button>
+                  </div>
+                  <div className={styles.ulasan_nanti} onClick={() => handleModalUlasan()}>
+                    <button>Nanti Saja</button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div className={styles.course_request_header_search}>
-              <Image src={Search} alt="" width={15} />
-              <input value={filterInput} onChange={handleFilterChange} placeholder={"Cari Kursus"} />
+          )}
+          {isUlasanTerkirim && (
+            <div className={styles.terkirim_container}>
+              <div>
+                <div className={styles.terkirim_title}>Beri Ulasan Berhasil</div>
+                <div className={styles.terkirim_icon}>
+                  <Image src={GreenChecklist} alt="" />
+                </div>
+                <div className={styles.terkirim_rekomendasi}>
+                  <div className={styles.terkirim_rekomendasi_title}>Rekomendasikan Guru</div>
+                  <div className={styles.terkirim_rekomendasi_link}></div>
+                </div>
+                <div className={styles.terkirim_share}>
+                  <div className={styles.terkirim_share_title}>atau rekomendasikan melalui</div>
+                  <div className={styles.terkirim_share_sosmed}>
+                    <div className={styles.terkirim_share_sosmed_wa}></div>
+                    <div className={styles.terkirim_share_sosmed_twitter}></div>
+                    <div className={styles.terkirim_share_sosmed_linkedin}></div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className={styles.course_request_body}>
-            <table {...getTableProps()} className={styles.table}>
-              <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                      <th
-                        {...column.getHeaderProps()}
-                        style={{
-                          // borderBottom: "solid 3px",
-                          background: "#F7F8FA",
-                          color: "#4F4F4F",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {column.render("Header")}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {page.map((row) => {
-                  prepareRow(row);
-                  return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <td
-                            {...cell.getCellProps()}
-                            style={{
-                              padding: "10px",
-                              fontWeight: "bold",
-                              fontSize: "10px",
-                            }}
-                          >
-                            {cell.render("Cell")}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <hr className={styles.hr} />
-        <div className={styles.table_footer}>
-          <div className={styles.table_footer_total}>Total murid: {data.length}</div>
-          <div className={styles.table_footer_pagination}>
-            <div className="pagination">
-              <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                {"<<"}
-              </button>{" "}
-              <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                {"<"}
-              </button>{" "}
-              <button onClick={() => nextPage()} disabled={!canNextPage}>
-                {">"}
-              </button>{" "}
-              <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                {">>"}
-              </button>{" "}
-              <span>
-                Page{" "}
-                <strong>
-                  {pageIndex + 1} of {pageOptions.length}
-                </strong>{" "}
-              </span>
-              <span>
-                | Go to page:{" "}
-                <input
-                  type="number"
-                  defaultValue={pageIndex + 1}
-                  onChange={(e) => {
-                    const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                    gotoPage(page);
-                  }}
-                  style={{ width: "100px" }}
-                />
-              </span>{" "}
-              <select
-                value={pageSize}
-                onChange={(e) => {
-                  setPageSize(Number(e.target.value));
-                }}
-              >
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    Show {pageSize}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+          )}
+        </Modal>
       </div>
     </section>
   );

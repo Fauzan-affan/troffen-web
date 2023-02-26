@@ -1,6 +1,6 @@
 import styles from "../../styles/core/Input.module.css";
 
-const Input = ({ type = "", label = "", desc = "", name, placeholder, inputLabel = "", handleChange }) => {
+const Input = ({ type = "", label = "", desc = "", name, placeholder, inputLabel = "", value, handleChange, isDisabled }) => {
   return (
     <>
       {type === "" && (
@@ -8,7 +8,7 @@ const Input = ({ type = "", label = "", desc = "", name, placeholder, inputLabel
           {label.length > 0 && <label htmlFor={label}>{label}</label>}
           {desc.length > 0 && <nav>{desc}</nav>}
           <nav className={styles.input}>
-            <input id={name} name={name} type="text" placeholder={placeholder} onChange={handleChange} />
+            <input id={name} name={name} type="text" placeholder={placeholder} value={value} onChange={handleChange} disabled={isDisabled} />
             {/* <Image alt="" src={Email} priority width={20} height={20} /> */}
           </nav>
         </div>
