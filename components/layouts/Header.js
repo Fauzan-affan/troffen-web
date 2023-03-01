@@ -11,7 +11,7 @@ import Back from "../../assets/img/back.svg";
 import ActiveNotif from "../../assets/img/dashboard/ic_notif.svg";
 import Search from "../../assets/img/dashboard/search.png";
 
-import PP from "../../assets/img/pp.svg";
+import PP from "../../assets/img/PP.svg";
 import ProfileIcon from "../../assets/img/dashboard/header/profile.svg";
 import UpgradeIcon from "../../assets/img/dashboard/header/upgrade.svg";
 import LogoutIcon from "../../assets/img/dashboard/header/logout.svg";
