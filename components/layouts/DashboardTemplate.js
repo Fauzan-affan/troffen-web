@@ -25,7 +25,7 @@ import Pengaturan0 from "../../assets/img/dashboard/sidebar/menu/pengaturan00.sv
 import Pengaturan1 from "../../assets/img/dashboard/sidebar/menu/pengaturan01.svg";
 import Pro from "../../assets/img/dashboard/sidebar/menu/pro.svg";
 
-import UpgradeIcon from "../../assets/img/dashboard/sidebar/Upgrade.svg";
+import UpgradeIcon from "../../assets/img/dashboard/sidebar/upgrade.svg";
 
 const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
   const router = useRouter();
