@@ -3,8 +3,8 @@ import Image from "next/image";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
 
 import Line from "../assets/img/dashboard/line_short.svg";
-import PP from "../assets/img/dashboard/pp_wishlist.svg";
-import Love from "../assets/img/dashboard/love.svg";
+// import PP from "../assets/img/dashboard/pp_wishlist.svg";
+// import Love from "../assets/img/dashboard/love.svg";
 import Star from "../assets/img/dashboard/star.svg";
 
 const ulasan = () => {
