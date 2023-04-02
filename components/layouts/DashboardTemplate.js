@@ -37,7 +37,7 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [token, setToken] = useState();
   const [firstname, setFirstname] = useState();
-  const [dashMenu, setDashMenu] = useState("Dashbor");
+  const [dashMenu, setDashMenu] = useState("Dasbor");
   const [role, setRole] = useState("");
 
   const handleNavbar = (nav) => {
@@ -93,15 +93,15 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                 <div className={styles.sidebar_menu}>
                   <ul>
                     <li onClick={() => router.push("/dashboard")}>
-                      {dashMenu === "Dashbor" ? (
+                      {dashMenu === "Dasbor" ? (
                         <>
                           <Image src={Dasbor1} alt={"image"} />
-                          <nav style={{ color: "#1EA9E4" }}>Dashbor</nav>
+                          <nav style={{ color: "#1EA9E4" }}>Dasbor</nav>
                         </>
                       ) : (
                         <>
                           <Image src={Dasbor0} alt={"image"} />
-                          <nav>Dashbor</nav>
+                          <nav>Dasbor</nav>
                         </>
                       )}
                     </li>

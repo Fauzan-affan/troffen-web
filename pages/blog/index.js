@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/image";
-import { FacebookShareButton, InstapaperShareButton, TwitterShareButton } from "react-share";
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import ShareIntagram from "../../functions/shareIntagram";
 
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Tag from "../../components/core/Tag";
@@ -16,8 +17,6 @@ import DateCreated from "../../assets/img/blog/date.svg";
 import BgSearch from "../../assets/img/bg-biru.svg";
 import fb from "../../assets/img//blog/icon/fb.svg";
 import twitter from "../../assets/img/blog/icon/twitter.png";
-import ig1 from "../../assets/img/blog/icon/ig1.svg";
-import ig2 from "../../assets/img/blog/icon/ig2.svg";
 import Previous from "../../assets/img/Previous.svg";
 import Next from "../../assets/img/Next.svg";
 import article1 from "../../assets/img/blog/artickles/artickle1.svg";
@@ -125,7 +124,7 @@ export default function Index({ posts }) {
                 <Tag type="blogTag">{posts[highlight].frontmatter.tags}</Tag>
               </nav>
               <div className={styles.content_title} onClick={() => handleClick(posts[highlight].slug)}>
-                {posts[highlight].slug}
+                {posts[highlight].frontmatter.title}
               </div>
               <div className={styles.content_creator_container}>
                 <div className={styles.content_creator}>
@@ -146,18 +145,13 @@ export default function Index({ posts }) {
               <div className={styles.content_share}>
                 <nav>Share via:</nav>
                 <div className={styles.content_share_icon}>
-                  <FacebookShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "%20")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
+                  <FacebookShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "-")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
                     <Image alt="" src={fb} />
                   </FacebookShareButton>
-                  <TwitterShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "%20")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
+                  <TwitterShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "-")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
                     <Image alt="" src={twitter} width={25} height={25} />
                   </TwitterShareButton>
-                  <InstapaperShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "%20")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
-                    <nav>
-                      <Image alt="" src={ig1} className={styles.img1} />
-                      <Image alt="" src={ig2} className={styles.img2} />
-                    </nav>
-                  </InstapaperShareButton>
+                  <ShareIntagram caption={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "-")}`} imageUrl={article1} />
                 </div>
               </div>
               <div className={styles.content_actions}>

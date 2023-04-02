@@ -1,7 +1,7 @@
 .container {
   /* padding: 1rem 7rem; */
 
-  max-width: 1024px;
+  max-width: 1210px;
   margin: 0 auto;
 }
 
@@ -184,9 +184,9 @@
 
 /* ------------- subjek ------------- */
 
-.favorite:hover {
+/* .favorite:hover {
   background-color: #ef144a;
-}
+} */
 
 .button_submit {
   background: #1ea9e4;

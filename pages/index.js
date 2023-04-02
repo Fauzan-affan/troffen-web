@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import fs from "fs";
 import matter from "gray-matter";
@@ -9,6 +9,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import Tag from "../components/core/Tag";
+import Modal from "../components/core/modal/Modal";
 
 import JumbotronLayout from "../assets/img/Group3761.svg";
 import JumbotronLoc from "../assets/img/location.svg";
@@ -34,6 +35,7 @@ import article1 from "../assets/img/blog/artickles/artickle1.svg";
 import j from "../assets/img/blog/girl.png";
 import Line from "../assets/img/blog/line.svg";
 import DateCreated from "../assets/img/blog/date.svg";
+import Banner from "../assets/img/banner.png";
 // import SubjekThumbnail from "../assets/img/Thumbnail.svg";
 // import Favorite from "../assets/img/Fav.svg";
 // import Verify from "../assets/img/Verify.svg";
@@ -72,6 +74,8 @@ export default function Home({ posts }) {
   const router = useRouter();
   const [isClick, setIsClick] = useState(1);
   const [list, setList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 16, 17]);
+  const [modalBanner, setModalBanner] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const handleArticleClick = (slug) => {
     router.push(`/blog/${slug}`);
@@ -88,6 +92,16 @@ export default function Home({ posts }) {
   const handleClick = (val) => {
     setIsClick(val);
   };
+
+  useEffect(() => {
+    let pop_status = localStorage.getItem("pop_status");
+    if (!pop_status) {
+      setVisible(true);
+      localStorage.setItem("pop_status", 1);
+    }
+  }, []);
+
+  // localStorage.clear();
 
   return (
     <GeneralTemplate
@@ -378,19 +392,30 @@ export default function Home({ posts }) {
         <div className={styles.container}>
           <div className={styles.benefit_sebagai}>
             <div className={styles.benefit_sebagai_tutor}>
-              <Link href={`/coming-soon`}>
+              <Link href={`/daftar-guru`}>
                 <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
               </Link>
-              {/* <Link href={`daftar-guru`}>
-                <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
-              </Link> */}
             </div>
             <div className={styles.benefit_sebagai_student}>
-              <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
+              <Link href={`/daftar-murid`}>
+                <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {!visible ? (
+        ""
+      ) : (
+        <section onClick={() => setVisible(false)}>
+          <Modal modalBanner={modalBanner} onClose={() => setModalBanner(false)}>
+            <a href={`https://lp.troffen-api.com/`} target="_blank" rel="noreferrer">
+              <Image width={700} src={Banner} alt="" priority />
+            </a>
+          </Modal>
+        </section>
+      )}
     </GeneralTemplate>
   );
 }

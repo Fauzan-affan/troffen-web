@@ -6,6 +6,11 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "../../styles/blog/Slug.module.css";
 
+import Modal from "../../components/core/modal/Modal";
+
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import ShareIntagram from "../../functions/shareIntagram";
+
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Breadcrumb from "../../components/core/Breadcrumb";
 import Tag from "../../components/core/Tag";
@@ -14,6 +19,8 @@ import Line from "../../assets/img/blog/line.svg";
 import DateCreated from "../../assets/img/blog/date.svg";
 import Share from "../../assets/img/blog/artickles/share.svg";
 import img from "../../assets/img/blog/artickles/img.svg";
+import fb from "../../assets/img//blog/icon/fb.svg";
+import twitter from "../../assets/img/blog/icon/twitter.png";
 
 import article1 from "../../assets/img/blog/artickles/artickle1.svg";
 
@@ -66,6 +73,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
 
   return {
     props: {
+      slug,
       frontmatter,
       content,
       allTags,
@@ -73,14 +81,15 @@ export const getStaticProps = async ({ params: { slug } }) => {
   };
 };
 
-const Index = ({ frontmatter, content, allTags }) => {
+const Index = ({ slug, frontmatter, content, allTags }) => {
   const router = useRouter();
   const { title, author, metaDesc, date, tags } = frontmatter;
   const alltags = allTags.map((val) => val.frontmatter.tags[0]);
 
   let filteredTag = [...new Set(alltags)];
 
-  const [adv, setAdv] = useState(true);
+  const [adv, setAdv] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const truncate = (str, n) => {
     return str.length > n ? str.slice(0, n - 1) + " ...." : str;
@@ -88,6 +97,10 @@ const Index = ({ frontmatter, content, allTags }) => {
 
   const handleClick = (slug) => {
     router.push(`/blog/${slug}`);
+  };
+
+  const handleModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -118,7 +131,7 @@ const Index = ({ frontmatter, content, allTags }) => {
                       <nav>{date}</nav>
                     </div>
                   </div>
-                  <div className={styles.content_share}>
+                  <div className={styles.content_share} onClick={() => setModal(true)}>
                     <Image alt="" src={Share} />
                   </div>
                 </div>
@@ -222,6 +235,21 @@ const Index = ({ frontmatter, content, allTags }) => {
           </div>
         </div>
       </section>
+
+      <Modal modalInfo={modal} handleModal={handleModal}>
+        <div className={styles.content_share_icon}>
+          <div className={styles.inner}>
+            {/* {console.log(slug)} */}
+            <FacebookShareButton url={`https://troffen.com/blog/${slug.replace(/ /g, "-")}`} quote={JSON.stringify(slug)} hashtag={tags[0]}>
+              <Image alt="" src={fb} />
+            </FacebookShareButton>
+            <TwitterShareButton url={`https://troffen.com/blog/${slug.replace(/ /g, "-")}`} quote={JSON.stringify(slug)} hashtag={tags[0]}>
+              <Image alt="" src={twitter} width={25} height={25} />
+            </TwitterShareButton>
+            <ShareIntagram caption={`https://troffen.com/blog/${slug.replace(/ /g, "-")}`} imageUrl={article1} />
+          </div>
+        </div>
+      </Modal>
     </GeneralTemplate>
   );
 };

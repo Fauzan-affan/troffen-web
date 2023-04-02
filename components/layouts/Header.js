@@ -8,7 +8,7 @@ import TroffenLogo2 from "../../assets/img/T.svg";
 import TroffenLogo3 from "../../assets/img/Troffen.svg";
 import Back from "../../assets/img/back.svg";
 
-import ActiveNotif from "../../assets/img/dashboard/ic_notif.svg";
+// import ActiveNotif from "../../assets/img/dashboard/ic_notif.svg";
 import Search from "../../assets/img/dashboard/search.png";
 
 import PP from "../../assets/img/PP.svg";
@@ -61,9 +61,9 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                 </div>
               </div>
               {/* notif */}
-              <div className={styles.ds_header_notif}>
+              {/* <div className={styles.ds_header_notif}>
                 <Image alt="" src={ActiveNotif} priority />
-              </div>
+              </div> */}
               {/* profile */}
               {isLogin || (token !== undefined && token) ? (
                 <div className={styles.ds_menu}>
@@ -84,7 +84,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                         <hr />
                         <li className={styles.logout_menu} onClick={() => handleLogout("dashboard")}>
                           <Image src={LogoutIcon} alt={""} />
-                          <div className={styles.logout_body}>Logout</div>
+                          <div className={styles.logout_body}>Keluar</div>
                         </li>
                       </ul>
                     </li>
@@ -168,7 +168,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
               </div>
               <div className={styles.navbar_contents_menu}>
                 {/* <div className={styles.navbar_contents_menu1}>
-                  <Link href={"/coming-soon"}>Cari Guru</Link>
+                  <Link href={"https://lp.troffen-api.com/"}>Daftar Digital Marketing Boothcamp Sekarang!</Link>
                 </div> */}
                 <div className={styles.navbar_contents_menu1}>
                   <Link href={"/cari-guru"}>Cari Guru</Link>
@@ -207,11 +207,11 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                       <Image alt="" src={PP} priority />
                       <ul className={styles.loggedin_menu_body}>
                         <li className={styles.dashboard_menu} onClick={() => handleNavbar("dashboardNavbar")}>
-                          <div className={styles.dashboard_body}>Dashbor</div>
+                          <div className={styles.dashboard_body}>Dasbor</div>
                         </li>
                         <hr />
                         <li className={styles.logout_menu} onClick={() => handleLogout()}>
-                          <div className={styles.logout_body}>Logout</div>
+                          <div className={styles.logout_body}>Keluar</div>
                         </li>
                       </ul>
                     </li>

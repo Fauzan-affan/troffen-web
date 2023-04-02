@@ -11,7 +11,7 @@ import PP from "../../assets/img/dashboard/pp.svg";
 import Yes from "../../assets/img/dashboard/yes.svg";
 import No from "../../assets/img/dashboard/no.svg";
 
-const Tutor = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
+const Student = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
   const router = useRouter();
 
   const Chat = ({ guru }) => {
@@ -290,4 +290,4 @@ const Tutor = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
   );
 };
 
-export default Tutor;
+export default Student;

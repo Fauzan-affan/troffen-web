@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import styles from "../../styles/cari-guru/CariGuru.module.css";
 
 import JumbotronLoc from "../../assets/img/location.svg";
@@ -15,6 +16,7 @@ import GOR from "../../assets/img/GroupOfReviewer.svg";
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 
 export default function Index() {
+  const router = useRouter();
   return (
     <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
       <section id="search_bar">
@@ -71,10 +73,10 @@ export default function Index() {
                       Tarif: High to Low
                     </option>
                     <option id={styles.select_id} value="postingan_oldes_newest">
-                      Postingan: Oldest to Newest
+                      Postingan: Oldest to ...
                     </option>
                     <option id={styles.select_id} value="postingan_newest_oldes">
-                      Postingan: Newest to Oldest
+                      Postingan: Newest to ...
                     </option>
                     <option id={styles.select_id} value="rating_low_high">
                       Rating: Low to High
@@ -89,7 +91,7 @@ export default function Index() {
             <div className={styles.subjek_gallery}>
               <div className={styles.subjek_gallery_row}>
                 {[0, 1, 2, 3, 4].map((i) => (
-                  <div className={styles.subjek_gallery_card} key={i}>
+                  <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-guru/${1}`)}>
                     <div className={styles.subjek_thumbnail}>
                       <Image alt="" src={SubjekThumbnail} priority />
                     </div>

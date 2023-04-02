@@ -8,7 +8,7 @@
 
 .article_detail {
   min-height: 100vh;
-  max-width: 1024px;
+  max-width: 1210px;
 
   margin: 0 auto;
 
@@ -107,6 +107,28 @@
   text-transform: capitalize;
 
   /* margin-bottom: 1rem; */
+}
+
+.content_share {
+  cursor: pointer;
+}
+
+.content_share_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+
+  /* background-color: aqua; */
+}
+
+.content_share_icon > .inner {
+  /* background-color: antiquewhite; */
+
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .artikel_baru {

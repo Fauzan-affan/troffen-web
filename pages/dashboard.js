@@ -126,7 +126,7 @@ Dashboard.getLayout = function getLayout(Dashboard) {
       title={`Platform Belajar High Demand Skill Dengan Mudah - Troffen`}
       desc={`Bingung Cara Belajar Skill Baru? atau Kesulitan Nemuin Pengajar Berkualitas? Tinggal cari aja di Troffen, Platform Belajar Skill Baru Dengan Mudah`}
       icon={`troffen.ico`}
-      menu={`Dashbor`}
+      menu={`Dasbor`}
     >
       {Dashboard}
     </DashboardTemplate>

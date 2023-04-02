@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Autocomplete from "react-autocomplete";
 import indonesia from "territory-indonesia";
 import styles from "../styles/IklanSaya.module.css";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
@@ -237,6 +238,26 @@ const Index = () => {
                 <div className={styles.po_desc}>Pilih subjek kursus yang sesuai dengan bidang keahlianmu. Kamu hanya dapat memilih 1 subjek kursus</div>
               </div>
               <form onSubmit={handleRegister}>
+                {/* {console.log(state.subjekKursus)} */}
+                {/* <Autocomplete
+                  menuStyle={{
+                    borderRadius: "10px",
+                    boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
+                    background: "rgba(255, 255, 255, 0.9)",
+                    padding: "2px 0",
+                    fontSize: "90%",
+                    position: "fixed",
+                    overflow: "auto",
+                    maxHeight: "50%", // TODO: don't cheat, let it flow to the bottom
+                  }}
+                  items={subjekOption}
+                  shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                  getItemValue={(item) => item.name}
+                  renderItem={(item, isHighlighted) => <div style={{ background: isHighlighted ? "lightgray" : "white" }}>{item.name}</div>}
+                  value={state.subjekKursus}
+                  onChange={(e) => setState({ subjekKursus: e.target.value })}
+                  onSelect={(subjekKursus) => setState({ subjekKursus })}
+                /> */}
                 <Select label="Subjek Kursus" optionLabel="Pilih subjek kursus" desc="" name="subjekKursus" options={subjekOption} handleChange={handleChange} />
                 <Input label="Judul Kursus" name="judulKursus" desc="Contoh: Kursus Bahasa Inggris Dasar" placeholder="Mauskkan judul kursus" handleChange={handleChange} />
                 <Select label="Hashtag Kursus" optionLabel="Pilih hashtag kursus (sesuai subjek)" desc="" name="hashtagKursus" options={hashtagOption} handleChange={handleChange} />
