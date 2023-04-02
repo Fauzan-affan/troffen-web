@@ -157,7 +157,7 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
                           const { title, tags, author, date } = frontmatter;
                           // console.log(tags[0], catActive);
                           return (
-                            <div className={styles.artikel_baru_card} key={slug} onClick={() => handleClick(slug)}>
+                            <div className={styles.artikel_baru_card} key={i} onClick={() => handleClick(slug)}>
                               <div className={styles.artikel_baru_card_img}>
                                 <Image alt="" src={article1} />
                               </div>
@@ -208,8 +208,8 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
                   <div className={styles.article_right_categories}>
                     <div className={styles.article_right_categories_title}>Categories</div>
                     <div className={styles.article_right_categories_list}>
-                      {categories.map((cat) => (
-                        <div className={styles.categories_list} key={cat.id}>
+                      {categories.map((cat, i) => (
+                        <div className={styles.categories_list} key={i}>
                           <div className={styles.categories_list_detail}>
                             <div className={styles.categories_list_name}>{cat.name}</div>
                             <div className={styles.categories_list_total}>{cat.total}</div>
@@ -222,8 +222,8 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
                   <div className={styles.article_right_tags}>
                     <div className={styles.article_right_tags_title}>Tags</div>
                     <div className={styles.article_right_tags_content}>
-                      {filteredTag.map((tag) => (
-                        <div className={styles.tag_list_box} key={tag.id} style={tag === tags[0] ? active : nonActive}>
+                      {filteredTag.map((tag, i) => (
+                        <div className={styles.tag_list_box} key={i} style={tag === tags[0] ? active : nonActive}>
                           {tag}
                         </div>
                       ))}
