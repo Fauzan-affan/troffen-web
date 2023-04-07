@@ -85,7 +85,7 @@
   border-radius: 12px;
   border-style: none;
 
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
 .input_file:focus {
@@ -98,7 +98,7 @@
   border-radius: 12px;
   border-style: none;
 
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
 .ip_input_file:focus {

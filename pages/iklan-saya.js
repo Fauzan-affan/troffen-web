@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Autocomplete from "react-autocomplete";
 import indonesia from "territory-indonesia";
@@ -8,8 +8,8 @@ import DashboardTemplate from "../components/layouts/DashboardTemplate";
 import Tab from "../components/core/Tab";
 import Tips from "../components/core/Tips";
 import Input from "../components/core/Input";
-import Select from "../components/core/Select";
 import Textarea from "../components/core/Textarea";
+import Checkbox from "../components/core/Checkbox";
 
 const provOption = [];
 indonesia
@@ -18,6 +18,7 @@ indonesia
     provOption.push(res);
   })
   .catch((err) => console.log(err));
+
 const kotaOption = [];
 indonesia
   .getAllRegencies()
@@ -25,44 +26,47 @@ indonesia
     kotaOption.push(res);
   })
   .catch((err) => console.log(err));
+
 const subjekOption = [
   { name: "UI/UX", value: "UI/UX" },
   { name: "Frontend Developer", value: "Frontend Developer" },
   { name: "Backend Developer", value: "Backend Developer" },
 ];
+
 const hashtagOption = [
   { name: "UI/UX", value: "UI/UX" },
   { name: "Desain", value: "Desain" },
   { name: "Backend Developer", value: "Backend Developer" },
 ];
 
+const tabObj = [
+  {
+    id: "Semua",
+    title: "Semua",
+  },
+  {
+    id: "Aktif",
+    title: "Aktif",
+  },
+  {
+    id: "Non-Aktif",
+    title: "Non-Aktif",
+  },
+];
+
+let Courses = [
+  { id: 1, status: "Aktif", kursus: "Kursus Programming Phyton", rating: "4.5", totalUlasan: 5 },
+  { id: 2, status: "Non-Aktif", kursus: "Kursus Programming Java", rating: "4.5", totalUlasan: 2 },
+  { id: 3, status: "Aktif", kursus: "Kursus Programming C", rating: "4.5", totalUlasan: 3 },
+  { id: 4, status: "Non-Aktif", kursus: "Kursus Programming C++", rating: "4.5", totalUlasan: 1 },
+  { id: 5, status: "Aktif", kursus: "Kursus Programming PHP", rating: "4.5", totalUlasan: 5 },
+];
+
 const Index = () => {
   const router = useRouter();
-  const tabObj = [
-    {
-      id: "Semua",
-      title: "Semua",
-    },
-    {
-      id: "Aktif",
-      title: "Aktif",
-    },
-    {
-      id: "Non-Aktif",
-      title: "Non-Aktif",
-    },
-  ];
-
-  const Courses = [
-    { status: "Aktif", kursus: "Kursus Programming Phyton", rating: "4.5", totalUlasan: 5 },
-    { status: "Non-Aktif", kursus: "Kursus Programming Java", rating: "4.5", totalUlasan: 2 },
-    { status: "Aktif", kursus: "Kursus Programming C", rating: "4.5", totalUlasan: 3 },
-    { status: "Non-Aktif", kursus: "Kursus Programming C++", rating: "4.5", totalUlasan: 1 },
-    { status: "Aktif", kursus: "Kursus Programming PHP", rating: "4.5", totalUlasan: 5 },
-  ];
-
   const defaultType = tabObj[0].id;
 
+  const [listCourses, setListCourses] = useState([]);
   const [stage, setStage] = useState("iklan saya");
   const [state, setState] = useState({
     stage: "",
@@ -93,8 +97,21 @@ const Index = () => {
     keteranganKursus: "",
     tarifKursus: "",
     onlineKursus: "",
+    areaKursus: "",
     checkbox: 1,
   });
+
+  const handleToogle = (id) => {
+    setListCourses((prevState) =>
+      prevState.map((obj) => {
+        if (obj.id === id && obj.status === "Aktif") {
+          return { ...obj, status: "Non-Aktif" };
+        } else if (obj.id === id && obj.status === "Non-Aktif") {
+          return { ...obj, status: "Aktif" };
+        } else return { ...obj };
+      })
+    );
+  };
 
   const handleStage = (nextStage) => {
     setStage(nextStage);
@@ -220,9 +237,13 @@ const Index = () => {
     router.reload();
   };
 
+  useEffect(() => {
+    Courses !== undefined && listCourses.length === 0 ? setListCourses(Courses) : "";
+  }, [listCourses]);
+
   return (
     <div>
-      {stage === "iklan saya" && <Tab tabObj={tabObj} defaultType={defaultType} isCard={true} isCardBody={true} Courses={Courses} handleStage={handleStage} />}
+      {stage === "iklan saya" && <Tab tabObj={tabObj} defaultType={defaultType} isCard={true} isCardBody={true} Courses={listCourses} handleStage={handleStage} handleToogleCard={handleToogle} />}
       {stage === "daftar iklan" && (
         <div className={styles.container_body}>
           <div className={styles.po_body}>
@@ -238,29 +259,50 @@ const Index = () => {
                 <div className={styles.po_desc}>Pilih subjek kursus yang sesuai dengan bidang keahlianmu. Kamu hanya dapat memilih 1 subjek kursus</div>
               </div>
               <form onSubmit={handleRegister}>
-                {/* {console.log(state.subjekKursus)} */}
-                {/* <Autocomplete
-                  menuStyle={{
-                    borderRadius: "10px",
-                    boxShadow: "0 2px 12px rgba(0, 0, 0, 0.1)",
-                    background: "rgba(255, 255, 255, 0.9)",
-                    padding: "2px 0",
-                    fontSize: "90%",
-                    position: "fixed",
-                    overflow: "auto",
-                    maxHeight: "50%", // TODO: don't cheat, let it flow to the bottom
-                  }}
-                  items={subjekOption}
-                  shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                  getItemValue={(item) => item.name}
-                  renderItem={(item, isHighlighted) => <div style={{ background: isHighlighted ? "lightgray" : "white" }}>{item.name}</div>}
-                  value={state.subjekKursus}
-                  onChange={(e) => setState({ subjekKursus: e.target.value })}
-                  onSelect={(subjekKursus) => setState({ subjekKursus })}
-                /> */}
-                <Select label="Subjek Kursus" optionLabel="Pilih subjek kursus" desc="" name="subjekKursus" options={subjekOption} handleChange={handleChange} />
+                <div className={styles.wrapper}>
+                  <label htmlFor={"Subjek Kursus"}>Subjek Kursus</label>
+                  {/* <nav>{desc}</nav> */}
+                  <div className={styles.input}>
+                    <Autocomplete
+                      value={state.subjekKursus}
+                      onChange={(e) => setState({ subjekKursus: e.target.value })}
+                      getItemValue={(item) => item.name}
+                      items={subjekOption}
+                      renderItem={(item, isHighlighted) => (
+                        <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                          {item.name}
+                        </div>
+                      )}
+                      renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih subjek kursus" type="text" />}
+                      onSelect={(subjekKursus) => setState({ subjekKursus })}
+                      shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                      autoHighlight={true}
+                    />
+                  </div>
+                </div>
                 <Input label="Judul Kursus" name="judulKursus" desc="Contoh: Kursus Bahasa Inggris Dasar" placeholder="Mauskkan judul kursus" handleChange={handleChange} />
-                <Select label="Hashtag Kursus" optionLabel="Pilih hashtag kursus (sesuai subjek)" desc="" name="hashtagKursus" options={hashtagOption} handleChange={handleChange} />
+                {/* <Select label="Hashtag Kursus" optionLabel="Pilih hashtag kursus (sesuai subjek)" desc="" name="hashtagKursus" options={hashtagOption} handleChange={handleChange} /> */}
+                <div className={styles.wrapper}>
+                  <label htmlFor={"Hashtag Kursus"}>Hashtag Kursus</label>
+                  {/* <nav>{desc}</nav> */}
+                  <div className={styles.input}>
+                    <Autocomplete
+                      value={state.hashtagKursus}
+                      onChange={(e) => setState({ hashtagKursus: e.target.value })}
+                      getItemValue={(item) => item.name}
+                      items={hashtagOption}
+                      renderItem={(item, isHighlighted) => (
+                        <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                          {item.name}
+                        </div>
+                      )}
+                      renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih hashtag kursus (sesuai subjek)" type="text" />}
+                      onSelect={(hashtagKursus) => setState({ hashtagKursus })}
+                      shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                      autoHighlight={true}
+                    />
+                  </div>
+                </div>
                 <Textarea
                   label="Keterangan Kursus"
                   name="keteranganKursus"
@@ -271,22 +313,35 @@ const Index = () => {
                   handleChange={handleChange}
                 />
                 <Input type="sideLabel" inputLabel="per sesi" label="Tarif Kursus" name="tarifKursus" desc="Tarif dasar kursus per sesi. Contoh: Rp 50.000/sesi (jam). " placeholder="Masukkan minimal tarif" handleChange={handleChange} />
-                <Select label="Area Kursus" optionLabel="Pilih area kursus" desc="" name="areaKursus" options={kotaOption[0]} handleChange={handleChange} />
-                <div className={styles.online_offline_title}>Tersedia Kursus Online?</div>
-                <div className={styles.online_offline}>
-                  <div className={styles.deco}>
-                    <label>
-                      <input type="checkbox" name="onlineKursus" value="1" onChange={handleChange} onClick={() => handleCheckbox(1)} checked={state.checkbox === 1} />
-                      <span>Ada</span>
-                    </label>
-                  </div>
-                  <div className={styles.deco}>
-                    <label>
-                      <input type="checkbox" name="onlineKursus" value="0" onChange={handleChange} onClick={() => handleCheckbox(0)} checked={state.checkbox === 0} />
-                      <span>Tidak</span>
-                    </label>
+                {/* {console.log(kotaOption[0])} */}
+                {/* <Select label="Area Kursus" optionLabel="Pilih area kursus" desc="" name="areaKursus" options={kotaOption[0]} handleChange={handleChange} /> */}
+                <div className={styles.wrapper}>
+                  <label htmlFor={"Area Kursus"}>Area Kursus</label>
+                  {/* <nav>{desc}</nav> */}
+                  <div className={styles.input}>
+                    <Autocomplete
+                      value={state.areaKursus}
+                      onChange={(e) => setState({ areaKursus: e.target.value })}
+                      getItemValue={(item) => item.name}
+                      items={kotaOption[0]}
+                      renderItem={(item, isHighlighted) => (
+                        <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                          {item.name}
+                        </div>
+                      )}
+                      renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih area kursus" type="text" />}
+                      onSelect={(areaKursus) => setState({ areaKursus })}
+                      shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                      autoHighlight={true}
+                    />
                   </div>
                 </div>
+
+                <>
+                  <div className={styles.online_offline_title}>Tersedia Kursus Online?</div>
+                  <Checkbox checkbox={state.checkbox} handleCheckbox={handleCheckbox} />
+                </>
+
                 <div className={styles.button_container}>
                   <button type="submit" className={styles.button_kembali} onClick={() => handleReset()}>
                     Reset

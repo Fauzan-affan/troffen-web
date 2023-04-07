@@ -171,7 +171,7 @@ a {
   border-radius: 12px;
   border-style: none;
 
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
 .masuk_email nav input:focus,

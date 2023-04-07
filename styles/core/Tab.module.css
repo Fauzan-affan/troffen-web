@@ -69,6 +69,10 @@
   line-height: 24px;
 }
 
+.card_status img {
+  margin-right: 0.5rem;
+}
+
 .card_image {
   display: flex;
   align-items: center;

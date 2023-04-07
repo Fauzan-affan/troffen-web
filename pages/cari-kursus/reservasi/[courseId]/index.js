@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../../../../styles/cari-guru/Reservasi.module.css";
+import styles from "../../../../styles/cari-kursus/Reservasi.module.css";
 import GeneralTemplate from "../../../../components/layouts/GeneralTemplate";
 import Tips from "../../../../components/core/Tips";
 import Textarea from "../../../../components/core/Textarea";

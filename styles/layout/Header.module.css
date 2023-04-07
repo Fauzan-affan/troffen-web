@@ -325,7 +325,7 @@
 
 .dashboard_label,
 .logout_label {
-  color: var(--gray);
+  /* color: var(--gray); */
 
   font-size: 12px;
 }

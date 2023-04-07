@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 
@@ -8,6 +8,7 @@ import Strip from "../../assets/img/strip.svg";
 import Plus from "../../assets/img/plus.svg";
 import QR from "../../assets/img/png/qr.png";
 import ToogleActive from "../../assets/img/dashboard/ToggleActive.svg";
+import ToogleNonActive from "../../assets/img/dashboard/Toggle.svg";
 import pp_iklan from "../../assets/img/dashboard/pp_iklan.svg";
 import star from "../../assets/img/dashboard/star.svg";
 
@@ -28,7 +29,7 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, isProfile, Courses, handleStage }) => {
+const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, isProfile, Courses, handleToogleCard, handleStage }) => {
   const [headerType, setheaderType] = useState(defaultType);
   const [toogleBCA, setToogleBCA] = useState(true);
   const [tooglePermata, setTooglePermata] = useState(false);
@@ -184,9 +185,9 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
           {Courses.map((course, i) => {
             if (headerType === "Semua") {
               return (
-                <div className={sc.card} key={i}>
+                <div className={sc.card} key={i} onClick={() => handleToogleCard(course.id)}>
                   <div className={sc.card_status}>
-                    <Image alt="" src={ToogleActive} />
+                    <Image alt="" src={course.status === "Aktif" ? ToogleActive : ToogleNonActive} />
                     <nav>{course.status}</nav>
                   </div>
                   <div className={sc.card_image}>

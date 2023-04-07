@@ -15,19 +15,20 @@
   box-shadow: var(--shadow);
 
   margin-bottom: 2rem;
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
-.textarea:hover {
+.textarea:hover,
+.textarea:focus {
   outline: none;
 }
 
 .textarea::placeholder {
-  color: var(--gray);
+  /* color: var(--gray); */
   opacity: 0.5;
 
   font-family: "Poppins", sans-serif;
-  color: #3e3e3e;
+  /* color: #3e3e3e; */
 }
 
 .nav {

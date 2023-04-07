@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "../../styles/cari-guru/Reservasi.module.css";
+import styles from "../../styles/cari-kursus/Reservasi.module.css";
 import Bohlam from "../../assets/img/lamp.svg";
 
 const Tips = ({ tips0_title = "", tips0_desc, tips1_title, tips1_desc, tips2_title, tips2_desc }) => {

@@ -6,7 +6,7 @@ import Link from "next/link";
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Tag from "../../components/core/Tag";
 
-import styles from "../../styles/cari-guru/DetailCourse.module.css";
+import styles from "../../styles/cari-kursus/DetailCourse.module.css";
 
 import SubjekThumbnail from "../../assets/img/Thumbnail.svg";
 import Verify from "../../assets/img/Verify.svg";

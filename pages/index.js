@@ -73,7 +73,7 @@ export const getStaticProps = async () => {
 export default function Home({ posts }) {
   const router = useRouter();
   const [isClick, setIsClick] = useState(1);
-  const [list, setList] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14, 16, 17]);
+  const [listContent, setListContent] = useState(3);
   const [modalBanner, setModalBanner] = useState(true);
   const [visible, setVisible] = useState(false);
 
@@ -85,9 +85,11 @@ export default function Home({ posts }) {
     return str.length > n ? str.slice(0, n - 1) + " ...." : str;
   };
 
-  let cardLists = [];
+  const handleLoadMoreCard = () => {
+    setListContent(listContent + 3);
+  };
 
-  cardLists = list.slice(0, 6);
+  let cardLists = posts.slice(0, listContent);
 
   const handleClick = (val) => {
     setIsClick(val);
@@ -134,7 +136,7 @@ export default function Home({ posts }) {
               </div>
             </div> */}
             <div className={styles.content4}>
-              Belum tahu tentang Troffen <a href="#">Pelajari di sini</a>
+              Belum tahu tentang Troffen <Link href="/tentang-kami">Pelajari di sini</Link>
             </div>
           </div>
         </div>
@@ -162,7 +164,7 @@ export default function Home({ posts }) {
               </div>
             </div>
             <div className={styles.content4}>
-              Belum tahu tentang Troffen <a href="#">Pelajari di sini</a>
+              Belum tahu tentang Troffen <Link href="/tentang-kami">Pelajari di sini</Link>
             </div>
           </div>
         </div>
@@ -289,14 +291,18 @@ export default function Home({ posts }) {
           <div className={styles.subjek}>
             <div className={styles.subjek_title}>
               <div className={styles.subjek_title_main}>Artikel Menarik Dari Troffen</div>
-              <div className={styles.subjek_title_action}>
-                <div className={styles.previous}>
-                  <Image alt="" src={Previous} priority />
+              {listContent !== 6 ? (
+                <div className={styles.subjek_title_action}>
+                  <div className={styles.previous}>
+                    <Image alt="" src={Previous} priority />
+                  </div>
+                  <div className={styles.next}>
+                    <Image alt="" src={Next} priority />
+                  </div>
                 </div>
-                <div className={styles.next}>
-                  <Image alt="" src={Next} priority />
-                </div>
-              </div>
+              ) : (
+                ""
+              )}
             </div>
             <div className={styles.subjek_gallery}>
               {/* <div className={styles.subjek_gallery_row}>
@@ -344,7 +350,7 @@ export default function Home({ posts }) {
               </div> */}
 
               <div className={styles.artikel_baru_card_container}>
-                {posts.map((article, i) => {
+                {cardLists.map((article, i) => {
                   //extract slug and frontmatter
                   const { slug, frontmatter, content } = article;
                   //extract frontmatter properties
@@ -381,9 +387,15 @@ export default function Home({ posts }) {
                 })}
               </div>
             </div>
-            <div className={styles.subjek_lihat_semua}>
-              <button className={styles.button_lihat_semua}>Lihat Semua</button>
-            </div>
+            {listContent !== 6 ? (
+              <div className={styles.subjek_lihat_semua}>
+                <button className={styles.button_lihat_semua} onClick={() => handleLoadMoreCard()}>
+                  Lihat Semua
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </section>

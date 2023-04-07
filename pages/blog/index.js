@@ -85,6 +85,14 @@ export default function Index({ posts }) {
     }
   };
 
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     // setHighlight(highlight + 1);
+  //   }, 1000);
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
   return (
     <GeneralTemplate
       title={`Kumpulan Artikel, Tips Karir Serta Informasi Terbaru - Troffen Blog`}

@@ -29,7 +29,7 @@
   border-radius: 12px;
   border-style: none;
 
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
 .wrapper nav input:focus {
@@ -78,7 +78,7 @@
   border-radius: 6px 0 0 6px;
   border-style: none;
 
-  color: var(--gray);
+  /* color: var(--gray); */
 }
 
 .wrapper_side nav input:focus {
@@ -104,10 +104,10 @@
 
 @media screen and (min-width: 1301px) {
   .wrapper_side .input_main {
-    width: 76%;
+    width: 73%;
   }
 
-  .input_label {
-    padding: 0.61rem 1.9rem;
-  }
+  /* .input_label {
+    padding: 0.61rem 1.2rem;
+  } */
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Autocomplete from "react-autocomplete";
 import indonesia from "territory-indonesia";
 
 import Image from "next/image";
@@ -371,6 +372,27 @@ const DaftarMurid = () => {
                   <Input label="Tempat Lahir" name="tempatLahir" desc="" placeholder="Masukkan tempat lahir" handleChange={handleChange} />
 
                   <Select label="Gender" optionLabel="Gender" desc="" name="gender" options={genderOption} handleChange={handleChange} />
+                  <div className={styles.wrapper}>
+                    <label htmlFor={"Gender"}>Gender</label>
+                    {/* <nav>{desc}</nav> */}
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={state.gender}
+                        onChange={(e) => setState({ gender: e.target.value })}
+                        getItemValue={(item) => item.name}
+                        items={genderOption}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih subjek kursus" type="text" />}
+                        onSelect={(gender) => setState({ gender })}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
 
                   <Upload stage={state.stage} label="Foto Profil" name="fotoProfil" desc="" handleChange={handleChange} />
                   <Input label="Nomor Handphone" name="noHP" desc="" placeholder="Cth: 0812 3456 7891" handleChange={handleChange} />

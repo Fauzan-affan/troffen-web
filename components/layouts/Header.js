@@ -171,7 +171,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                   <Link href={"https://lp.troffen-api.com/"}>Daftar Digital Marketing Boothcamp Sekarang!</Link>
                 </div> */}
                 <div className={styles.navbar_contents_menu1}>
-                  <Link href={"/cari-guru"}>Cari Guru</Link>
+                  <Link href={"/cari-kursus"}>Cari Kursus</Link>
                 </div>
                 <div className={styles.navbar_contents_menu2}>
                   <Link href={"/blog"}>Blog</Link>
