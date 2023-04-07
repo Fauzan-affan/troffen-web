@@ -57,6 +57,7 @@ export default function Index() {
     return (
       <div className={styles.items}>
         <div className={styles.subjek_gallery_row}>
+          {!currentItems && <div>Loading...</div>}
           {currentItems &&
             currentItems.map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
