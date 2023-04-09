@@ -5,6 +5,7 @@ import Email from "../../../assets/img/png/001-mail.png";
 import Pass from "../../../assets/img/png/002-eye.png";
 import Google from "../../../assets/img/png/002-search.png";
 import Fb from "../../../assets/img/png/001-facebook.png";
+import ShowPass from "../../../assets/img/show.png";
 
 import Modal from "../modal/Modal.js";
 
@@ -25,7 +26,7 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-function ModalPopupLogic({ onClose, show, title, session, signIn, masukSebagaiType, changeLoginType, handleLogin, handleChange }) {
+function ModalPopupLogic({ onClose, show, title, session, signIn, password, masukSebagaiType, changeLoginType, handleLogin, handleChange, handlePassword }) {
   const router = useRouter();
 
   // if (status === "loading") {
@@ -76,8 +77,8 @@ function ModalPopupLogic({ onClose, show, title, session, signIn, masukSebagaiTy
                 <div className="masuk_password">
                   <label htmlFor="password">Password*</label>
                   <nav>
-                    <input id="password" name="password" type="password" placeholder="password" onChange={handleChange} />
-                    <Image alt="" src={Pass} priority width={20} height={20} />
+                    <input id="password" name="password" type={password ? "text" : "password"} placeholder="password" onChange={handleChange} />
+                    <Image alt="" src={password ? ShowPass : Pass} priority width={20} height={20} onClick={() => handlePassword()} />
                   </nav>
                 </div>
                 <div className="masuk_action">

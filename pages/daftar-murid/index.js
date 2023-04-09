@@ -24,6 +24,7 @@ import Satu from "../../assets/img/1.svg";
 import Dua from "../../assets/img/2.svg";
 import lingkaran from "../../assets/img/EllipseNo.svg";
 import DoneImage from "../../assets/img/done_.svg";
+import ShowPass from "../../assets/img/show.png";
 
 const date = [
   { name: 1, value: 1 },
@@ -164,6 +165,12 @@ const DaftarMurid = () => {
     alamatLengkap: "",
   });
 
+  const [password, setPassword] = useState(false);
+
+  const handlePassword = () => {
+    setPassword(!password);
+  };
+
   const handleChange = (e) => {
     const target = e.target;
     const value = target.value;
@@ -301,8 +308,8 @@ const DaftarMurid = () => {
                       <div className="masuk_password">
                         <label htmlFor="password">Password*</label>
                         <nav>
-                          <input id="password" name="password" type="password" placeholder="password" value={state.password} onChange={handleChange} />
-                          <Image alt="" src={Pass} priority width={20} height={20} />
+                          <input id="password" name="password" type={password ? "text" : "password"} placeholder="password" value={state.password} onChange={handleChange} />
+                          <Image alt="" src={password ? ShowPass : Pass} priority width={20} height={20} onClick={() => handlePassword()} />
                         </nav>
                       </div>
                       <button type="submit" className="masuk_submit">

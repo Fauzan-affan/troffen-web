@@ -28,6 +28,7 @@ import CMG2 from "../../assets/img/pendaftaraan/g11.svg";
 import no1 from "../../assets/img/pendaftaraan/no1.svg";
 import no2 from "../../assets/img/pendaftaraan/no2.svg";
 import DoneIklan from "../../assets/img/iklan_done.svg";
+import ShowPass from "../../assets/img/show.png";
 
 const date = [
   { name: 1, value: 1 },
@@ -188,6 +189,11 @@ const DaftarGuru = () => {
     onlineKursus: "",
     checkbox: 1,
   });
+  const [password, setPassword] = useState(false);
+
+  const handlePassword = () => {
+    setPassword(!password);
+  };
 
   const handleChange = (e) => {
     const target = e.target;
@@ -349,8 +355,8 @@ const DaftarGuru = () => {
                       <div className="masuk_password">
                         <label htmlFor="password">Password*</label>
                         <nav>
-                          <input id="password" name="password" type="password" placeholder="password" value={state.password} onChange={handleChange} />
-                          <Image alt="" src={Pass} priority width={20} height={20} />
+                          <input id="password" name="password" type={password ? "text" : "password"} placeholder="password" value={state.password} onChange={handleChange} />
+                          <Image alt="" src={password ? ShowPass : Pass} priority width={20} height={20} onClick={() => handlePassword()} />
                         </nav>
                       </div>
                       <button type="submit" className="masuk_submit">

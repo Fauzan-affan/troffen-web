@@ -236,6 +236,276 @@ export default function Index() {
                 </div>
               </div>
             ))}
+          {currentItems &&
+            urutan === "tarif_low_high" &&
+            currentItems.sort(tarifAscendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            urutan === "tarif_high_low" &&
+            currentItems.sort(tarifDescendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            urutan === "postingan_newest_oldes" &&
+            currentItems.sort(postingAscendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            urutan === "postingan_oldes_newest" &&
+            currentItems.sort(postingDescendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            urutan === "rating_low_high" &&
+            currentItems.sort(ratingAscendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            urutan === "rating_high_low" &&
+            currentItems.sort(ratingDescendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     );
@@ -397,11 +667,11 @@ export default function Index() {
                     <option id={styles.select_id} value="tarif_high_low">
                       Tarif: High to Low
                     </option>
-                    <option id={styles.select_id} value="postingan_oldes_newest">
-                      Postingan: Oldest to ...
-                    </option>
                     <option id={styles.select_id} value="postingan_newest_oldes">
                       Postingan: Newest to ...
+                    </option>
+                    <option id={styles.select_id} value="postingan_oldes_newest">
+                      Postingan: Oldest to ...
                     </option>
                     <option id={styles.select_id} value="rating_low_high">
                       Rating: Low to High

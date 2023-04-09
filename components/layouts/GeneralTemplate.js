@@ -26,6 +26,11 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [token, setToken] = useState();
   const [firstname, setFirstname] = useState();
+  const [showPass, setShowPass] = useState(false);
+
+  const handlePassword = () => {
+    setShowPass(!showPass);
+  };
 
   const modalConfig = (headerMenu, modalStatus) => {
     setMenu(headerMenu);
@@ -122,7 +127,19 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
       <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={Logout} />
       {children}
       <Footer />
-      <ModalPopupLogic onClose={setShowModal} show={showModal} title={menu} session={session} signIn={signIn} masukSebagaiType={masukSebagaiType} changeLoginType={changeLoginType} handleLogin={handleLogin} handleChange={handleChange} />
+      <ModalPopupLogic
+        onClose={setShowModal}
+        show={showModal}
+        title={menu}
+        session={session}
+        signIn={signIn}
+        password={showPass}
+        masukSebagaiType={masukSebagaiType}
+        changeLoginType={changeLoginType}
+        handleLogin={handleLogin}
+        handleChange={handleChange}
+        handlePassword={handlePassword}
+      />
     </div>
   );
 };
