@@ -112,7 +112,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
       setFirstname(Cookies.get("firstName"));
     }
 
-    if (Cookies.get("token") !== undefined && Cookies.get("token").length > 0) {
+    if (Cookies.get("token") !== undefined) {
       setToken(Cookies.get("token"));
     }
   }, [isNavbar, isLogin, token, firstname, session]);
