@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ReactPaginate from "react-paginate";
 import Autocomplete from "react-autocomplete";
+import indonesia from "territory-indonesia";
 import styles from "../../styles/cari-kursus/CariKursus.module.css";
 
 import JumbotronLoc from "../../assets/img/location.svg";
@@ -18,7 +19,15 @@ import GOR from "../../assets/img/GroupOfReviewer.svg";
 
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 
-import { loadCourses } from "../../functions/courses";
+import { loadCoursesFunc, searchCourseFunc } from "../../functions/courses";
+
+const kotaOption = [];
+indonesia
+  .getAllRegencies()
+  .then((res) => {
+    kotaOption.push(res);
+  })
+  .catch((err) => console.log(err));
 
 export default function Index() {
   const router = useRouter();
@@ -31,12 +40,25 @@ export default function Index() {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [state, setState] = useState({
-    title: "",
-    loc: "",
-  });
+  const [title, setTitle] = useState("");
+  const [areaKursus, setAreaKursus] = useState("");
+  const [buttonTarif, setButtonTarif] = useState(false);
+  const [buttonRating, setButtonRating] = useState(false);
+
+  const [urutan, setUrutan] = useState("");
 
   const itemsPerPage = 6;
+
+  // menghilangkan duplicate nama course
+  const filteredCourses = courses.filter((item, index, arr) => arr.findIndex((t) => t.title === item.title) === index);
+  // mendapatkan semua area dari nama course terpilih dan memfilter unique id area saja
+  const allArea = courses.filter((item) => item.title === title).map((item) => item.course_area);
+  const filteredAreaId = allArea.filter((item, index) => allArea.indexOf(item) === index);
+  // mendapatkan kota berdasrkan nama course yg dipilih
+  const filteredArea = kotaOption[0].filter((item) => filteredAreaId.includes(item.id));
+
+  // mendapatkan id dari area
+  const areaKursusId = kotaOption[0].filter((val) => val.name === areaKursus).map((val) => val.id);
 
   const convertToFloat = (val) => {
     const num = parseFloat(val);
@@ -53,13 +75,125 @@ export default function Index() {
     return formattedNominal;
   };
 
+  const tarifAscendingSort = (a, b) => a.tarif - b.tarif;
+  const tarifDescendingSort = (a, b) => b.tarif - a.tarif;
+
+  const ratingAscendingSort = (a, b) => a.rating - b.rating;
+  const ratingDescendingSort = (a, b) => b.rating - a.rating;
+
+  const postingAscendingSort = (a, b) => a.created_at - b.created_at;
+  const postingDescendingSort = (a, b) => b.created_at - a.created_at;
+
+  const handleChange = (e) => {
+    setButtonTarif(false);
+    setButtonRating(false);
+    setUrutan(e.target.value);
+  };
+
   const Items = ({ currentItems }) => {
     return (
       <div className={styles.items}>
         <div className={styles.subjek_gallery_row}>
+          {/* {console.log(urutan)}
+          {console.log(currentItems)} */}
+
           {!currentItems && <div>Loading...</div>}
+          {currentItems !== null && currentItems.length === 0 && <div>Maaf kata kunci tidak valid, silahkan refresh dan coba kembali :)</div>}
           {currentItems &&
-            currentItems.map((course, i) => (
+            !buttonTarif &&
+            !buttonRating &&
+            urutan.length === 0 &&
+            currentItems.sort(tarifAscendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            buttonTarif &&
+            currentItems.sort(tarifDescendingSort).map((course, i) => (
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+                <div className={styles.subjek_thumbnail}>
+                  <Image alt="" src={SubjekThumbnail} priority />
+                </div>
+                <div className={styles.subjek_content}>
+                  <div className={styles.subjek_content_title}>
+                    <div className={styles.subjek_content_title_main}>{course.title}</div>
+                    <div className={styles.subjek_content_title_fav}>
+                      <Image alt="" src={Favorite} priority className={styles.favorite} />
+                    </div>
+                  </div>
+                  <div className={styles.subjek_content_tutor}>
+                    <nav>{course.tutor}</nav>
+                    <Image alt="" src={Verify} priority />
+                  </div>
+                  <div className={styles.subjek_content_rating}>
+                    <nav className={styles.star}>
+                      <Image alt="" src={Star} priority className={styles.star} />
+                    </nav>
+                    <nav className={styles.ulasan}>
+                      {convertToFloat(course.rating)} ({course.ulasan} Ulasan)
+                    </nav>
+                    <nav className={styles.divider}>
+                      <Image alt="" src={Divider} priority />
+                    </nav>
+                    <nav className={styles.group_of_reviewer}>
+                      <Image alt="" src={GOR} priority />
+                    </nav>
+                    <nav className={styles.murid}>{course.murid} Murid</nav>
+                  </div>
+                  <hr />
+                </div>
+                <div className={styles.subjek_action}>
+                  <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
+                  <div className={styles.subjek_action_action}>
+                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                      BOOK
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          {currentItems &&
+            buttonRating &&
+            currentItems.sort(ratingDescendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
@@ -114,9 +248,21 @@ export default function Index() {
     setItemOffset(newOffset);
   };
 
-  const handleCourses = async (title = "", area = "", page = 1) => {
+  const handleButtonTarif = () => {
+    buttonRating && setButtonRating(false);
+    urutan.length > 0 && setUrutan("");
+    setButtonTarif(!buttonTarif);
+  };
+
+  const handleButtonRating = () => {
+    buttonTarif && setButtonTarif(false);
+    urutan.length > 0 && setUrutan("");
+    setButtonRating(!buttonRating);
+  };
+
+  const handleCourses = async () => {
     try {
-      const courses = await loadCourses(title, area, page);
+      const courses = await loadCoursesFunc();
 
       setPayload(courses.data);
       setCourses(courses.data.records);
@@ -131,9 +277,26 @@ export default function Index() {
     }
   };
 
+  const searchCourse = async (title, area, page) => {
+    try {
+      const courses = await searchCourseFunc(title, area, page);
+
+      setPayload(courses.data);
+      setCourses(courses.data.records);
+
+      // Fetch items from another resources.
+      const endOffset = itemOffset + itemsPerPage;
+      // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+      setCurrentItems(courses.data.records.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(courses.data.records.length / itemsPerPage));
+    } catch (error) {}
+  };
+
   useEffect(() => {
     handleCourses();
-  }, []);
+
+    urutan.length > 0 && setButtonTarif(false) && setButtonRating(false);
+  }, [urutan]);
 
   return (
     <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
@@ -145,31 +308,32 @@ export default function Index() {
             </div>
             <div className={styles.search_filter}>
               <div className={styles.search_filter_1}>
-                <button className={styles.button_filter}>Tarif</button>
+                <button className={buttonTarif ? styles.button_filter_active : styles.button_filter} onClick={() => handleButtonTarif()}>
+                  Tarif
+                </button>
               </div>
               <div className={styles.search_filter_2}>
-                <button className={styles.button_filter}>Rating</button>
+                <button className={buttonRating ? styles.button_filter_active : styles.button_filter} onClick={() => handleButtonRating()}>
+                  Rating
+                </button>
               </div>
             </div>
             <div className={styles.search_box}>
               <div className={styles.search_subject}>
-                {/* <input type="text" placeholder="Mau belajar apa hari ini?" /> */}
                 <div className={styles.wrapper}>
-                  {/* <label htmlFor={"Subjek Kursus"}>Subjek Kursus</label> */}
-                  {/* <nav>{desc}</nav> */}
                   <div className={styles.input}>
                     <Autocomplete
-                      value={state.title}
-                      onChange={(e) => setState({ title: e.target.value })}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                       getItemValue={(item) => item.title}
-                      items={courses}
+                      items={filteredCourses}
                       renderItem={(item, isHighlighted) => (
                         <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.id}>
                           {item.title}
                         </div>
                       )}
                       renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Mau belajar apa hari ini?" type="text" />}
-                      onSelect={(title) => setState({ title })}
+                      onSelect={(title) => setTitle(title)}
                       shouldItemRender={(item, value) => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1}
                       autoHighlight={true}
                     />
@@ -179,10 +343,32 @@ export default function Index() {
               <div className={styles.search_location}>
                 <div className={styles.search_location_left}>
                   <Image alt="" src={JumbotronLoc} priority />
-                  <input type="text" placeholder="Lokasi" />
+                  <div className={styles.wrapper}>
+                    <div className={styles.input}>
+                      {/* {console.log(courses)}
+                      {console.log(kotaOption[0].filter((val) => val.id === "1304"))} */}
+                      <Autocomplete
+                        value={areaKursus}
+                        onChange={(e) => setAreaKursus(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={title.length === 0 ? kotaOption[0] : filteredArea}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.id}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html_2} placeholder="Lokasi" type="text" />}
+                        onSelect={(areaKursus) => setAreaKursus(areaKursus)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div className={styles.search_location_right}>
-                  <button className={styles.button_search}>Cari Kursus</button>
+                  <button className={styles.button_search} onClick={() => searchCourse(title, areaKursusId[0])}>
+                    Cari Kursus
+                  </button>
                 </div>
               </div>
               <div className={styles.search_location_mobile}>
@@ -197,14 +383,14 @@ export default function Index() {
         <div className={styles.container}>
           <div className={styles.subjek}>
             <div className={styles.subjek_title}>
-              <div className={styles.subjek_title_main}>20 guru yang sesuai dengan kriteria Anda</div>
+              <div className={styles.subjek_title_main}>{payload.total_records} guru yang sesuai dengan kriteria Anda</div>
               <div className={styles.subjek_title_action}>
                 <div className={styles.filter_label}>
                   <p>Urutkan :</p>
                 </div>
                 <div className={styles.filter}>
                   <Image alt="" src={Filter} priority className={styles.filter_icon} />
-                  <select name="" id="" className={styles.select_filter}>
+                  <select name="urutan" id="" className={styles.select_filter} onChange={handleChange}>
                     <option id={styles.select_id} value="tarif_low_high">
                       Tarif: Low to High
                     </option>
@@ -253,13 +439,13 @@ export default function Index() {
                 <a href="#" className={styles.blocks}>
                   &raquo;
                 </a> */}
-                <ReactPaginate
-                  nextLabel="next >"
+                {/* <ReactPaginate
+                  nextLabel=">>"
                   onPageChange={handlePageClick}
-                  pageRangeDisplayed={3}
-                  marginPagesDisplayed={2}
+                  // pageRangeDisplayed={3}
+                  // marginPagesDisplayed={2}
                   pageCount={pageCount}
-                  previousLabel="< previous"
+                  previousLabel="<<"
                   // pageClassName={styles["page-item"]}
                   // pageLinkClassName={styles["page-link"]}
                   // previousClassName={styles["page-item"]}
@@ -272,7 +458,7 @@ export default function Index() {
                   containerClassName={styles["pagination"]}
                   activeClassName={styles["active"]}
                   renderOnZeroPageCount={null}
-                />
+                /> */}
               </div>
             </div>
           </div>
