@@ -115,7 +115,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                     <Image alt="" src={TroffenLogo3} priority />
                   </nav>
                 </Link>
-                {(process.env.WEB_ENV = "STAGING" && <nav>&nbsp; Staging</nav>)}
+                {process.env.WEB_ENV === "STAGING" && <nav>&nbsp; Staging</nav>}
               </div>
               {!isLogin && Cookies.get("token") === undefined && (
                 <div className={styles.navbar_contents_menu}>
@@ -164,7 +164,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                     <Image alt="" src={TroffenLogo3} priority />
                   </nav>
                 </Link>
-                {(process.env.WEB_ENV = "STAGING" && <nav>&nbsp; Staging</nav>)}
+                {process.env.WEB_ENV === "STAGING" && <nav>&nbsp; Staging</nav>}
               </div>
               <div className={styles.navbar_contents_menu}>
                 {/* <div className={styles.navbar_contents_menu1}>
