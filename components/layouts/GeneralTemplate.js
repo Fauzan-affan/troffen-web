@@ -67,38 +67,42 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // tutor => email: fabian@gmail.com, pass: password
-    // student => email: student@gmail.com, pass: password
+    // test_tutor1@email.com
+    // test_student1@email.com
     if (state.email.length !== 0 && state.password.length !== 0) {
-      Cookies.set("token", 123);
-      Cookies.set("email", state.email);
-      state.email === "fabian@gmail.com" && Cookies.set("firstName", "fabian") && Cookies.set("role", "tutor");
-      state.email === "student@gmail.com" && Cookies.set("firstName", "student") && Cookies.set("role", "student");
-      setShowModal(false);
-      router.reload();
+      try {
+        const res = await fetch(`https://api.troffen-api.com/api/${masukSebagaiType === 1 ? `student` : `tutor`}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          // credentials: "include",
+          body: JSON.stringify(state),
+        });
+        const response = await res.json();
+        console.log(data);
+        if (response !== undefined && response.meta.code === 200) {
+          const { data } = response;
+          const { token, role, user } = data;
+          const { first_name, email } = user;
 
-      // try {
-      //   const res = await fetch("https://api.troffen-api.com/api/login", {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     // credentials: "include",
-      //     body: JSON.stringify(state),
-      //   });
-      //   const data = await res.json();
-      //   // console.log(data.data);
-      //   if (data.meta.code === 200) {
-      //     Cookies.set("token", data.data.token);
-      //     Cookies.set("firstName", data.data.user.first_name);
-      //     setShowModal(false);
-      //     router.reload();
-      //   }
-      // } catch (error) {
-      //   console.log(error);
-      //   if (error.meta.code === 422) {
-      //     console.log(error);
-      //   }
-      // }
+          Cookies.set("token", token);
+          Cookies.set("email", email);
+          Cookies.set("firstName", first_name);
+          Cookies.set("role", role);
+          setShowModal(false);
+          router.reload();
+        }
+      } catch (error) {
+        console.log(error);
+        // if (error !== undefined && error.meta.code === 422) {
+        //   console.log(error);
+        // }
+      }
     }
+  };
+
+  const handleLogout = () => {
+    setIsLogin(false);
+    Logout();
   };
 
   useEffect(() => {
@@ -124,7 +128,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         <meta name="description" content={desc} />
         <link rel="icon" href={`/${icon}`} />
       </Head>
-      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={Logout} />
+      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} />
       {children}
       <Footer />
       <ModalPopupLogic

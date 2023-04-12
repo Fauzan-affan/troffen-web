@@ -60,9 +60,13 @@ function ModalPopupLogic({ onClose, show, title, session, signIn, password, masu
               </div>
             </div>
             <div className="mobile_masuk_modal_type">
-              <div className="masuk_sebagai_murid">Masuk Sebagai Murid</div>
+              <div className="masuk_sebagai_murid" onClick={() => changeLoginType(1)}>
+                Masuk Sebagai Murid
+              </div>
               <hr />
-              <div className="masuk_sebagai_guru">Masuk Sebagai Guru</div>
+              <div className="masuk_sebagai_guru" onClick={() => changeLoginType(2)}>
+                Masuk Sebagai Guru
+              </div>
               <hr />
             </div>
             <div className="masuk_modal_body">
@@ -90,7 +94,9 @@ function ModalPopupLogic({ onClose, show, title, session, signIn, password, masu
                     <nav>Lupa Password?</nav>
                   </div>
                 </div>
-                <button className="masuk_submit">Masuk</button>
+                <button className="masuk_submit" type="submit">
+                  Masuk
+                </button>
                 <div className="masuk_options">
                   <div className="masuk_option_label">atau masuk dengan</div>
                   <div className="masuk_options_body">

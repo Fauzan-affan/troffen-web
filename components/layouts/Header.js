@@ -69,7 +69,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                 <div className={styles.ds_menu}>
                   <ul className={styles.ds_ul}>
                     <li className={styles.loggedin_menu}>
-                      <div className={styles.loggedin_username}>{(firstname !== undefined && firstname) || "Fauzan-Affan"}</div>
+                      <div className={styles.loggedin_username}>{firstname !== undefined && firstname}</div>
                       <Image alt="" src={PP} priority />
                       <ul className={styles.ds_loggedin_menu_body}>
                         <li className={styles.dashboard_menu} onClick={() => handleNavbar("profile")}>
@@ -82,7 +82,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                           <div className={styles.upgrade_body}>Upgrade ke Pro</div>
                         </li>
                         <hr />
-                        <li className={styles.logout_menu} onClick={() => handleLogout("dashboard")}>
+                        <li className={styles.logout_menu} onClick={() => handleLogout()}>
                           <Image src={LogoutIcon} alt={""} />
                           <div className={styles.logout_body}>Keluar</div>
                         </li>
