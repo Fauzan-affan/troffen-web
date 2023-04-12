@@ -78,7 +78,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
           body: JSON.stringify(state),
         });
         const response = await res.json();
-        console.log(data);
+        // console.log(data);
         if (response !== undefined && response.meta.code === 200) {
           const { data } = response;
           const { token, role, user } = data;
