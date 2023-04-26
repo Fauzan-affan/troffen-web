@@ -83,7 +83,7 @@ function Footer() {
                 <div className={styles.ig} onClick={() => handleRedirect("https://www.instagram.com/troffen.co/")}>
                   Instagram
                 </div>
-                <div className={styles.fb} onClick={() => handleRedirect("/coming-soon")}>
+                <div className={styles.fb} onClick={() => handleRedirect("https://www.facebook.com/profile.php?id=100088431716699")}>
                   Facebook
                 </div>
                 {/* <div className={styles.fb} onClick={() => handleRedirect("https://www.facebook.com/Jokowi")}>
