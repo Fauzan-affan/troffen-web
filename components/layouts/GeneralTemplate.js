@@ -135,7 +135,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     if (session?.user.account !== undefined && session?.user.account.access_token) {
       getOAuthToken(session?.user.account.access_token);
     }
-  }, [navbar, session]);
+  }, [isNavbar, navbar, session]);
 
   return (
     <div>
