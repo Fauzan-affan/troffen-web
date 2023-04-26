@@ -2,9 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { getSession, useSession, signIn, signOut } from "next-auth/react";
 import ReactPaginate from "react-paginate";
 import Autocomplete from "react-autocomplete";
 import indonesia from "territory-indonesia";
+import Cookies from "js-cookie";
 import styles from "../../styles/cari-kursus/CariKursus.module.css";
 
 import JumbotronLoc from "../../assets/img/location.svg";
@@ -18,6 +20,7 @@ import Divider from "../../assets/img/Line8.svg";
 import GOR from "../../assets/img/GroupOfReviewer.svg";
 
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
+import Modal from "../../components/core/modal/Modal";
 
 import { loadCoursesFunc, searchCourseFunc } from "../../functions/courses";
 
@@ -31,6 +34,8 @@ indonesia
 
 export default function Index() {
   const router = useRouter();
+
+  const { data: session, status } = useSession();
 
   const [payload, setPayload] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -47,6 +52,8 @@ export default function Index() {
 
   const [urutan, setUrutan] = useState("");
 
+  const [modalInfo, setModalInfo] = useState(false);
+
   const itemsPerPage = 6;
 
   // menghilangkan duplicate nama course
@@ -55,7 +62,10 @@ export default function Index() {
   const allArea = courses.filter((item) => item.title === title).map((item) => item.course_area);
   const filteredAreaId = allArea.filter((item, index) => allArea.indexOf(item) === index);
   // mendapatkan kota berdasrkan nama course yg dipilih
-  const filteredArea = kotaOption[0].filter((item) => filteredAreaId.includes(item.id));
+  // const filteredArea = kotaOption[0].filter((item) => filteredAreaId.includes(item.id));
+  const filteredArea = filteredAreaId.map((item) => ({
+    name: item,
+  }));
 
   // mendapatkan id dari area
   const areaKursusId = kotaOption[0].filter((val) => val.name === areaKursus).map((val) => val.id);
@@ -90,6 +100,18 @@ export default function Index() {
     setUrutan(e.target.value);
   };
 
+  const handleCloseModalInfo = () => {
+    setModalInfo(false);
+  };
+
+  const handleBook = (courseId) => {
+    if (Cookies.get("token") === undefined) {
+      setModalInfo(true);
+    } else {
+      router.push(`cari-kursus/${courseId}`);
+    }
+  };
+
   const Items = ({ currentItems }) => {
     return (
       <div className={styles.items}>
@@ -104,7 +126,7 @@ export default function Index() {
             !buttonRating &&
             urutan.length === 0 &&
             currentItems.sort(tarifAscendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -139,7 +161,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -149,7 +171,7 @@ export default function Index() {
           {currentItems &&
             buttonTarif &&
             currentItems.sort(tarifDescendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -184,7 +206,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -194,7 +216,7 @@ export default function Index() {
           {currentItems &&
             buttonRating &&
             currentItems.sort(ratingDescendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -229,7 +251,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -239,7 +261,7 @@ export default function Index() {
           {currentItems &&
             urutan === "tarif_low_high" &&
             currentItems.sort(tarifAscendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -274,7 +296,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -284,7 +306,7 @@ export default function Index() {
           {currentItems &&
             urutan === "tarif_high_low" &&
             currentItems.sort(tarifDescendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -319,7 +341,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -329,7 +351,7 @@ export default function Index() {
           {currentItems &&
             urutan === "postingan_newest_oldes" &&
             currentItems.sort(postingAscendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -364,7 +386,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -374,7 +396,7 @@ export default function Index() {
           {currentItems &&
             urutan === "postingan_oldes_newest" &&
             currentItems.sort(postingDescendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -409,7 +431,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -419,7 +441,7 @@ export default function Index() {
           {currentItems &&
             urutan === "rating_low_high" &&
             currentItems.sort(ratingAscendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -454,7 +476,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -464,7 +486,7 @@ export default function Index() {
           {currentItems &&
             urutan === "rating_high_low" &&
             currentItems.sort(ratingDescendingSort).map((course, i) => (
-              <div className={styles.subjek_gallery_card} key={i} onClick={() => router.push(`cari-kursus/${course.id}`)}>
+              <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
                   <Image alt="" src={SubjekThumbnail} priority />
                 </div>
@@ -499,7 +521,7 @@ export default function Index() {
                 <div className={styles.subjek_action}>
                   <div className={styles.subjek_action_harga}>{convertToRupiah(course.tarif)}/jam</div>
                   <div className={styles.subjek_action_action}>
-                    <Link className={styles.button_submit} href={`cari-kursus/${1}`}>
+                    <Link className={styles.button_submit} href={`#`}>
                       BOOK
                     </Link>
                   </div>
@@ -534,14 +556,16 @@ export default function Index() {
     try {
       const courses = await loadCoursesFunc();
 
+      // console.log(courses);
+
       setPayload(courses.data);
-      setCourses(courses.data.records);
+      setCourses(courses.data.data);
 
       // Fetch items from another resources.
       const endOffset = itemOffset + itemsPerPage;
       // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(courses.data.records.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(courses.data.records.length / itemsPerPage));
+      setCurrentItems(courses.data.data.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(courses.data.data.length / itemsPerPage));
     } catch (error) {
       console.log(error);
     }
@@ -551,14 +575,16 @@ export default function Index() {
     try {
       const courses = await searchCourseFunc(title, area, page);
 
+      // console.log(courses);
+
       setPayload(courses.data);
-      setCourses(courses.data.records);
+      courses.data.data !== undefined && setCourses(courses.data.data);
 
       // Fetch items from another resources.
       const endOffset = itemOffset + itemsPerPage;
       // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(courses.data.records.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(courses.data.records.length / itemsPerPage));
+      setCurrentItems(courses.data.data.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(courses.data.data.length / itemsPerPage));
     } catch (error) {}
   };
 
@@ -734,6 +760,10 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      <Modal modalInfo={modalInfo} handleModal={handleCloseModalInfo}>
+        <div className={styles.modal_info_wrapper}>Silahkan Masuk Terlebih Dahulu</div>
+      </Modal>
     </GeneralTemplate>
   );
 }

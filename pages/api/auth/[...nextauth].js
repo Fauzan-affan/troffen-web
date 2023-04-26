@@ -15,6 +15,15 @@ export const authOptions = {
     }),
     // ...add more providers here
   ],
-  secret: process.env.JWT_SECRET,
+  // secret: process.env.JWT_SECRET,
+  callbacks: {
+    async jwt(token, user, account, profile, isNewUser) {
+      return token;
+    },
+    async session({ session, token }) {
+      session.user = token.token.token;
+      return session;
+    },
+  },
 };
 export default NextAuth(authOptions);

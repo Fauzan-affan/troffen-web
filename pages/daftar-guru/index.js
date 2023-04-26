@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import indonesia from "territory-indonesia";
+import Autocomplete from "react-autocomplete";
+import { getSession, useSession, signIn, signOut } from "next-auth/react";
+import Cookies from "js-cookie";
 
 import Image from "next/image";
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
@@ -29,6 +31,13 @@ import no1 from "../../assets/img/pendaftaraan/no1.svg";
 import no2 from "../../assets/img/pendaftaraan/no2.svg";
 import DoneIklan from "../../assets/img/iklan_done.svg";
 import ShowPass from "../../assets/img/show.png";
+
+import Modal from "../../components/core/modal/Modal";
+import Checkbox from "../../components/core/Checkbox";
+
+import { loadProvinceFunc } from "../../functions/province";
+import { loadCityFunc } from "../../functions/city";
+import { submitPersonalInfo, submitEducation, submitWork, submitCertificate, submitCourse, getUserDetail, registerProvider } from "../../functions/tutor";
 
 const date = [
   { name: 1, value: 1 },
@@ -121,39 +130,29 @@ const year = [
   { name: 2022, value: 2022 },
   { name: 2023, value: 2023 },
 ];
+const degree = [
+  { name: "SD", value: "SD" },
+  { name: "SMP", value: "SMP" },
+  { name: "SMA", value: "SMA" },
+  { name: "S1", value: "S1" },
+  { name: "S2", value: "S2" },
+  { name: "S3", value: "S3" },
+];
 const genderOption = [
   { name: "Laki - Laki", value: "Laki - Laki" },
   { name: "Perempuan", value: "Perempuan" },
 ];
-const provOption = [];
-indonesia
-  .getAllProvinces()
-  .then((res) => {
-    provOption.push(res);
-  })
-  .catch((err) => console.log(err));
-const kotaOption = [];
-indonesia
-  .getAllRegencies()
-  .then((res) => {
-    kotaOption.push(res);
-  })
-  .catch((err) => console.log(err));
 const subjekOption = [
   { name: "UI/UX", value: "UI/UX" },
   { name: "Frontend Developer", value: "Frontend Developer" },
   { name: "Backend Developer", value: "Backend Developer" },
 ];
+
 const hashtagOption = [
   { name: "UI/UX", value: "UI/UX" },
   { name: "Desain", value: "Desain" },
   { name: "Backend Developer", value: "Backend Developer" },
 ];
-// const areaOption = [
-//   { name: "Jakarta Selatan", value: "Jakarta Selatan" },
-//   { name: "Cirebon", value: "Cirebon" },
-//   { name: "Kuta", value: "Kuta" },
-// ];
 
 const DaftarGuru = () => {
   const router = useRouter();
@@ -162,7 +161,6 @@ const DaftarGuru = () => {
     stage: "",
     email: "",
     password: "",
-
     namaLengkap: "",
     namaDepan: "",
     namaBelakang: "",
@@ -170,26 +168,112 @@ const DaftarGuru = () => {
     tempatLahir: "",
     bulanLahir: "",
     tahunLahir: "",
-    gender: "",
     fotoProfil: "",
     noHP: "",
-    provinsi: "",
-    kota: "",
     alamatLengkap: "",
-
-    pengalamanPendidikan: "",
-    pengalamanPekerjaan: "",
-    sertifikat: "",
-
-    subjekKursus: "",
-    judulKursus: "",
-    hashtagKursus: "",
-    keteranganKursus: "",
-    tarifKursus: "",
-    onlineKursus: "",
-    checkbox: 1,
   });
+
+  const [stateExp, setStateExp] = useState({
+    token: "",
+    eduSchool: "",
+    eduDegree: "",
+    startDate: "",
+    endDate: "",
+
+    userId: "",
+    companyName: "",
+    workTitle: "",
+    startWork: "",
+    endWork: "",
+    workDesc: "",
+    sertifikat: "",
+  });
+
+  // token,
+  // courseCategory = subjekKursus,
+  // (courseTitle = judulKursus),
+  // (courseHashtag = hashtagKursus),
+  // (courseDescription = keteranganKursus),
+  // courseDetail,
+  // (coursePrice = tarifKursus),
+  // courseArea = areaKursus,
+  // isOnline = onlineKursus;
+
+  const [stateCourse, setStateCourse] = useState({
+    judulKursus: "", // done
+    keteranganKursus: "", // done
+    tarifKursus: "", // done
+    // areaKursus: "", // done
+    onlineKursus: 1, // done
+  });
+
+  const [subjekKursus, setSubjekKursus] = useState("");
+  const [hashtagKursus, setHashtagKursus] = useState("");
+
+  const [areaKursus, setAreaKursus] = useState("");
+
+  const [user, setUser] = useState([]);
+
+  const [gender, setGender] = useState("");
+
+  const [provinces, setProvinces] = useState([]);
+  const [provinsi, setProvinsi] = useState("");
+
+  const [cities, setCities] = useState([]);
+  const [kota, setKota] = useState("");
+  const [selectedKotaId, setSelectedKotaId] = useState(0);
+  const [personalInfoRes, setPersonalInfoRes] = useState([]);
+
   const [password, setPassword] = useState(false);
+
+  const [modal, setModal] = useState(false);
+  const [modalPend, setModalPend] = useState(false);
+  const [modalPek, setModalPek] = useState(false);
+  const [modalRegisterProvider, setModalRegisterProvider] = useState(false);
+
+  const handleProvinces = async () => {
+    try {
+      const prov = await loadProvinceFunc();
+
+      setProvinces(prov);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCities = async (provinceId) => {
+    try {
+      const city = await loadCityFunc(provinceId);
+
+      setCities(city);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const selectedProv = (prov) => {
+    const id = provinces.filter((item) => item.name === prov)[0].id;
+    setProvinsi(prov);
+    handleCities(id);
+  };
+
+  const selectedKota = (kota) => {
+    const id = cities.filter((item) => item.name === kota)[0].id;
+    setSelectedKotaId(id);
+    setKota(kota);
+  };
+
+  const handleRegisterProvider = (provider) => {
+    signIn(provider);
+    Cookies.set("provider", provider);
+  };
+
+  const submitRegisterProviderAPI = async () => {
+    const res = await registerProvider(Cookies.get("token"));
+    // console.log(Cookies.get("provider"));
+    // console.log(res);
+    setModalRegisterProvider(true);
+  };
 
   const handlePassword = () => {
     setPassword(!password);
@@ -206,6 +290,26 @@ const DaftarGuru = () => {
     }));
   };
 
+  const handleChangeExperiance = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    setStateExp((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
+
+  const handleChangeCourse = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    setStateCourse((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
     // console.log(state);
@@ -217,56 +321,40 @@ const DaftarGuru = () => {
       }));
     }
 
-    if (
-      state.stage === "Personal Info" &&
-      state.namaLengkap.length !== 0 &&
-      state.namaDepan.length !== 0 &&
-      state.namaBelakang.length !== 0 &&
-      state.tempatLahir.length !== 0 &&
-      state.gender.length !== 0 &&
-      state.fotoProfil.length !== 0 &&
-      state.noHP.length !== 0 &&
-      state.provinsi.length !== 0 &&
-      state.kota.length !== 0
-    ) {
+    if (state.stage === "Personal Info" && state.namaLengkap.length !== 0 && state.namaDepan.length !== 0 && state.namaBelakang.length !== 0 && state.tempatLahir.length !== 0 && state.fotoProfil.length !== 0 && state.noHP.length !== 0) {
       setState((state) => ({
         ...state,
         ["stage"]: "Experiences",
       }));
     }
 
-    if (
-      state.stage === "Experiences" &&
-      state.pengalamanPendidikan.length !== 0 &&
-      state.pengalamanPekerjaan.length !== 0
-      // && state.sertifikat.length !== 0
-    ) {
+    if (state.stage === "Experiences") {
       setState((state) => ({
         ...state,
         ["stage"]: "Subjek Kursus",
       }));
     }
 
-    if (
-      state.stage === "Subjek Kursus" &&
-      state.subjekKursus.length !== 0 &&
-      state.judulKursus.length !== 0 &&
-      state.hashtagKursus.length !== 0 &&
-      state.keteranganKursus.length !== 0 &&
-      state.tarifKursus.length !== 0 &&
-      state.onlineKursus.length !== 0
-    ) {
-      setState((state) => ({
-        ...state,
-        ["stage"]: "Done",
-      }));
-    }
+    // if (
+    //   state.stage === "Subjek Kursus" &&
+    //   stateCourse.subjekKursus.length !== 0 &&
+    //   stateCourse.judulKursus.length !== 0 &&
+    //   stateCourse.hashtagKursus.length !== 0 &&
+    //   stateCourse.keteranganKursus.length !== 0 &&
+    //   stateCourse.tarifKursus.length !== 0 &&
+    //   stateCourse.onlineKursus.length !== 0
+    // ) {
+    //   setState((state) => ({
+    //     ...state,
+    //     ["stage"]: "Done",
+    //   }));
+    // }
   };
 
   const handleCheckbox = (val) => {
-    setState((state) => ({
+    setStateCourse((state) => ({
       ...state,
-      ["checkbox"]: val,
+      ["onlineKursus"]: val,
     }));
   };
 
@@ -281,48 +369,95 @@ const DaftarGuru = () => {
     router.replace(url);
   };
 
-  const handleSubmit = async () => {
-    // console.log(state);
+  const handleCloseModal = () => {
+    setModal(false);
+  };
 
-    const { namaDepan, namaBelakang, namaLengkap, tempatLahir, tahunLahir, bulanLahir, tanggalLahir, alamatLengkap, fotoProfil, gender, noHP, email, password } = state;
+  const handleCloseModalPend = () => {
+    setModalPend(false);
+  };
 
-    try {
-      const res = await fetch("https://api.troffen-api.com/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // credentials: "include",
-        body: JSON.stringify({
-          first_name: namaDepan,
-          last_name: namaBelakang,
-          full_name: namaLengkap,
-          birth_place: tempatLahir,
-          birth_date: `${tahunLahir}-${bulanLahir}-${tanggalLahir}`,
-          full_address: alamatLengkap,
-          photo: fotoProfil,
-          gender: gender,
-          phone: noHP,
-          email: email,
-          password: password,
-          password_confirmation: password,
-          user_status: "murid",
-          id_area: 1,
-        }),
-      });
+  const handleCloseModalPek = () => {
+    setModalPek(false);
+  };
 
-      const data = await res.json();
-      if (data.meta.code === 200) {
-        // Cookies.set("token", data.data.token);
-        // Cookies.set("firstName", data.data.user.first_name);
-        // setShowModal(false);
-        // console.log(data);
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.meta.code === 422) {
-        console.log(error);
+  const handleCloseModalProv = () => {
+    setModalRegisterProvider(false);
+    router.replace("/");
+  };
+
+  const handlePersonalInfo = async (e) => {
+    e.preventDefault();
+    const { namaDepan, namaBelakang, namaLengkap, tempatLahir, tahunLahir, bulanLahir, tanggalLahir, alamatLengkap, fotoProfil, noHP, email, password } = state;
+    if (state.stage === "Personal Info" && namaLengkap.length !== 0 && namaDepan.length !== 0 && namaBelakang.length !== 0 && tempatLahir.length !== 0 && fotoProfil.length !== 0 && noHP.length !== 0) {
+      const tanggalLhr = `${tahunLahir}-${bulanLahir}-${tanggalLahir}`;
+      const res = await submitPersonalInfo(namaDepan, namaBelakang, namaLengkap, tempatLahir, tanggalLhr, alamatLengkap, fotoProfil, gender, noHP, email, password, "tutor", selectedKotaId);
+
+      if (res.meta.code === 401) {
+        // sudent exist, silahkan login
+        setPersonalInfoRes(res);
+        setModal(true);
+      } else if (res.meta.code === 200) {
+        setPersonalInfoRes(res);
+        setStateExp((state) => ({
+          ...state,
+          ["token"]: res.data.token,
+          ["userId"]: res.data.user.id,
+        }));
+        setState((state) => ({
+          ...state,
+          ["stage"]: "Experiences",
+        }));
       }
     }
   };
+
+  const handleSubmitPendidikan = async () => {
+    const { token, eduSchool, eduDegree, startDate, endDate } = stateExp;
+    if (state.stage === "Experiences" && token.length !== 0 && eduSchool.length !== 0 && eduDegree.length !== 0 && startDate.length !== 0 && endDate.length !== 0) {
+      const res = await submitEducation(token, eduSchool, eduDegree, startDate, endDate);
+      if (res.meta.code === 200) {
+        const user = await getUserDetail(token);
+        setUser(user);
+        setModalPend(false);
+      }
+    }
+  };
+
+  const handleSubmitPekerjaan = async () => {
+    const { token, userId, companyName, workTitle, startWork, endWork, workDesc } = stateExp;
+    if (state.stage === "Experiences" && companyName.length !== 0 && workTitle.length !== 0 && startWork.length !== 0 && endWork.length !== 0 && workDesc.length !== 0) {
+      const res = await submitWork(token, userId, companyName, workTitle, startWork, endWork, workDesc);
+      if (res.meta.code === 200) {
+        const user = await getUserDetail(token);
+        setUser(user);
+        setModalPek(false);
+      }
+    }
+  };
+
+  const handleCourse = async (e) => {
+    e.preventDefault();
+    const { token } = stateExp;
+    const { judulKursus, keteranganKursus, tarifKursus, onlineKursus } = stateCourse;
+    if (state.stage === "Subjek Kursus" && token.length !== 0 && subjekKursus.length !== 0 && judulKursus.length !== 0 && hashtagKursus.length !== 0 && keteranganKursus.length !== 0 && tarifKursus.length !== 0 && areaKursus.length !== 0) {
+      // console.log(token, subjekKursus, judulKursus, hashtagKursus, keteranganKursus, tarifKursus, areaKursus, onlineKursus);
+      const res = await submitCourse(token, subjekKursus, judulKursus, hashtagKursus, keteranganKursus, tarifKursus, areaKursus, onlineKursus);
+      // console.log(res);
+      if (res.meta.code === 200) {
+        setState((state) => ({
+          ...state,
+          ["stage"]: "Done",
+        }));
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleProvinces();
+
+    Cookies.get("email") !== undefined && submitRegisterProviderAPI();
+  }, [Cookies.get("email")]);
 
   return (
     <GeneralTemplate
@@ -367,11 +502,11 @@ const DaftarGuru = () => {
                           atau masuk dengan
                         </div>
                         <div className="masuk_options_body">
-                          <div className="masuk_google">
+                          <div className="masuk_google" onClick={() => handleRegisterProvider("google")}>
                             <Image alt="" src={Google} priority width={20} height={20} />
                             <nav>Google</nav>
                           </div>
-                          <div className="masuk_facebook">
+                          <div className="masuk_facebook" onClick={() => handleRegisterProvider("facebook")}>
                             <Image alt="" src={Fb} priority width={20} height={20} />
                             <nav>Facebook</nav>
                           </div>
@@ -444,7 +579,7 @@ const DaftarGuru = () => {
                   </div>
                   <div className={styles.po_desc}>Masukkan informasi pribadi mengenai Anda.</div>
                 </div>
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handlePersonalInfo}>
                   <Input label="Nama Lengkap" name="namaLengkap" desc="" placeholder="Masukkan nama lengkap" handleChange={handleChange} />
                   <Input label="Nama Depan" name="namaDepan" desc="Nama depan akan muncul di profil Anda." placeholder="Masukkan nama depan" handleChange={handleChange} />
                   <Input label="Nama Belakang" name="namaBelakang" desc="Nama belakang akan muncul di profil Anda." placeholder="Masukkan nama belakang" handleChange={handleChange} />
@@ -466,13 +601,74 @@ const DaftarGuru = () => {
 
                   <Input label="Tempat Lahir" name="tempatLahir" desc="" placeholder="Masukkan tempat lahir" handleChange={handleChange} />
 
-                  <Select label="Gender" optionLabel="Gender" desc="" name="gender" options={genderOption} handleChange={handleChange} />
+                  <div className={styles.wrapper}>
+                    <label htmlFor={"Gender"}>Gender</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={genderOption}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih jenis kelamin" type="text" />}
+                        onSelect={(gender) => setGender(gender)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
 
                   <Upload stage={state.stage} label="Foto Profil" name="fotoProfil" desc="" handleChange={handleChange} />
                   <Input label="Nomor Handphone" name="noHP" desc="" placeholder="Cth: 0812 3456 7891" handleChange={handleChange} />
 
-                  <Select label="Provinsi" optionLabel="Provinsi" desc="" name="provinsi" options={provOption[0]} handleChange={handleChange} />
-                  <Select label="Kota / Area" optionLabel="Kota" desc="" name="kota" options={kotaOption[0]} handleChange={handleChange} />
+                  {/* <Select label="Provinsi" optionLabel="Provinsi" desc="" name="provinsi" options={provOption[0]} handleChange={handleChange} />
+                  <Select label="Kota / Area" optionLabel="Kota" desc="" name="kota" options={kotaOption[0]} handleChange={handleChange} /> */}
+
+                  <div className={styles.wrapper}>
+                    <label htmlFor={"Provinsi"}>Provinsi</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={provinsi}
+                        onChange={(e) => setProvinsi(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={provinces}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih provinsi" type="text" />}
+                        onSelect={(provinsi) => selectedProv(provinsi)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.wrapper}>
+                    <label htmlFor="">Kota / Area</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={kota}
+                        onChange={(e) => setKota(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={cities}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih provinsi terlebih dahulu" type="text" />}
+                        onSelect={(kota) => selectedKota(kota)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
 
                   <Textarea label="Alamat Lengkap" name="alamatLengkap" desc="" col={60} row={4} placeholder="Masukkan alamat lengkap" handleChange={handleChange} />
 
@@ -514,11 +710,37 @@ const DaftarGuru = () => {
                   <div className={styles.po_desc}>Informasi mengenai pengalaman sangat menentukan tingkat ketertarikan murid untuk melakukan reservasi kursus. Judul subjek yang menarik juga bisa membantu.</div>
                 </div>
                 <form onSubmit={handleRegister}>
-                  <Upload stage={state.stage} label="Pengalaman Pendidikan" desc="Masukkan pengalaman pendidikan Anda (maksimal 3)" name="pengalamanPendidikan" handleChange={handleChange} />
+                  <div className={styles.pendidikan_wrapper}>
+                    <label htmlFor={""}>Pengalaman Pendidikan (Opsional)</label>
+                    <nav>Masukkan pengalaman pendidikan Anda (maksimal 3)</nav>
+                    {user.length !== 0 && user.data.user.educations.map((item, i) => <div key={i}>- {item.education_school}</div>)}
+                    {user.length !== 0 && user.data.user.educations.length < 3 && (
+                      <div className={styles.tambah_pendidikan} onClick={() => setModalPend(true)}>
+                        <b>+ Tambah Pendidikan</b>
+                      </div>
+                    )}
+                    {user.length === 0 && (
+                      <div className={styles.tambah_pendidikan} onClick={() => setModalPend(true)}>
+                        <b>+ Tambah Pendidikan</b>
+                      </div>
+                    )}
+                  </div>
                   <hr className={styles.hr} />
-                  <Upload stage={state.stage} label="Pengalaman Pekerjaan" desc="Masukkan pengalaman pekerjaan Anda (maksimal 3)" name="pengalamanPekerjaan" handleChange={handleChange} />
-                  <hr className={styles.hr} />
-                  <Upload stage={state.stage} label="Sertifikat (Opsional)" desc="Masukkan sertifikat (maksimal 3)" name="sertifikat" handleChange={handleChange} />
+                  <div className={styles.pekerjaan_wrapper}>
+                    <label htmlFor={""}>Pengalaman Pekerjaan (Opsional)</label>
+                    <nav>Masukkan pengalaman pekerjaan Anda (maksimal 3)</nav>
+                    {user.length !== 0 && user.data.user.works.map((item, i) => <div key={i}>- {item.work_company_name}</div>)}
+                    {user.length !== 0 && user.data.user.works.length < 3 && (
+                      <div className={styles.tambah_pekerjaan} onClick={() => setModalPek(true)}>
+                        <b>+ Tambah Pekerjaan</b>
+                      </div>
+                    )}
+                    {user.length === 0 && (
+                      <div className={styles.tambah_pekerjaan} onClick={() => setModalPek(true)}>
+                        <b>+ Tambah Pekerjaan</b>
+                      </div>
+                    )}
+                  </div>
                   <div className={styles.button_container}>
                     <button type="submit" className={styles.button_kembali} onClick={() => handleBack("Personal Info")}>
                       Kembali
@@ -559,10 +781,48 @@ const DaftarGuru = () => {
                   </div>
                   <div className={styles.po_desc}>Pilih subjek kursus yang sesuai dengan bidang keahlianmu. Kamu hanya dapat memilih 1 subjek kursus</div>
                 </div>
-                <form onSubmit={handleRegister}>
-                  <Select label="Subjek Kursus" optionLabel="Pilih subjek kursus" desc="" name="subjekKursus" options={subjekOption} handleChange={handleChange} />
-                  <Input label="Judul Kursus" name="judulKursus" desc="Contoh: Kursus Bahasa Inggris Dasar" placeholder="Mauskkan judul kursus" handleChange={handleChange} />
-                  <Select label="Hashtag Kursus" optionLabel="Pilih hashtag kursus (sesuai subjek)" desc="" name="hashtagKursus" options={hashtagOption} handleChange={handleChange} />
+                <form onSubmit={handleCourse}>
+                  <div className={styles.wrapper}>
+                    <label htmlFor="Subjek Kursus">Subjek Kursus</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={subjekKursus}
+                        onChange={(e) => setSubjekKursus(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={subjekOption}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih subjek kursus" type="text" />}
+                        onSelect={(subjekKursus) => setSubjekKursus(subjekKursus)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
+                  <Input label="Judul Kursus" name="judulKursus" desc="Contoh: Kursus Bahasa Inggris Dasar" placeholder="Mauskkan judul kursus" handleChange={handleChangeCourse} />
+                  <div className={styles.wrapper}>
+                    <label htmlFor="Hashtag Kursus">Hashtag Kursus</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={hashtagKursus}
+                        onChange={(e) => setHashtagKursus(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={hashtagOption}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih subjek kursus" type="text" />}
+                        onSelect={(hashtagKursus) => setHashtagKursus(hashtagKursus)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
                   <Textarea
                     label="Keterangan Kursus"
                     name="keteranganKursus"
@@ -570,30 +830,61 @@ const DaftarGuru = () => {
                     col={60}
                     row={4}
                     placeholder="Minimal 250 karakter"
-                    handleChange={handleChange}
+                    handleChange={handleChangeCourse}
                   />
-                  <Input type="sideLabel" inputLabel="per sesi" label="Tarif Kursus" name="tarifKursus" desc="Tarif dasar kursus per sesi. Contoh: Rp 50.000/sesi (jam). " placeholder="Masukkan minimal tarif" handleChange={handleChange} />
-                  <Select label="Area Kursus" optionLabel="Pilih area kursus" desc="" name="areaKursus" options={kotaOption[0]} handleChange={handleChange} />
-                  <div className={styles.online_offline_title}>Tersedia Kursus Online?</div>
+                  <Input
+                    type="sideLabel"
+                    inputLabel="per sesi"
+                    label="Tarif Kursus"
+                    name="tarifKursus"
+                    desc="Tarif dasar kursus per sesi. Contoh: Rp 50.000/sesi (jam). "
+                    placeholder="Masukkan minimal tarif"
+                    handleChange={handleChangeCourse}
+                  />
+                  <div className={styles.wrapper}>
+                    <label htmlFor="Area Kursus">Area Kursus</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={areaKursus}
+                        onChange={(e) => setAreaKursus(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={cities}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih area kursus" type="text" />}
+                        onSelect={(areaKursus) => setAreaKursus(areaKursus)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.online_offline_wrapper}>
+                    <div className={styles.online_offline_title}>Tersedia Kursus Online?</div>
+                    <Checkbox checkbox={stateCourse.onlineKursus} handleCheckbox={handleCheckbox} />
+                  </div>
+                  {/* <div className={styles.online_offline_title}>Tersedia Kursus Online?</div>
                   <div className={styles.online_offline}>
                     <div className={styles.deco}>
                       <label>
-                        <input type="checkbox" name="onlineKursus" value="1" onChange={handleChange} onClick={() => handleCheckbox(1)} checked={state.checkbox === 1} />
+                        <input type="checkbox" name="onlineKursus" value="1" onChange={handleChange} onClick={() => handleCheckbox(1)} checked={stateCourse.onlineKursus === "1"} />
                         <span>Ada</span>
                       </label>
                     </div>
                     <div className={styles.deco}>
                       <label>
-                        <input type="checkbox" name="onlineKursus" value="0" onChange={handleChange} onClick={() => handleCheckbox(0)} checked={state.checkbox === 0} />
+                        <input type="checkbox" name="onlineKursus" value="0" onChange={handleChange} onClick={() => handleCheckbox(0)} checked={stateCourse.onlineKursus === "0"} />
                         <span>Tidak</span>
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                   <div className={styles.button_container}>
                     <button type="submit" className={styles.button_kembali} onClick={() => handleBack("Experiences")}>
                       Kembali
                     </button>
-                    <button type="submit" className={styles.button} onClick={() => handleSubmit()}>
+                    <button type="submit" className={styles.button}>
                       Selesai
                     </button>
                   </div>
@@ -625,7 +916,7 @@ const DaftarGuru = () => {
               Selamat! Sekarang murid dapat melakukan reservasi terhadap iklan kamu. Tingkatkan visibilitas iklan dengan mengubah ke Professional Plan, hanya mulai dari <b>Rp 100rb/bulan</b> saja!
             </nav>
             <div className={styles.done_action}>
-              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/coming-soon")}>
+              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/monthly-pass")}>
                 Upgrade
               </button>
               <button type="submit" className={styles.button_home} onClick={() => handleRedirect("/")}>
@@ -635,6 +926,60 @@ const DaftarGuru = () => {
           </div>
         </div>
       )}
+
+      <Modal modalInfo={modal} handleModal={handleCloseModal}>
+        <>{personalInfoRes.length !== 0 && personalInfoRes.meta.code === 401 && <p>{state.email} sudah terdaftar. Silahkan masuk terlebih dahulu.</p>}</>
+      </Modal>
+
+      <Modal modalForm={modalPend} onClose={handleCloseModalPend}>
+        <div className={styles.modal_title}>Tambah Pengalaman Pendidikan</div>
+        <div className={styles.eduSchool}>
+          <Input label="Nama Sekolah/Universitas" name="eduSchool" desc="" placeholder="Cth: Sekolah Menengah Atas ABC" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.eduDegree}>
+          <Select label="Tingkat" optionLabel="Degree" desc="" name="eduDegree" options={degree} handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.startDate}>
+          <Select label="Tahun Mulai" optionLabel="Tahun" desc="" name="startDate" options={year} handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.endDate}>
+          <Select label="Tahun Selesai" optionLabel="Tahun" desc="" name="endDate" options={year} handleChange={handleChangeExperiance} />
+        </div>
+        <button type="submit" className={styles.button} onClick={() => handleSubmitPendidikan()}>
+          Selesai
+        </button>
+      </Modal>
+
+      <Modal modalForm={modalPek} onClose={handleCloseModalPek}>
+        <div className={styles.modal_title}>Tambah Pengalaman Pekerjaan</div>
+        <div className={styles.companyName}>
+          <Input label="Nama Institusi/Perusahaan" name="companyName" desc="" placeholder="Cth: Google" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.workTitle}>
+          <Input label="Jabatan Pekerjaan" name="workTitle" desc="" placeholder="Cth: Software Engineer" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.workDate}>
+          <nav>
+            <Select label="Tahun Mulai" optionLabel="Tahun" desc="" name="startWork" options={year} handleChange={handleChangeExperiance} />
+          </nav>
+          <nav>
+            <Select label="Tahun Selesai" optionLabel="Tahun" desc="" name="endWork" options={year} handleChange={handleChangeExperiance} />
+          </nav>
+        </div>
+        <div className={styles.workDesc}>
+          <Textarea label="Deskripsi Pekerjaan" name="workDesc" desc="" col={60} row={2} placeholder="Masukkan deskripsi pekerjaan" handleChange={handleChangeExperiance} />
+        </div>
+        <button type="submit" className={styles.button} onClick={() => handleSubmitPekerjaan()}>
+          Selesai
+        </button>
+      </Modal>
+
+      <Modal modalInfo={modalRegisterProvider} handleModal={handleCloseModalProv}>
+        <>
+          <b>{Cookies.get("email")}</b>
+          {` Telah Berhasil Didaftarkan!`}
+        </>
+      </Modal>
     </GeneralTemplate>
   );
 };

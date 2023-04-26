@@ -11,16 +11,16 @@ import PP from "../../assets/img/dashboard/pp.svg";
 import Yes from "../../assets/img/dashboard/yes.svg";
 import No from "../../assets/img/dashboard/no.svg";
 
-const Student = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
+const Student = ({ dataCourse, filterInput, isNewChat, setFilterInput, onOpenModal }) => {
   const router = useRouter();
 
-  const Chat = ({ guru }) => {
+  const Chat = ({ tutor_name }) => {
     return (
       <>
         {isNewChat ? (
-          <Image src={NewChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${guru.name}`)} />
+          <Image src={NewChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${tutor_name}`)} />
         ) : (
-          <Image src={NoChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${guru.name}`)} />
+          <Image src={NoChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${tutor_name}`)} />
         )}
       </>
     );
@@ -30,10 +30,10 @@ const Student = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
     return (
       <>
         <div className={styles.murid_container}>
-          <Image src={guru.img} alt="" style={{ borderRadius: "50%", marginRight: "0.5rem" }} />
+          <Image src={PP} alt="" style={{ borderRadius: "50%", marginRight: "0.5rem" }} />
           <div className={styles.murid_detail}>
-            <div className={styles.murid_detail_name}>{guru.name}</div>
-            <div className={styles.murid_detail_age}>{guru.age}th</div>
+            <div className={styles.murid_detail_name}>{guru}</div>
+            {/* <div className={styles.murid_detail_age}>{guru.age}th</div> */}
           </div>
         </div>
       </>
@@ -46,108 +46,100 @@ const Student = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
     setFilterInput(value);
   };
 
-  const data = useMemo(
-    () => [
-      {
-        Guru: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "50 murid",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Guru: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "50 murid",
-        Status: "Diterima",
-        Area: "Online",
-        Kursus: "Programmer",
-      },
-      {
-        Guru: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "50 murid",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Database Design",
-      },
-      {
-        Guru: {
-          img: PP,
-          name: "Jane",
-          age: 17,
-        },
-        Pengalaman: "100 murid",
-        Status: "Berikan ulasan untuk Jane",
-        Area: "Online",
-        Kursus: "Design UI/UX",
-      },
-    ],
-    []
-  );
+  const data = useMemo(() => dataCourse.data.data, []);
+  // console.log(data);
+  // const data = useMemo(
+  //   () => [
+  //     {
+  //       Guru: {
+  //         img: PP,
+  //         name: "Maulana",
+  //         age: 30,
+  //       },
+  //       Pengalaman: "50 murid",
+  //       Status: "Menunggu konfirmasi",
+  //       Area: "Online",
+  //       Kursus: "Desain UI/UX",
+  //     },
+  //     {
+  //       Guru: {
+  //         img: PP,
+  //         name: "Maulana",
+  //         age: 30,
+  //       },
+  //       Pengalaman: "50 murid",
+  //       Status: "Diterima",
+  //       Area: "Online",
+  //       Kursus: "Programmer",
+  //     },
+  //     {
+  //       Guru: {
+  //         img: PP,
+  //         name: "Maulana",
+  //         age: 30,
+  //       },
+  //       Pengalaman: "50 murid",
+  //       Status: "Ditolak",
+  //       Area: "Online",
+  //       Kursus: "Database Design",
+  //     },
+  //     {
+  //       Guru: {
+  //         img: PP,
+  //         name: "Jane",
+  //         age: 17,
+  //       },
+  //       Pengalaman: "100 murid",
+  //       Status: "Berikan ulasan untuk Jane",
+  //       Area: "Online",
+  //       Kursus: "Design UI/UX",
+  //     },
+  //   ],
+  //   []
+  // );
 
   const columns = useMemo(
     () => [
       {
         Header: () => null, // No header
         accessor: "chatStatus", // It needs an ID
-        Cell: ({ row }) => <Chat guru={row.original.Guru} />,
+        Cell: ({ row }) => <Chat guru={row.original.tutor_name} />,
       },
       {
         Header: () => "Guru",
-        accessor: "Guru",
+        accessor: "tutor_name",
         Cell: ({ cell: { value } }) => <DataGuru guru={value} />,
       },
       {
-        Header: "Pengalaman",
-        accessor: "Pengalaman",
+        Header: "Pengalaman (Murid)",
+        accessor: "tutor_experiences",
       },
       {
         Header: "Status",
-        accessor: "Status",
+        accessor: "course_status",
       },
       {
         Header: "Area",
-        accessor: "Area",
+        accessor: "course_area",
       },
       {
         Header: "Kursus",
-        accessor: "Kursus",
+        accessor: "course_name",
       },
       {
         Header: () => "Respon",
-        id: "Respon", // It needs an ID
+        id: "respon", // It needs an ID
         Cell: ({ row }) => (
           <>
-            {row.original.Status === "Ditolak" && <div className={styles.respon_reject}>Menunggu Respon</div>}
-            {row.original.Status === "Diterima" && <div className={styles.respon_approved}>Menunggu Respon</div>}
-            {row.original.Status === `Berikan ulasan untuk ${row.original.Guru.name}` && (
+            {/* {console.log(row)} */}
+            {row.original.course_status === "tolak" && <div className={styles.respon_reject}>Menunggu Respon</div>}
+            {row.original.course_status === "terima" && <div className={styles.respon_approved}>Menunggu Respon</div>}
+            {row.original.course_status === "selesai" && (
               <div className={styles.respon_ulasan} onClick={() => onOpenModal()}>
                 Beri Ulasan
               </div>
             )}
-            {row.original.Status === "Menunggu konfirmasi" && (
-              <div className={styles.respons_container}>
-                <div className={styles.respons_yes}>
-                  <Image src={Yes} alt="" />
-                  <nav>Terima</nav>
-                </div>
-                <div className={styles.respons_no}>
-                  <Image src={No} alt="" />
-                  <nav>Tolak</nav>
-                </div>
-              </div>
-            )}
+            {row.original.course_status === "Menunggu konfirmasi" && <div className={styles.respon_reject}>Menunggu Respon</div>}
           </>
         ),
       },
@@ -180,7 +172,7 @@ const Student = ({ filterInput, isNewChat, setFilterInput, onOpenModal }) => {
           <div className={styles.course_request_header_group}>
             <div className={styles.course_request_header_title}>Permintaan Kursus</div>
             <div>|</div>
-            <div className={styles.course_request_header_notif}>{3} permintaan menunggu respon</div>
+            <div className={styles.course_request_header_notif}>{dataCourse.data.data.length} permintaan menunggu respon</div>
           </div>
           <div className={styles.course_request_header_search}>
             <Image src={Search} alt="" width={15} />

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 import styles from "../../styles/layout/Header.module.css";
 import TroffenLogo1 from "../../assets/img/Rectangle63.svg";
@@ -16,7 +17,9 @@ import ProfileIcon from "../../assets/img/dashboard/header/profile.svg";
 import UpgradeIcon from "../../assets/img/dashboard/header/upgrade.svg";
 import LogoutIcon from "../../assets/img/dashboard/header/logout.svg";
 
-function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, handleLogout }) {
+function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
+  const router = useRouter();
+
   const date = new Date();
   let day = date.getDate();
   let month = date.getMonth() + 1;
@@ -38,6 +41,8 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
   }
 
   let currentDate = getMonthName(month);
+  // console.log(Cookies.get("firstname"));
+
   return (
     <>
       {navbar === "dashboardNavbar" && (
@@ -47,7 +52,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
               {/* info */}
               <div className={styles.ds_header_info}>
                 <div>
-                  <div className={styles.ds_header_info_name}>Hello, {firstname}!</div>
+                  <div className={styles.ds_header_info_name}>Hello, {Cookies.get("firstname")}!</div>
                   <div className={styles.ds_header_info_date_time}>
                     {currentTime} {day} {currentDate} {year}
                   </div>
@@ -65,11 +70,11 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                 <Image alt="" src={ActiveNotif} priority />
               </div> */}
               {/* profile */}
-              {isLogin || (token !== undefined && token) ? (
+              {isLogin || Cookies.get("token") !== undefined ? (
                 <div className={styles.ds_menu}>
                   <ul className={styles.ds_ul}>
                     <li className={styles.loggedin_menu}>
-                      <div className={styles.loggedin_username}>{firstname !== undefined && firstname}</div>
+                      <div className={styles.loggedin_username}>{Cookies.get("firstname")}</div>
                       <Image alt="" src={PP} priority />
                       <ul className={styles.ds_loggedin_menu_body}>
                         <li className={styles.dashboard_menu} onClick={() => handleNavbar("profile")}>
@@ -104,17 +109,13 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents_member}>
               <div className={styles.navbar_contents_logo}>
-                <Link href={"/"}>
-                  <nav className={styles.logo1}>
-                    <Image alt="" src={TroffenLogo1} className={styles.logo1_1} priority />
-                    <Image alt="" src={TroffenLogo2} className={styles.logo1_2} priority />
-                  </nav>
-                </Link>
-                <Link href={"/"}>
-                  <nav className={styles.logo2}>
-                    <Image alt="" src={TroffenLogo3} priority />
-                  </nav>
-                </Link>
+                <nav className={styles.logo1} onClick={() => router.replace("/")}>
+                  <Image alt="" src={TroffenLogo1} className={styles.logo1_1} priority />
+                  <Image alt="" src={TroffenLogo2} className={styles.logo1_2} priority />
+                </nav>
+                <nav className={styles.logo2} onClick={() => router.replace("/")}>
+                  <Image alt="" src={TroffenLogo3} priority />
+                </nav>
                 {process.env.WEB_ENV === "STAGING" && <nav>&nbsp; Staging</nav>}
               </div>
               {!isLogin && Cookies.get("token") === undefined && (
@@ -153,23 +154,16 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
           <div className={styles.container_navbar}>
             <div className={styles.navbar_contents}>
               <div className={styles.navbar_contents_logo}>
-                <Link href={"/"}>
-                  <nav className={styles.logo1}>
-                    <Image alt="" src={TroffenLogo1} className={styles.logo1_1} priority />
-                    <Image alt="" src={TroffenLogo2} className={styles.logo1_2} priority />
-                  </nav>
-                </Link>
-                <Link href={"/"}>
-                  <nav className={styles.logo2}>
-                    <Image alt="" src={TroffenLogo3} priority />
-                  </nav>
-                </Link>
+                <nav className={styles.logo1} onClick={() => router.replace("/")}>
+                  <Image alt="" src={TroffenLogo1} className={styles.logo1_1} priority />
+                  <Image alt="" src={TroffenLogo2} className={styles.logo1_2} priority />
+                </nav>
+                <nav className={styles.logo2} onClick={() => router.replace("/")}>
+                  <Image alt="" src={TroffenLogo3} priority />
+                </nav>
                 {process.env.WEB_ENV === "STAGING" && <nav>&nbsp; Staging</nav>}
               </div>
               <div className={styles.navbar_contents_menu}>
-                {/* <div className={styles.navbar_contents_menu1}>
-                  <Link href={"https://lp.troffen-api.com/"}>Daftar Digital Marketing Boothcamp Sekarang!</Link>
-                </div> */}
                 <div className={styles.navbar_contents_menu1}>
                   <Link href={"/cari-kursus"}>Cari Kursus</Link>
                 </div>
@@ -179,11 +173,8 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                 <div className={styles.navbar_contents_menu3}>
                   <Link href={"/coming-soon"}>Tentang Kami</Link>
                 </div>
-                {/* <div className={styles.navbar_contents_menu3}>
-                  <Link href={"/tentang-kami"}>Tentang Kami</Link>
-                </div> */}
 
-                {!isLogin && token === undefined ? (
+                {isLogin === false && Cookies.get("token") === undefined ? (
                   <>
                     <div className={styles.navbar_contents_menu4}>
                       <Link href={"#"} onClick={() => modalConfig("daftar", true)}>
@@ -200,10 +191,10 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, token, firstname, 
                   ""
                 )}
 
-                {isLogin || (token !== undefined && token) ? (
+                {Cookies.get("token") !== undefined ? (
                   <ul className={styles.ul}>
                     <li className={styles.loggedin_menu}>
-                      <div className={styles.loggedin_username}>{(firstname !== undefined && firstname) || "Fauzan-Affan"}</div>
+                      <div className={styles.loggedin_username}>{Cookies.get("firstname")}</div>
                       <Image alt="" src={PP} priority />
                       <ul className={styles.loggedin_menu_body}>
                         <li className={styles.dashboard_menu} onClick={() => handleNavbar("dashboardNavbar")}>

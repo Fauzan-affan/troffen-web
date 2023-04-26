@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Autocomplete from "react-autocomplete";
-import indonesia from "territory-indonesia";
+import { getSession, useSession, signIn, signOut } from "next-auth/react";
+import Cookies from "js-cookie";
 
 import Image from "next/image";
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
@@ -25,6 +26,12 @@ import Dua from "../../assets/img/2.svg";
 import lingkaran from "../../assets/img/EllipseNo.svg";
 import DoneImage from "../../assets/img/done_.svg";
 import ShowPass from "../../assets/img/show.png";
+
+import Modal from "../../components/core/modal/Modal";
+
+import { loadProvinceFunc } from "../../functions/province";
+import { loadCityFunc } from "../../functions/city";
+import { submitPersonalInfo, submitEducation, submitWork, getUserDetail, registerProvider } from "../../functions/student";
 
 const date = [
   { name: 1, value: 1 },
@@ -118,28 +125,19 @@ const year = [
   { name: 2023, value: 2023 },
 ];
 
+const degree = [
+  { name: "SD", value: "SD" },
+  { name: "SMP", value: "SMP" },
+  { name: "SMA", value: "SMA" },
+  { name: "S1", value: "S1" },
+  { name: "S2", value: "S2" },
+  { name: "S3", value: "S3" },
+];
+
 const genderOption = [
   { name: "Laki - Laki", value: "Laki - Laki" },
   { name: "Perempuan", value: "Perempuan" },
 ];
-
-const provOption = [];
-
-indonesia
-  .getAllProvinces()
-  .then((res) => {
-    provOption.push(res);
-  })
-  .catch((err) => console.log(err));
-
-const kotaOption = [];
-
-indonesia
-  .getAllRegencies()
-  .then((res) => {
-    kotaOption.push(res);
-  })
-  .catch((err) => console.log(err));
 
 const DaftarMurid = () => {
   const router = useRouter();
@@ -155,17 +153,88 @@ const DaftarMurid = () => {
     bulanLahir: "",
     tahunLahir: "",
     tempatLahir: "",
-    gender: "",
     fotoProfil: "",
     noHP: "",
-    provinsi: "",
-    kota: "",
-    pengalamanPendidikan: "",
-    pengalamanPekerjaan: "",
     alamatLengkap: "",
   });
 
+  const [stateExp, setStateExp] = useState({
+    token: "",
+    eduSchool: "",
+    eduDegree: "",
+    startDate: "",
+    endDate: "",
+
+    userId: "",
+    companyName: "",
+    workTitle: "",
+    startWork: "",
+    endWork: "",
+    workDesc: "",
+  });
+
+  const [user, setUser] = useState([]);
+
+  const [gender, setGender] = useState("");
+
+  const [provinces, setProvinces] = useState([]);
+  const [provinsi, setProvinsi] = useState("");
+
+  const [cities, setCities] = useState([]);
+  const [kota, setKota] = useState("");
+  const [selectedKotaId, setSelectedKotaId] = useState(0);
+  const [personalInfoRes, setPersonalInfoRes] = useState([]);
+
   const [password, setPassword] = useState(false);
+
+  const [modal, setModal] = useState(false);
+  const [modalPend, setModalPend] = useState(false);
+  const [modalPek, setModalPek] = useState(false);
+  const [modalRegisterProvider, setModalRegisterProvider] = useState(false);
+
+  const handleProvinces = async () => {
+    try {
+      const prov = await loadProvinceFunc();
+
+      setProvinces(prov);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCities = async (provinceId) => {
+    try {
+      const city = await loadCityFunc(provinceId);
+
+      setCities(city);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const selectedProv = (prov) => {
+    const id = provinces.filter((item) => item.name === prov)[0].id;
+    setProvinsi(prov);
+    handleCities(id);
+  };
+
+  const selectedKota = (kota) => {
+    const id = cities.filter((item) => item.name === kota)[0].id;
+    setSelectedKotaId(id);
+    setKota(kota);
+  };
+
+  const handleRegisterProvider = (provider) => {
+    signIn(provider);
+    Cookies.set("provider", provider);
+  };
+
+  const submitRegisterProviderAPI = async () => {
+    const res = await registerProvider(Cookies.get("token"));
+    // console.log(Cookies.get("provider"));
+    // console.log(res);
+    setModalRegisterProvider(true);
+  };
 
   const handlePassword = () => {
     setPassword(!password);
@@ -182,6 +251,16 @@ const DaftarMurid = () => {
     }));
   };
 
+  const handleChangeExperiance = (e) => {
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    setStateExp((state) => ({
+      ...state,
+      [name]: value,
+    }));
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
     // console.log(state);
@@ -193,29 +272,7 @@ const DaftarMurid = () => {
       }));
     }
 
-    if (
-      state.stage === "Personal Info" &&
-      state.namaLengkap.length !== 0 &&
-      state.namaDepan.length !== 0 &&
-      state.namaBelakang.length !== 0 &&
-      state.tempatLahir.length !== 0 &&
-      state.gender.length !== 0 &&
-      state.fotoProfil.length !== 0 &&
-      state.noHP.length !== 0 &&
-      state.provinsi.length !== 0 &&
-      state.kota.length !== 0
-    ) {
-      setState((state) => ({
-        ...state,
-        ["stage"]: "Experiences",
-      }));
-    }
-
-    if (
-      state.stage === "Experiences"
-      // && state.pengalamanPendidikan.length !== 0
-      // && state.pengalamanPekerjaan.length !== 0
-    ) {
+    if (state.stage === "Experiences") {
       setState((state) => ({
         ...state,
         ["stage"]: "Done",
@@ -234,48 +291,87 @@ const DaftarMurid = () => {
     router.replace(url);
   };
 
-  const handleSubmit = async () => {
-    console.log(state);
+  const handleCloseModal = () => {
+    setModal(false);
+  };
 
-    const { namaDepan, namaBelakang, namaLengkap, tempatLahir, tahunLahir, bulanLahir, tanggalLahir, alamatLengkap, fotoProfil, gender, noHP, email, password } = state;
+  const handleCloseModalPend = () => {
+    setModalPend(false);
+  };
 
-    try {
-      const res = await fetch("https://api.troffen-api.com/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        // credentials: "include",
-        body: JSON.stringify({
-          first_name: namaDepan,
-          last_name: namaBelakang,
-          full_name: namaLengkap,
-          birth_place: tempatLahir,
-          birth_date: `${tahunLahir}-${bulanLahir}-${tanggalLahir}`,
-          full_address: alamatLengkap,
-          photo: fotoProfil,
-          gender: gender,
-          phone: noHP,
-          email: email,
-          password: password,
-          password_confirmation: password,
-          user_status: "murid",
-          id_area: 1,
-        }),
-      });
+  const handleCloseModalPek = () => {
+    setModalPek(false);
+  };
 
-      const data = await res.json();
-      if (data.meta.code === 200) {
-        // Cookies.set("token", data.data.token);
-        // Cookies.set("firstName", data.data.user.first_name);
-        // setShowModal(false);
-        console.log(data);
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.meta.code === 422) {
-        console.log(error);
+  const handleCloseModalProv = () => {
+    setModalRegisterProvider(false);
+    router.replace("/");
+  };
+
+  const handlePersonalInfo = async (e) => {
+    e.preventDefault();
+    const { namaDepan, namaBelakang, namaLengkap, tempatLahir, tahunLahir, bulanLahir, tanggalLahir, alamatLengkap, fotoProfil, noHP, email, password } = state;
+    if (state.stage === "Personal Info" && namaLengkap.length !== 0 && namaDepan.length !== 0 && namaBelakang.length !== 0 && tempatLahir.length !== 0 && fotoProfil.length !== 0 && noHP.length !== 0) {
+      const tanggalLhr = `${tahunLahir}-${bulanLahir}-${tanggalLahir}`;
+      const res = await submitPersonalInfo(namaDepan, namaBelakang, namaLengkap, tempatLahir, tanggalLhr, alamatLengkap, fotoProfil, gender, noHP, email, password, "student", selectedKotaId);
+
+      if (res.meta.code === 401) {
+        // sudent exist, seilahkan login
+        setPersonalInfoRes(res);
+        setModal(true);
+      } else if (res.meta.code === 200) {
+        setPersonalInfoRes(res);
+        setStateExp((state) => ({
+          ...state,
+          ["token"]: res.data.token,
+          ["userId"]: res.data.user.id,
+        }));
+        setState((state) => ({
+          ...state,
+          ["stage"]: "Experiences",
+        }));
       }
     }
   };
+
+  // useruser1@gmail.com
+  // useruser2@gmail.com
+  // useruser3@gmail.com
+  // useruser4@gmail.com
+  // useruser5@gmail.com
+  // useruser6@gmail.com
+  // useruser7@gmail.com
+  // useruser8@gmail.com
+
+  const handleSubmitPendidikan = async () => {
+    const { token, eduSchool, eduDegree, startDate, endDate } = stateExp;
+    if (state.stage === "Experiences" && token.length !== 0 && eduSchool.length !== 0 && eduDegree.length !== 0 && startDate.length !== 0 && endDate.length !== 0) {
+      const res = await submitEducation(token, eduSchool, eduDegree, startDate, endDate);
+      if (res.meta.code === 200) {
+        const user = await getUserDetail(token);
+        setUser(user);
+        setModalPend(false);
+      }
+    }
+  };
+
+  const handleSubmitPekerjaan = async () => {
+    const { token, userId, companyName, workTitle, startWork, endWork, workDesc } = stateExp;
+    if (state.stage === "Experiences" && companyName.length !== 0 && workTitle.length !== 0 && startWork.length !== 0 && endWork.length !== 0 && workDesc.length !== 0) {
+      const res = await submitWork(token, userId, companyName, workTitle, startWork, endWork, workDesc);
+      if (res.meta.code === 200) {
+        const user = await getUserDetail(token);
+        setUser(user);
+        setModalPek(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleProvinces();
+
+    Cookies.get("email") !== undefined && submitRegisterProviderAPI();
+  }, [Cookies.get("email")]);
 
   return (
     <GeneralTemplate
@@ -320,11 +416,11 @@ const DaftarMurid = () => {
                           atau masuk dengan
                         </div>
                         <div className="masuk_options_body">
-                          <div className="masuk_google">
+                          <div className="masuk_google" onClick={() => handleRegisterProvider("google")}>
                             <Image alt="" src={Google} priority width={20} height={20} />
                             <nav>Google</nav>
                           </div>
-                          <div className="masuk_facebook">
+                          <div className="masuk_facebook" onClick={() => handleRegisterProvider("facebook")}>
                             <Image alt="" src={Fb} priority width={20} height={20} />
                             <nav>Facebook</nav>
                           </div>
@@ -356,7 +452,7 @@ const DaftarMurid = () => {
                   </div>
                   <div className={styles.po_desc}>Masukkan informasi pribadi mengenai Anda.</div>
                 </div>
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handlePersonalInfo}>
                   <Input label="Nama Lengkap" name="namaLengkap" desc="" placeholder="Masukkan nama lengkap" handleChange={handleChange} />
                   <Input label="Nama Depan" name="namaDepan" desc="Nama depan akan muncul di profil Anda." placeholder="Masukkan nama depan" handleChange={handleChange} />
                   <Input label="Nama Belakang" name="namaBelakang" desc="Nama belakang akan muncul di profil Anda." placeholder="Masukkan nama belakang" handleChange={handleChange} />
@@ -378,14 +474,12 @@ const DaftarMurid = () => {
 
                   <Input label="Tempat Lahir" name="tempatLahir" desc="" placeholder="Masukkan tempat lahir" handleChange={handleChange} />
 
-                  <Select label="Gender" optionLabel="Gender" desc="" name="gender" options={genderOption} handleChange={handleChange} />
                   <div className={styles.wrapper}>
                     <label htmlFor={"Gender"}>Gender</label>
-                    {/* <nav>{desc}</nav> */}
                     <div className={styles.input}>
                       <Autocomplete
-                        value={state.gender}
-                        onChange={(e) => setState({ gender: e.target.value })}
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
                         getItemValue={(item) => item.name}
                         items={genderOption}
                         renderItem={(item, isHighlighted) => (
@@ -393,8 +487,8 @@ const DaftarMurid = () => {
                             {item.name}
                           </div>
                         )}
-                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih subjek kursus" type="text" />}
-                        onSelect={(gender) => setState({ gender })}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih jenis kelamin" type="text" />}
+                        onSelect={(gender) => setGender(gender)}
                         shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
                         autoHighlight={true}
                       />
@@ -404,8 +498,47 @@ const DaftarMurid = () => {
                   <Upload stage={state.stage} label="Foto Profil" name="fotoProfil" desc="" handleChange={handleChange} />
                   <Input label="Nomor Handphone" name="noHP" desc="" placeholder="Cth: 0812 3456 7891" handleChange={handleChange} />
 
-                  <Select label="Provinsi" optionLabel="Provinsi" desc="" name="provinsi" options={provOption[0]} handleChange={handleChange} />
-                  <Select label="Kota / Area" optionLabel="Kota" desc="" name="kota" options={kotaOption[0]} handleChange={handleChange} />
+                  <div className={styles.wrapper}>
+                    <label htmlFor={"Provinsi"}>Provinsi</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={provinsi}
+                        onChange={(e) => setProvinsi(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={provinces}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih provinsi" type="text" />}
+                        onSelect={(provinsi) => selectedProv(provinsi)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={styles.wrapper}>
+                    <label htmlFor="">Kota / Area</label>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={kota}
+                        onChange={(e) => setKota(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={cities}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih provinsi terlebih dahulu" type="text" />}
+                        onSelect={(kota) => selectedKota(kota)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
 
                   <Textarea label="Alamat Lengkap" name="alamatLengkap" desc="" col={60} row={4} placeholder="Masukkan alamat lengkap" handleChange={handleChange} />
 
@@ -447,14 +580,42 @@ const DaftarMurid = () => {
                   <div className={styles.po_desc}>Informasi mengenai pengalaman sangat menentukan tingkat ketertarikan murid melakukan reservasi terhadap iklan dari judul subjek Anda.</div>
                 </div>
                 <form onSubmit={handleRegister}>
-                  <Upload stage={state.stage} label="Pengalaman Pendidikan (Opsional)" desc="Masukkan pengalaman pendidikan Anda (maksimal 3)" name="pengalamanPendidikan" handleChange={handleChange} />
+                  <div className={styles.pendidikan_wrapper}>
+                    <label htmlFor={""}>Pengalaman Pendidikan (Opsional)</label>
+                    <nav>Masukkan pengalaman pendidikan Anda (maksimal 3)</nav>
+                    {user.length !== 0 && user.data.user.educations.map((item, i) => <div key={i}>- {item.education_school}</div>)}
+                    {user.length !== 0 && user.data.user.educations.length < 3 && (
+                      <div className={styles.tambah_pendidikan} onClick={() => setModalPend(true)}>
+                        <b>+ Tambah Pendidikan</b>
+                      </div>
+                    )}
+                    {user.length === 0 && (
+                      <div className={styles.tambah_pendidikan} onClick={() => setModalPend(true)}>
+                        <b>+ Tambah Pendidikan</b>
+                      </div>
+                    )}
+                  </div>
                   <hr className={styles.hr} />
-                  <Upload stage={state.stage} label="Pengalaman Pekerjaan (Opsional)" desc="Masukkan pengalaman pekerjaan Anda (maksimal 3)" name="pengalamanPekerjaan" handleChange={handleChange} />
+                  <div className={styles.pekerjaan_wrapper}>
+                    <label htmlFor={""}>Pengalaman Pekerjaan (Opsional)</label>
+                    <nav>Masukkan pengalaman pekerjaan Anda (maksimal 3)</nav>
+                    {user.length !== 0 && user.data.user.works.map((item, i) => <div key={i}>- {item.work_company_name}</div>)}
+                    {user.length !== 0 && user.data.user.works.length < 3 && (
+                      <div className={styles.tambah_pekerjaan} onClick={() => setModalPek(true)}>
+                        <b>+ Tambah Pekerjaan</b>
+                      </div>
+                    )}
+                    {user.length === 0 && (
+                      <div className={styles.tambah_pekerjaan} onClick={() => setModalPek(true)}>
+                        <b>+ Tambah Pekerjaan</b>
+                      </div>
+                    )}
+                  </div>
                   <div className={styles.button_container}>
                     <button type="submit" className={styles.button_kembali} onClick={() => handleBack("Personal Info")}>
                       Kembali
                     </button>
-                    <button type="submit" className={styles.button} onClick={() => handleSubmit()}>
+                    <button type="submit" className={styles.button}>
                       Selesai
                     </button>
                   </div>
@@ -484,7 +645,7 @@ const DaftarMurid = () => {
               Selamat! Temukan dan reservasi kursus sesuai dengan guru pilihanmu. Langganan <b>Monthly Pass</b> sekarang hanya dengan <b>Rp 15rb/bulan</b> untuk dapat melakukan reservasi kursus.
             </nav>
             <div className={styles.done_action}>
-              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/coming-soon")}>
+              <button type="submit" className={styles.button_langganan} onClick={() => handleRedirect("/monthly-pass")}>
                 Langganan Sekarang
               </button>
               <button type="submit" className={styles.button_home} onClick={() => handleRedirect("/")}>
@@ -494,6 +655,66 @@ const DaftarMurid = () => {
           </div>
         </div>
       )}
+
+      <Modal modalInfo={modal} handleModal={handleCloseModal}>
+        <>
+          {personalInfoRes.length !== 0 && personalInfoRes.meta.code === 401 && (
+            <>
+              <b>{state.email}</b> {` sudah terdaftar. Silahkan masuk terlebih dahulu.`}
+            </>
+          )}
+        </>
+      </Modal>
+
+      <Modal modalForm={modalPend} onClose={handleCloseModalPend}>
+        <div className={styles.modal_title}>Tambah Pengalaman Pendidikan</div>
+        <div className={styles.eduSchool}>
+          <Input label="Nama Sekolah/Universitas" name="eduSchool" desc="" placeholder="Cth: Sekolah Menengah Atas ABC" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.eduDegree}>
+          <Select label="Tingkat" optionLabel="Degree" desc="" name="eduDegree" options={degree} handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.startDate}>
+          <Select label="Tahun Mulai" optionLabel="Tahun" desc="" name="startDate" options={year} handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.endDate}>
+          <Select label="Tahun Selesai" optionLabel="Tahun" desc="" name="endDate" options={year} handleChange={handleChangeExperiance} />
+        </div>
+        <button type="submit" className={styles.button} onClick={() => handleSubmitPendidikan()}>
+          Selesai
+        </button>
+      </Modal>
+
+      <Modal modalForm={modalPek} onClose={handleCloseModalPek}>
+        <div className={styles.modal_title}>Tambah Pengalaman Pekerjaan</div>
+        <div className={styles.companyName}>
+          <Input label="Nama Institusi/Perusahaan" name="companyName" desc="" placeholder="Cth: Google" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.workTitle}>
+          <Input label="Jabatan Pekerjaan" name="workTitle" desc="" placeholder="Cth: Software Engineer" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.workDate}>
+          <nav>
+            <Select label="Tahun Mulai" optionLabel="Tahun" desc="" name="startWork" options={year} handleChange={handleChangeExperiance} />
+          </nav>
+          <nav>
+            <Select label="Tahun Selesai" optionLabel="Tahun" desc="" name="endWork" options={year} handleChange={handleChangeExperiance} />
+          </nav>
+        </div>
+        <div className={styles.workDesc}>
+          <Textarea label="Deskripsi Pekerjaan" name="workDesc" desc="" col={60} row={2} placeholder="Masukkan deskripsi pekerjaan" handleChange={handleChangeExperiance} />
+        </div>
+        <button type="submit" className={styles.button} onClick={() => handleSubmitPekerjaan()}>
+          Selesai
+        </button>
+      </Modal>
+
+      <Modal modalInfo={modalRegisterProvider} handleModal={handleCloseModalProv}>
+        <>
+          <b>{Cookies.get("email")}</b>
+          {` Telah Berhasil Didaftarkan!`}
+        </>
+      </Modal>
     </GeneralTemplate>
   );
 };

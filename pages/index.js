@@ -73,7 +73,7 @@ export const getStaticProps = async () => {
 export default function Home({ posts }) {
   const router = useRouter();
   const [isClick, setIsClick] = useState(1);
-  const [listContent, setListContent] = useState(3);
+  const [listContent, setListContent] = useState(0);
   const [modalBanner, setModalBanner] = useState(true);
   const [visible, setVisible] = useState(false);
 
@@ -85,8 +85,23 @@ export default function Home({ posts }) {
     return str.length > n ? str.slice(0, n - 1) + " ...." : str;
   };
 
-  const handleLoadMoreCard = () => {
-    setListContent(listContent + 3);
+  const handleLoadMoreCard = (param) => {
+    let total = posts.length;
+    if (param === "next") {
+      if (listContent === total) {
+        setListContent(total);
+      } else {
+        setListContent(listContent + 1);
+      }
+    } else if (param === "prev") {
+      if (listContent === 1) {
+        setListContent(1);
+      } else {
+        setListContent(listContent - 1);
+      }
+    } else {
+      setListContent(1);
+    }
   };
 
   let cardLists = posts.slice(0, listContent);
@@ -101,6 +116,8 @@ export default function Home({ posts }) {
       setVisible(true);
       localStorage.setItem("pop_status", 1);
     }
+
+    setListContent(posts.length);
   }, []);
 
   // localStorage.clear();
@@ -291,18 +308,14 @@ export default function Home({ posts }) {
           <div className={styles.subjek}>
             <div className={styles.subjek_title}>
               <div className={styles.subjek_title_main}>Artikel Menarik Dari Troffen</div>
-              {listContent !== 6 ? (
-                <div className={styles.subjek_title_action}>
-                  <div className={styles.previous}>
-                    <Image alt="" src={Previous} priority />
-                  </div>
-                  <div className={styles.next}>
-                    <Image alt="" src={Next} priority />
-                  </div>
+              <div className={styles.subjek_title_action}>
+                <div className={styles.previous}>
+                  <Image alt="" src={Previous} priority onClick={() => handleLoadMoreCard("prev")} />
                 </div>
-              ) : (
-                ""
-              )}
+                <div className={styles.next}>
+                  <Image alt="" src={Next} priority onClick={() => handleLoadMoreCard("next")} />
+                </div>
+              </div>
             </div>
             <div className={styles.subjek_gallery}>
               {/* <div className={styles.subjek_gallery_row}>
@@ -364,7 +377,7 @@ export default function Home({ posts }) {
                         <nav>
                           <Tag type="blogTag">{tags}</Tag>
                         </nav>
-                        <div className={styles.content_title}>{title}</div>
+                        <div className={styles.content_title}>{truncate(title, 50)}</div>
                         <div className={styles.content_creator_container}>
                           <div className={styles.content_creator}>
                             <Image alt="" src={j} priority width={20} />
@@ -387,32 +400,26 @@ export default function Home({ posts }) {
                 })}
               </div>
             </div>
-            {listContent !== 6 ? (
-              <div className={styles.subjek_lihat_semua}>
-                <button className={styles.button_lihat_semua} onClick={() => handleLoadMoreCard()}>
-                  Lihat Semua
-                </button>
-              </div>
-            ) : (
-              ""
-            )}
+            <div className={styles.subjek_lihat_semua}>
+              <button className={styles.button_lihat_semua} onClick={() => router.push(`/blog`)}>
+                Lihat Semua
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="benefit-sebagai">
-        <div className={styles.container}>
-          <div className={styles.benefit_sebagai}>
-            <div className={styles.benefit_sebagai_tutor}>
-              <Link href={`/daftar-guru`}>
-                <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
-              </Link>
-            </div>
-            <div className={styles.benefit_sebagai_student}>
-              <Link href={`/daftar-murid`}>
-                <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
-              </Link>
-            </div>
+        <div className={styles.benefit_sebagai}>
+          <div className={styles.benefit_sebagai_tutor}>
+            <Link href={`/daftar-guru`}>
+              <Image alt="" src={GuruBenefit} priority className={styles.benefit_sebagai_tutor_img} />
+            </Link>
+          </div>
+          <div className={styles.benefit_sebagai_student}>
+            <Link href={`/daftar-murid`}>
+              <Image alt="" src={MuridBenefit} className={styles.benefit_sebagai_student_img} />
+            </Link>
           </div>
         </div>
       </section>

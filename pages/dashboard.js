@@ -12,7 +12,22 @@ import Student from "../components/dashboard/Student";
 
 import GreenChecklist from "../assets/img/dashboard/greenchecklist.svg";
 
-const Dashboard = () => {
+import { submitAjukanKursus } from "../functions/dashboard";
+
+export const getStaticProps = async () => {
+  const res = await submitAjukanKursus("Bearer 17|K01ITpaMfBrSTguFHR7XneeQrykSJ8BgX8ADNS2K");
+  // console.log(res);
+  return {
+    props: {
+      courselist: res,
+    },
+  };
+};
+
+const Dashboard = ({ courselist }) => {
+  // console.log(courselist);
+  // console.log(Cookies.get("role"));
+
   const [modal, setModal] = useState(false);
   const [ulasan, setUlasan] = useState("");
   const [isUlasanTerkirim, setIsUlasanTerkirim] = useState(false);
@@ -52,8 +67,8 @@ const Dashboard = () => {
     <section id="container">
       <div className={styles.container}>
         <Modal onClose={closeStickyModal} isSticky={stickyActive} />
-        {role === "tutor" && <Tutor filterInput={filterInput} isNewChat={isNewChat} setFilterInput={setFilterInput} />}
-        {role === "student" && <Student filterInput={filterInput} isNewChat={isNewChat} setFilterInput={setFilterInput} onOpenModal={handleModalUlasan} />}
+        {role === "tutor" && <Tutor dataCourse={courselist} filterInput={filterInput} isNewChat={isNewChat} setFilterInput={setFilterInput} />}
+        {role === "student" && <Student dataCourse={courselist} filterInput={filterInput} isNewChat={isNewChat} setFilterInput={setFilterInput} onOpenModal={handleModalUlasan} />}
         <Modal onClose={handleModalUlasan} modalUlasan={modal}>
           {!isUlasanTerkirim && (
             <div className={styles.ulasan_container}>

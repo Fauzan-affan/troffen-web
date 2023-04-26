@@ -27,14 +27,14 @@ export const loadCoursesFunc = async (title = "", area = "", page = 1) => {
 
 export const searchCourseFunc = async (title = "", area = "", page = 1) => {
   try {
-    console.log(title, area.length);
+    // console.log(title, area.length);
     const res = await fetch("https://api.troffen-api.com/api/public/course/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // credentials: "include",
       body: JSON.stringify({
         course_title: title,
-        course_area: area || "",
+        course_area: area,
         limit: 6,
         page: page,
       }),

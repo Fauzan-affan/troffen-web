@@ -26,14 +26,14 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-function ModalPopupLogic({ onClose, show, title, session, signIn, password, masukSebagaiType, changeLoginType, handleLogin, handleChange, handlePassword }) {
+function ModalPopupLogic({ onClose, show, title, iSlogin, signIn, password, masukSebagaiType, changeLoginType, handleLogin, handleChange, handlePassword }) {
   const router = useRouter();
 
   // if (status === "loading") {
   //   return <p>Loading...</p>;
   // }
 
-  if (!session) {
+  if (!iSlogin) {
     return (
       <Modal onClose={() => onClose(false)} show={show} title={title}>
         {title === "daftar" && (

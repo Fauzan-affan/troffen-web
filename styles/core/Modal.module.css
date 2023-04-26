@@ -83,6 +83,22 @@
   padding: 30px;
 }
 
+.modal_ulasan {
+  background: white;
+  width: 800px;
+  height: 650px;
+  border-radius: 50px;
+  padding: 30px;
+}
+
+.modal_pend {
+  background: white;
+  width: 800px;
+  height: 650px;
+  border-radius: 50px;
+  padding: 30px;
+}
+
 .modal_ulasan_banner {
   background: white;
   width: 800px;

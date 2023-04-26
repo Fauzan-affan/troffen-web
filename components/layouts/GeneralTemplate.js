@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+import { getSession, useSession, signIn, signOut } from "next-auth/react";
 import { Logout } from "../../functions/logout";
 import Cookies from "js-cookie";
 
@@ -8,13 +8,17 @@ import Head from "next/head";
 import Header from "./Header";
 import Footer from "./Footer.js";
 
+import Modal from "../core/modal/Modal";
 import ModalPopupLogic from "../core/modal/ModalPopupLogic";
+
+import { loginProvider } from "../../functions/login";
 
 const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
   const router = useRouter();
-  // session google & FB
-  const { data: session } = useSession();
 
+  const { data: session, status } = useSession();
+
+  const [modalInfo, setModalInfo] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [menu, setMenu] = useState("");
   const [navbar, setNavbar] = useState("");
@@ -24,8 +28,6 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     password: "",
   });
   const [isLogin, setIsLogin] = useState(false);
-  const [token, setToken] = useState();
-  const [firstname, setFirstname] = useState();
   const [showPass, setShowPass] = useState(false);
 
   const handlePassword = () => {
@@ -51,7 +53,9 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
   };
 
   const changeLoginType = (type) => {
+    // console.log(type);
     setMasukSebagaiType(type);
+    Cookies.set("roleLoginProvider", type);
   };
 
   const handleChange = (e) => {
@@ -67,8 +71,6 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // test_tutor1@email.com
-    // test_student1@email.com
     if (state.email.length !== 0 && state.password.length !== 0) {
       try {
         const res = await fetch(`https://api.troffen-api.com/api/${masukSebagaiType === 1 ? `student` : `tutor`}/login`, {
@@ -78,8 +80,8 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
           body: JSON.stringify(state),
         });
         const response = await res.json();
-        // console.log(data);
         if (response !== undefined && response.meta.code === 200) {
+          setIsLogin(true);
           const { data } = response;
           const { token, role, user } = data;
           const { first_name, email } = user;
@@ -93,33 +95,47 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         }
       } catch (error) {
         console.log(error);
-        // if (error !== undefined && error.meta.code === 422) {
-        //   console.log(error);
-        // }
       }
     }
   };
 
+  const handleProviderLogin = (provider) => {
+    signIn(provider);
+    Cookies.set("provider", provider);
+  };
+
+  const getOAuthToken = async (token) => {
+    try {
+      const res = await loginProvider(token);
+
+      if (res !== undefined && res.meta.code === 200) {
+        Cookies.set("token", res.data.token);
+        Cookies.set("email", res.data.user.email);
+        Cookies.set("firstName", res.data.user.first_name);
+        Cookies.set("role", res.data.role);
+        setIsLogin(true);
+      } else {
+        setModalInfo(true);
+      }
+    } catch (error) {
+      console.log(error);
+      setModalInfo(true);
+    }
+  };
+
   const handleLogout = () => {
-    setIsLogin(false);
     Logout();
+    setIsLogin(false);
+    router.replace("/");
   };
 
   useEffect(() => {
-    isNavbar ? setNavbar(isNavbar) : "";
+    isNavbar && setNavbar(isNavbar);
 
-    if (session) {
-      setIsLogin(session);
+    if (session?.user.account !== undefined && session?.user.account.access_token) {
+      getOAuthToken(session?.user.account.access_token);
     }
-
-    if (Cookies.get("token") !== undefined) {
-      setFirstname(Cookies.get("firstName"));
-    }
-
-    if (Cookies.get("token") !== undefined) {
-      setToken(Cookies.get("token"));
-    }
-  }, [isNavbar, isLogin, token, firstname, session]);
+  }, [navbar, session]);
 
   return (
     <div>
@@ -128,15 +144,15 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         <meta name="description" content={desc} />
         <link rel="icon" href={`/${icon}`} />
       </Head>
-      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} />
+      <Header modalConfig={modalConfig} navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} handleLogout={handleLogout} />
       {children}
       <Footer />
       <ModalPopupLogic
         onClose={setShowModal}
         show={showModal}
         title={menu}
-        session={session}
-        signIn={signIn}
+        isLogin={isLogin}
+        signIn={handleProviderLogin}
         password={showPass}
         masukSebagaiType={masukSebagaiType}
         changeLoginType={changeLoginType}
@@ -144,6 +160,9 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         handleChange={handleChange}
         handlePassword={handlePassword}
       />
+      <Modal modalInfo={modalInfo} handleModal={() => setModalInfo(false)}>
+        <div>Akun Belum Terdaftar</div>
+      </Modal>
     </div>
   );
 };

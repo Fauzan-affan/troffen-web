@@ -713,7 +713,7 @@
 .benefit_sebagai_tutor_img,
 .benefit_sebagai_student_img {
   cursor: pointer;
-  width: 100%;
+  /* width: 100%; */
 }
 
 #jumbotron_mobile {

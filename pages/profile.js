@@ -129,7 +129,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    Cookies.get("firstName").length > 0 && setNama({ namaLengkap: `${Cookies.get("firstName")} Maulana`, nameDepan: Cookies.get("firstName"), namaBelakang: "Maulana" });
+    Cookies.get("firstName") !== undefined && setNama({ namaLengkap: `${Cookies.get("firstName")} Maulana`, nameDepan: Cookies.get("firstName"), namaBelakang: "Maulana" });
 
     bio.nomorTelepon === "" && bio.akunInstagram === "" && bio.alamatLengkap === "" && setBio({ nomorTelepon: "081322787899", akunInstagram: "https://intagram.com/fabianmaulana", alamatLengkap: "Jl. Jakarta, South Jakarta" });
   }, [bio.nomorTelepon, bio.akunInstagram, bio.alamatLengkap]);

@@ -14,3 +14,13 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
     </ErrorBoundary>
   );
 }
+
+// export default function App({ Component, pageProps }) {
+//   const getLayout = Component.getLayout || ((page) => page);
+//   return (
+//     <ErrorBoundary>
+//       <NextNProgress />
+//       {getLayout(<Component {...pageProps} />)}
+//     </ErrorBoundary>
+//   );
+// }

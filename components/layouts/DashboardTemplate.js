@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
 import { Logout } from "../../functions/logout";
 import Cookies from "js-cookie";
 
@@ -26,11 +25,10 @@ import Pengaturan1 from "../../assets/img/dashboard/sidebar/menu/pengaturan01.sv
 import Pro from "../../assets/img/dashboard/sidebar/menu/pro.svg";
 
 import UpgradeIcon from "../../assets/img/dashboard/sidebar/upgrade.svg";
+import UpgradeIconStudent from "../../assets/img/dashboard/sidebar/upgradeStudent.svg";
 
 const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
   const router = useRouter();
-  // session google & FB
-  const { data: session } = useSession();
 
   const [navbar, setNavbar] = useState("");
 
@@ -55,13 +53,15 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
     }
   };
 
+  const handleLogout = () => {
+    Logout();
+    setIsLogin(false);
+    router.replace("/");
+  };
+
   useEffect(() => {
     isNavbar ? setNavbar(isNavbar) : "";
     menu ? setDashMenu(menu) : "";
-
-    if (session) {
-      setIsLogin(session);
-    }
 
     if (Cookies.get("token") !== undefined && Cookies.get("firstName").length > 0) {
       setFirstname(Cookies.get("firstName"));
@@ -70,12 +70,12 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
 
     if (Cookies.get("token") !== undefined && Cookies.get("token").length > 0) {
       setToken(Cookies.get("token"));
+      setIsLogin(true);
     }
-  }, [isNavbar, isLogin, token, firstname, dashMenu, menu, role, session]);
+  }, [isNavbar, isLogin, token, firstname, dashMenu, menu, role]);
 
   return (
-    isLogin ||
-    (token && (
+    isLogin && (
       <div>
         <Head>
           <title>{title}</title>
@@ -206,17 +206,21 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                 </div>
               </div>
               <div className={styles.sidebar_upgrade}>
-                <Image src={UpgradeIcon} width={180} alt={"image"} />
+                {Cookies.get("role") === "tutor" ? (
+                  <Image src={UpgradeIcon} width={180} alt={"image"} onClick={() => router.push("/monthly-pass")} />
+                ) : (
+                  <Image src={UpgradeIconStudent} width={180} alt={"image"} onClick={() => router.push("/monthly-pass")} />
+                )}
               </div>
             </div>
             <div className={styles.right_content}>
-              <Header navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={Logout} />
+              <Header navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} />
               <div className={styles.right_content_section}>{children}</div>
             </div>
           </div>
         </div>
       </div>
-    ))
+    )
   );
 };
 
