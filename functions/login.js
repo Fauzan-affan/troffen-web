@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 
 export const loginProvider = async (access_token) => {
   try {
-    const res = await fetch(`https://api.troffen-api.com/api/${Cookies.get("roleLoginProvider") === 1 ? "student" : "tutor"}/provider/login`, {
+    const res = await fetch(`https://api.troffen-api.com/api/${Cookies.get("roleLoginProvider") === 1 || Cookies.get("roleLoginProvider") === undefined ? "student" : "tutor"}/provider/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // credentials: "include",

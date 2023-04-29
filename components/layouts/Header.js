@@ -9,7 +9,6 @@ import TroffenLogo2 from "../../assets/img/T.svg";
 import TroffenLogo3 from "../../assets/img/Troffen.svg";
 import Back from "../../assets/img/back.svg";
 
-// import ActiveNotif from "../../assets/img/dashboard/ic_notif.svg";
 import Search from "../../assets/img/dashboard/search.png";
 
 import PP from "../../assets/img/PP.svg";
@@ -41,7 +40,6 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
   }
 
   let currentDate = getMonthName(month);
-  // console.log(Cookies.get("firstname"));
 
   return (
     <>
@@ -52,7 +50,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
               {/* info */}
               <div className={styles.ds_header_info}>
                 <div>
-                  <div className={styles.ds_header_info_name}>Hello, {Cookies.get("firstname")}!</div>
+                  <div className={styles.ds_header_info_name}>Hello, {Cookies.get("firstName")}!</div>
                   <div className={styles.ds_header_info_date_time}>
                     {currentTime} {day} {currentDate} {year}
                   </div>
@@ -70,11 +68,11 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
                 <Image alt="" src={ActiveNotif} priority />
               </div> */}
               {/* profile */}
-              {isLogin || Cookies.get("token") !== undefined ? (
+              {Cookies.get("token") !== undefined ? (
                 <div className={styles.ds_menu}>
                   <ul className={styles.ds_ul}>
                     <li className={styles.loggedin_menu}>
-                      <div className={styles.loggedin_username}>{Cookies.get("firstname")}</div>
+                      <div className={styles.loggedin_username}>{Cookies.get("firstName")}</div>
                       <Image alt="" src={PP} priority />
                       <ul className={styles.ds_loggedin_menu_body}>
                         <li className={styles.dashboard_menu} onClick={() => handleNavbar("profile")}>
@@ -118,7 +116,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
                 </nav>
                 {process.env.WEB_ENV === "STAGING" && <nav>&nbsp; Staging</nav>}
               </div>
-              {!isLogin && Cookies.get("token") === undefined && (
+              {Cookies.get("token") === undefined && (
                 <div className={styles.navbar_contents_menu}>
                   <div className={styles.navbar_contents_button}>
                     <nav className={styles.navbar_contents_login_text}>
@@ -174,7 +172,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
                   <Link href={"/coming-soon"}>Tentang Kami</Link>
                 </div>
 
-                {isLogin === false && Cookies.get("token") === undefined ? (
+                {Cookies.get("token") === undefined && (
                   <>
                     <div className={styles.navbar_contents_menu4}>
                       <Link href={"#"} onClick={() => modalConfig("daftar", true)}>
@@ -187,28 +185,24 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
                       </button>
                     </div>
                   </>
-                ) : (
-                  ""
                 )}
 
-                {Cookies.get("token") !== undefined ? (
-                  <ul className={styles.ul}>
-                    <li className={styles.loggedin_menu}>
-                      <div className={styles.loggedin_username}>{Cookies.get("firstname")}</div>
+                {Cookies.get("token") !== undefined && (
+                  <div className={styles.div}>
+                    <div className={styles.loggedin_menu}>
+                      <div className={styles.loggedin_username}>{Cookies.get("firstName")}</div>
                       <Image alt="" src={PP} priority />
-                      <ul className={styles.loggedin_menu_body}>
-                        <li className={styles.dashboard_menu} onClick={() => handleNavbar("dashboardNavbar")}>
+                      <div className={styles.loggedin_menu_body}>
+                        <div className={styles.dashboard_menu} onClick={() => handleNavbar("dashboardNavbar")}>
                           <div className={styles.dashboard_body}>Dasbor</div>
-                        </li>
+                        </div>
                         <hr />
-                        <li className={styles.logout_menu} onClick={() => handleLogout()}>
+                        <div className={styles.logout_menu} onClick={() => handleLogout()}>
                           <div className={styles.logout_body}>Keluar</div>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                ) : (
-                  ""
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

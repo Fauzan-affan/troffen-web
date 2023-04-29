@@ -81,7 +81,6 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         });
         const response = await res.json();
         if (response !== undefined && response.meta.code === 200) {
-          setIsLogin(true);
           const { data } = response;
           const { token, role, user } = data;
           const { first_name, email } = user;
@@ -91,7 +90,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
           Cookies.set("firstName", first_name);
           Cookies.set("role", role);
           setShowModal(false);
-          router.reload();
+          setIsLogin(true);
         }
       } catch (error) {
         console.log(error);
@@ -109,13 +108,11 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
       const res = await loginProvider(token);
 
       if (res !== undefined && res.meta.code === 200) {
+        setIsLogin(true);
         Cookies.set("token", res.data.token);
         Cookies.set("email", res.data.user.email);
         Cookies.set("firstName", res.data.user.first_name);
         Cookies.set("role", res.data.role);
-        setIsLogin(true);
-      } else {
-        setModalInfo(true);
       }
     } catch (error) {
       console.log(error);
@@ -135,7 +132,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     if (session?.user.account !== undefined && session?.user.account.access_token) {
       getOAuthToken(session?.user.account.access_token);
     }
-  }, [isNavbar, navbar, session]);
+  }, [isLogin, isNavbar, session]);
 
   return (
     <div>

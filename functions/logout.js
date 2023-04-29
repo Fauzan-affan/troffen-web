@@ -6,5 +6,7 @@ export const Logout = () => {
   Cookies.remove("email");
   Cookies.remove("role");
   Cookies.remove("provider");
+  Cookies.remove("roleLoginProvider");
+  Cookies.remove("loggedIn");
   // signOut();
 };
