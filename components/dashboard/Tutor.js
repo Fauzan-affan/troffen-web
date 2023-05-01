@@ -11,16 +11,16 @@ import PP from "../../assets/img/dashboard/pp.svg";
 import Yes from "../../assets/img/dashboard/yes.svg";
 import No from "../../assets/img/dashboard/no.svg";
 
-const Tutor = ({ filterInput, isNewChat, setFilterInput }) => {
+const Tutor = ({ dataCourse, filterInput, setFilterInput, waiting, respon, age }) => {
   const router = useRouter();
 
   const Chat = ({ murid }) => {
     return (
       <>
-        {isNewChat ? (
-          <Image src={NewChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${murid.name}`)} />
+        {murid.course_status === "Menunggu konfirmasi" ? (
+          <Image src={NewChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${murid.reservation_id}`)} />
         ) : (
-          <Image src={NoChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${murid.name}`)} />
+          <Image src={NoChat} alt="" style={{ cursor: "pointer" }} onClick={() => router.push(`/pesan/${murid.reservation_id}`)} />
         )}
       </>
     );
@@ -30,10 +30,10 @@ const Tutor = ({ filterInput, isNewChat, setFilterInput }) => {
     return (
       <>
         <div className={styles.murid_container}>
-          <Image src={murid.img} alt="" style={{ borderRadius: "50%", marginRight: "0.5rem" }} />
+          <Image src={PP} alt="" style={{ borderRadius: "50%", marginRight: "0.5rem" }} />
           <div className={styles.murid_detail}>
-            <div className={styles.murid_detail_name}>{murid.name}</div>
-            <div className={styles.murid_detail_age}>{murid.age}th</div>
+            <div className={styles.murid_detail_name}>{murid}</div>
+            <div className={styles.murid_detail_age}>{age} th</div>
           </div>
         </div>
       </>
@@ -46,285 +46,56 @@ const Tutor = ({ filterInput, isNewChat, setFilterInput }) => {
     setFilterInput(value);
   };
 
-  const data = useMemo(
-    () => [
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Programmer",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Menunggu konfirmasi",
-        Area: "Online",
-        Kursus: "Database Design",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Diterima",
-        Area: "Online",
-        Kursus: "UX Researcher",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-      {
-        Murid: {
-          img: PP,
-          name: "Maulana",
-          age: 30,
-        },
-        Pengalaman: "132 kali ambil kursus",
-        Status: "Ditolak",
-        Area: "Online",
-        Kursus: "Desain UI/UX",
-      },
-    ],
-    []
-  );
+  const data = useMemo(() => dataCourse, []);
 
   const columns = useMemo(
     () => [
       {
         Header: () => null, // No header
         accessor: "chatStatus", // It needs an ID
-        Cell: ({ row }) => <Chat murid={row.original.Murid} />,
+        Cell: ({ row }) => <Chat murid={row.original} />,
       },
       {
         Header: () => "Murid",
-        accessor: "Murid",
+        accessor: "student_name",
         Cell: ({ cell: { value } }) => <DataMurid murid={value} />,
       },
       {
-        Header: "Pengalaman",
-        accessor: "Pengalaman",
+        Header: "Pengalaman (Kursus)",
+        accessor: "student_experiences",
       },
       {
         Header: "Status",
-        accessor: "Status",
+        accessor: "course_status",
       },
       {
         Header: "Area",
-        accessor: "Area",
+        accessor: "course_area",
       },
       {
         Header: "Kursus",
-        accessor: "Kursus",
+        accessor: "course_name",
       },
       {
         Header: () => "Respon",
         id: "Respon", // It needs an ID
         Cell: ({ row }) => (
           <>
-            {row.original.Status === "Ditolak" && <div className={styles.respon_reject}>Lihat profil murid</div>}
-            {row.original.Status === "Diterima" && <div className={styles.respon_approved}>Selesaikan Kursus</div>}
-            {row.original.Status === "Menunggu konfirmasi" && (
+            {row.original.course_status === "Sudah diulas" && <div className={styles.respon_reject}>Sudah diulas</div>}
+            {row.original.course_status === "Selesai" && <div className={styles.respon_reject}>Lihat profil murid</div>}
+            {row.original.course_status === "Diterima" && (
+              <div className={styles.respon_approved} onClick={() => respon(row.original.reservation_id, "selesai")}>
+                Selesaikan Kursus
+              </div>
+            )}
+            {row.original.course_status === "Ditolak" && <div className={styles.respon_reject}>Lihat profil murid</div>}
+            {row.original.course_status === "Menunggu konfirmasi" && (
               <div className={styles.respons_container}>
-                <div className={styles.respons_yes}>
+                <div className={styles.respons_yes} onClick={() => respon(row.original.reservation_id, "terima")}>
                   <Image src={Yes} alt="" />
                   <nav>Terima</nav>
                 </div>
-                <div className={styles.respons_no}>
+                <div className={styles.respons_no} onClick={() => respon(row.original.reservation_id, "tolak")}>
                   <Image src={No} alt="" />
                   <nav>Tolak</nav>
                 </div>
@@ -362,7 +133,7 @@ const Tutor = ({ filterInput, isNewChat, setFilterInput }) => {
           <div className={styles.course_request_header_group}>
             <div className={styles.course_request_header_title}>Permintaan Kursus</div>
             <div>|</div>
-            <div className={styles.course_request_header_notif}>{3} permintaan menunggu respon</div>
+            <div className={styles.course_request_header_notif}>{waiting} permintaan menunggu respon</div>
           </div>
           <div className={styles.course_request_header_search}>
             <Image src={Search} alt="" width={15} />

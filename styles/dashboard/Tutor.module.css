@@ -34,7 +34,7 @@
 .murid_container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .murid_detail_name {

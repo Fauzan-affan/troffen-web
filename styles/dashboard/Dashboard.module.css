@@ -242,3 +242,41 @@
   font-size: 16px;
   line-height: 24px;
 }
+
+.copy_link {
+  box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.16);
+  border-radius: 0.5rem;
+
+  height: 3rem;
+
+  padding: 1rem;
+  margin: 1rem 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.copied_link {
+  margin: 1rem 0;
+  cursor: pointer;
+}
+
+.copy_link_right {
+  /* background-color: #828282; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  cursor: pointer;
+}
+
+.copy_link_right > nav {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+
+  margin-left: 0.5rem;
+
+  color: #1ea9e4;
+}

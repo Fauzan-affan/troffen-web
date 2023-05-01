@@ -54,7 +54,7 @@ export default function Index() {
 
   const [modalInfo, setModalInfo] = useState(false);
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 20;
 
   // menghilangkan duplicate nama course
   const filteredCourses = courses.filter((item, index, arr) => arr.findIndex((t) => t.title === item.title) === index);
@@ -116,8 +116,8 @@ export default function Index() {
     return (
       <div className={styles.items}>
         <div className={styles.subjek_gallery_row}>
-          {/* {console.log(urutan)}
-          {console.log(currentItems)} */}
+          {/* {console.log(urutan)} */}
+          {/* {console.log(currentItems)} */}
 
           {!currentItems && <div>Loading...</div>}
           {currentItems !== null && currentItems.length === 0 && <div>Maaf kata kunci tidak valid, silahkan refresh dan coba kembali :)</div>}
@@ -641,8 +641,6 @@ export default function Index() {
                   <Image alt="" src={JumbotronLoc} priority />
                   <div className={styles.wrapper}>
                     <div className={styles.input}>
-                      {/* {console.log(courses)}
-                      {console.log(kotaOption[0].filter((val) => val.id === "1304"))} */}
                       <Autocomplete
                         value={areaKursus}
                         onChange={(e) => setAreaKursus(e.target.value)}

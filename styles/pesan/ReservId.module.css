@@ -76,3 +76,21 @@
 .hr {
   border: var(--hr);
 }
+
+/* ------------------------------ */
+
+.home_user {
+  /* background-color: antiquewhite; */
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.away_user {
+  /* background-color: aliceblue; */
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

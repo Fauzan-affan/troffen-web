@@ -5,10 +5,10 @@ export const loadCoursesFunc = async (title = "", area = "", page = 1) => {
       headers: { "Content-Type": "application/json" },
       // credentials: "include",
       body: JSON.stringify({
-        course_title: title,
-        course_area: area,
-        limit: 6,
-        page: page,
+        // course_title: title,
+        // course_area: area,
+        // limit: 6,
+        // page: page,
         orderby: "desc",
       }),
     });
@@ -35,8 +35,8 @@ export const searchCourseFunc = async (title = "", area = "", page = 1) => {
       body: JSON.stringify({
         course_title: title,
         course_area: area,
-        limit: 6,
-        page: page,
+        // limit: 6,
+        // page: page,
       }),
     });
     const data = await res.json();

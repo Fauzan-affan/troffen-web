@@ -122,12 +122,12 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                       {dashMenu === "Tagihan" ? (
                         <>
                           <Image src={IklanLangganan1} alt={"image"} />
-                          <nav style={{ color: "#1EA9E4" }}>Tagihan</nav>
+                          <nav style={{ color: "#1EA9E4" }}>{Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}</nav>
                         </>
                       ) : (
                         <>
                           <Image src={IklanLangganan0} alt={"image"} />
-                          <nav>Tagihan</nav>
+                          <nav>{Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}</nav>
                         </>
                       )}
                     </li>
@@ -189,19 +189,21 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                         )}
                       </li>
                     )}
-                    <li onClick={() => router.push("/pengaturan")}>
-                      {dashMenu === "Pengaturan" ? (
-                        <>
-                          <Image src={Pengaturan1} alt={"image"} />
-                          <nav style={{ color: "#1EA9E4" }}>Pengaturan</nav>
-                        </>
-                      ) : (
-                        <>
-                          <Image src={Pengaturan0} alt={"image"} />
-                          <nav>Pengaturan</nav>
-                        </>
-                      )}
-                    </li>
+                    {Cookies.get("isProvider") !== "yes" && (
+                      <li onClick={() => router.push("/pengaturan")}>
+                        {dashMenu === "Pengaturan" ? (
+                          <>
+                            <Image src={Pengaturan1} alt={"image"} />
+                            <nav style={{ color: "#1EA9E4" }}>Pengaturan</nav>
+                          </>
+                        ) : (
+                          <>
+                            <Image src={Pengaturan0} alt={"image"} />
+                            <nav>Pengaturan</nav>
+                          </>
+                        )}
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>

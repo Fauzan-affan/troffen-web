@@ -2,94 +2,180 @@ import { useTable, usePagination } from "react-table";
 import { useState, useMemo } from "react";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
 import styles from "../styles/Tagihan.module.css";
+import Cookies from "js-cookie";
 
 const Tagihan = () => {
   const Status = ({ tagihanStatus }) => {
     return <div className={tagihanStatus === "Terbayar" ? styles.tagihan_terbayar : styles.tagihan}>{tagihanStatus}</div>;
   };
 
-  const data = useMemo(
-    () => [
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-      {
-        Tagihan: "Professional Plan Januari 2023",
-        TanggalTagihan: "28 Januari 2022, 15:45",
-        Status: "Terbayar",
-        Nominal: "Rp 50.000",
-      },
-    ],
-    []
-  );
+  const filteredData =
+    Cookies.get("role") === "tutor"
+      ? [
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Tagihan: "Professional Plan Januari 2023",
+            TanggalTagihan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+        ]
+      : [
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+          {
+            Langganan: "Professional Plan Januari 2023",
+            TanggalLangganan: "28 Januari 2022, 15:45",
+            Status: "Terbayar",
+            Nominal: "Rp 50.000",
+          },
+        ];
+
+  const data = useMemo(() => filteredData, []);
+
+  const header1 =
+    Cookies.get("role") === "tutor"
+      ? {
+          Header: "Tagihan",
+          accessor: "Tagihan",
+        }
+      : {
+          Header: "Langganan",
+          accessor: "Langganan",
+        };
+
+  const header2 =
+    Cookies.get("role") === "tutor"
+      ? {
+          Header: "Tanggal Tagihan",
+          accessor: "TanggalTagihan",
+        }
+      : {
+          Header: "Tanggal Langganan",
+          accessor: "TanggalLangganan",
+        };
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Tagihan",
-        accessor: "Tagihan",
-      },
-      {
-        Header: "Tanggal Tagihan",
-        accessor: "TanggalTagihan",
-      },
+      header1,
+      header2,
       {
         Header: () => "Status",
         accessor: "Status",
@@ -122,7 +208,7 @@ const Tagihan = () => {
 
   return (
     <div className={styles.tagihan_container}>
-      <div className={styles.tagihan_title}>Daftar Tagihan</div>
+      <div className={styles.tagihan_title}>Daftar {Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}</div>
       <div className={styles.tagihan_content}>
         <div className={styles.course_request_body}>
           <table {...getTableProps()} className={styles.table}>

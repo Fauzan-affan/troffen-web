@@ -1,8 +1,7 @@
 import { useState } from "react";
 import styles from "../../styles/core/Stars.module.css";
 
-const Stars = () => {
-  const [rating, setRating] = useState(0);
+const Stars = ({ rating, setRating }) => {
   const [hover, setHover] = useState(0);
   return (
     <div className={styles.star_rating}>

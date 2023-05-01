@@ -113,7 +113,8 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         Cookies.set("email", res.data.user.email);
         Cookies.set("firstName", res.data.user.first_name);
         Cookies.set("role", res.data.role);
-        router.reload();
+        Cookies.set("isProvider", "yes");
+        router.push("/");
       }
     } catch (error) {
       console.log(error);
@@ -133,6 +134,8 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
     if (session?.user.account !== undefined && session?.user.account.access_token) {
       getOAuthToken(session?.user.account.access_token);
     }
+
+    // console.log(Cookies.get("token"));
   }, [isLogin, isNavbar, session]);
 
   return (

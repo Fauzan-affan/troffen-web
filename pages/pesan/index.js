@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardTemplate from "../../components/layouts/DashboardTemplate";
 import Modal from "../../components/core/modal/Modal";
 import styles from "../../styles/pesan/Pesan.module.css";
@@ -9,6 +10,8 @@ import styles from "../../styles/pesan/Pesan.module.css";
 import VectorAction from "../../assets/img/dashboard/VectorAction.svg";
 import PP from "../../assets/img/dashboard/pp_pesan.svg";
 import dot from "../../assets/img/dashboard/dot.svg";
+
+import { getPesan, getPesanStudent } from "../../functions/dashboard";
 
 const Pesan = () => {
   const router = useRouter();
@@ -18,7 +21,10 @@ const Pesan = () => {
     riwayatKursus: 0,
   });
 
+  const [message, getMessage] = useState([]);
+
   const handleModal = (umur, rk) => {
+    // console.log(umur, rk);
     setProfile((profile) => ({
       ...profile,
       usia: umur,
@@ -27,9 +33,34 @@ const Pesan = () => {
     setModal(!modal);
   };
 
+  const handleMessageList = async () => {
+    try {
+      if (Cookies.get("role") === "student") {
+        const res = await getPesanStudent(Cookies.get("token"));
+        // console.log(res);
+        if (res !== undefined && res.meta.code === 200) {
+          getMessage(res.data.data);
+        }
+      } else if (Cookies.get("role") === "tutor") {
+        const res = await getPesan(Cookies.get("token"));
+        // console.log(res);
+        if (res !== undefined && res.meta.code === 200) {
+          getMessage(res.data.data);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleMessageList();
+  }, []);
+
   return (
     <div className={styles.pesan_container}>
-      {[1, 2, 3, 4].map((val, i) => (
+      {/* {console.log(message)} */}
+      {message.map((item, i) => (
         <>
           <div className={styles.pesan_card} key={i}>
             <div className={styles.pesan_card_info}>
@@ -39,19 +70,21 @@ const Pesan = () => {
                 </div>
                 <div className={styles.pesan_card_info_profile_name_course}>
                   <div className={styles.pesan_card_info_profile_name_course_top}>
-                    <div className={styles.pesan_name}>{`Fabian Maulana`}</div>
+                    <div className={styles.pesan_name}>{item.tutor_name}</div>
                     <Image src={dot} alt="" />
-                    <div className={styles.pesan_course}>{`Kursus Programming Python`}</div>
+                    <div className={styles.pesan_course}>{`Kursus ${item.course_name}`}</div>
+                    <Image src={dot} alt="" />
+                    <div className={styles.pesan_course}>{`Kursus ${Cookies.get("role") === "student" ? item.course_status : item.status}`}</div>
                   </div>
-                  <div className={styles.pesan_card_info_profile_detail} onClick={() => handleModal(26, 2)}>
+                  <div className={styles.pesan_card_info_profile_detail} onClick={() => handleModal(item.student_age, item.student_experiences)}>
                     Lihat profil
                   </div>
                 </div>
               </div>
-              <div className={styles.pesan_card_info_text}>Hi, saya menunggu konfirmasi Anda untuk menerima permintaan menjadi guru...</div>
+              <div className={styles.pesan_card_info_text}>{item.message}</div>
             </div>
             <div className={styles.pesan_card_action}>
-              <Image src={VectorAction} alt="" onClick={() => router.push(`pesan/${i}`)} />
+              <Image src={VectorAction} alt="" onClick={() => router.push(`pesan/${item.reservation_id}`)} />
             </div>
           </div>
         </>
