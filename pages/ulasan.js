@@ -11,7 +11,7 @@ import { getStudentUlasan } from "../functions/ulasan";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 
-const ulasan = () => {
+const Ulasan = () => {
   const [ulasan, setUlasan] = useState([]);
 
   const handleUlasan = async () => {
@@ -73,7 +73,7 @@ const ulasan = () => {
   );
 };
 
-ulasan.getLayout = function getLayout(ulasan) {
+Ulasan.getLayout = function getLayout(Ulasan) {
   return (
     <DashboardTemplate
       isNavbar={`dashboardNavbar`}
@@ -82,9 +82,9 @@ ulasan.getLayout = function getLayout(ulasan) {
       icon={`troffen.ico`}
       menu={`Ulasan`}
     >
-      {ulasan}
+      {Ulasan}
     </DashboardTemplate>
   );
 };
 
-export default ulasan;
+export default Ulasan;

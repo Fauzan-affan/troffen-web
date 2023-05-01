@@ -13,7 +13,7 @@ import { getStudentWishlist, getTutorWishlist, addOrDeleteWishlistStudent, addOr
 import { getProfile } from "../functions/profile";
 import Cookies from "js-cookie";
 
-const wishlist = () => {
+const Wishlist = () => {
   const router = useRouter();
 
   const [wishlist, setWishlist] = useState([]);
@@ -122,7 +122,7 @@ const wishlist = () => {
   );
 };
 
-wishlist.getLayout = function getLayout(wishlist) {
+Wishlist.getLayout = function getLayout(Wishlist) {
   return (
     <DashboardTemplate
       isNavbar={`dashboardNavbar`}
@@ -131,9 +131,9 @@ wishlist.getLayout = function getLayout(wishlist) {
       icon={`troffen.ico`}
       menu={`Wishlist`}
     >
-      {wishlist}
+      {Wishlist}
     </DashboardTemplate>
   );
 };
 
-export default wishlist;
+export default Wishlist;

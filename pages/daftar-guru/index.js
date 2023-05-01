@@ -457,7 +457,7 @@ const DaftarGuru = () => {
     handleProvinces();
 
     Cookies.get("email") !== undefined && submitRegisterProviderAPI();
-  }, [Cookies.get("email")]);
+  }, []);
 
   return (
     <GeneralTemplate
