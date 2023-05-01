@@ -12,7 +12,7 @@ import Tutor from "../components/dashboard/Tutor";
 import Student from "../components/dashboard/Student";
 
 import GreenChecklist from "../assets/img/dashboard/greenchecklist.svg";
-import Copy from "../assets/img/dashboard/copy.svg";
+import Copy from "../assets/img/dashboard/Copy.svg";
 
 import { getDashboardStudent, getDashboardTutor, responCourseReq } from "../functions/dashboard";
 import { getProfile } from "../functions/profile";
@@ -39,6 +39,8 @@ const Dashboard = () => {
 
   const [profile, setProfile] = useState({});
   const [iSCopy, setCopy] = useState(false);
+
+  const [age, setAge] = useState("");
 
   const closeStickyModal = () => {
     setStickyActive(false);
@@ -97,6 +99,8 @@ const Dashboard = () => {
 
       const res = await getProfile(Cookies.get("token"));
       if (res !== undefined && res.meta.code === 200) {
+        const age = new Date().getFullYear() - res.data.user.birth_date.slice(0, 4);
+        setAge(age);
         setProfile(res.data.user);
       }
     } catch (error) {}
@@ -113,7 +117,6 @@ const Dashboard = () => {
     } catch (error) {}
   };
 
-  const age = profile !== undefined && new Date().getFullYear() - profile.birth_date.slice(0, 4);
   const copyText = reservId !== "" && `troffen.com/cari-kursus`;
 
   const handleCopy = () => {
@@ -131,8 +134,6 @@ const Dashboard = () => {
     <section id="container">
       <div className={styles.container}>
         <Modal onClose={closeStickyModal} isSticky={stickyActive} />
-
-        {/* {console.log(courselist)} */}
 
         {role === "tutor" && courselist !== undefined && <Tutor dataCourse={courselist} respon={handleResponCourseReq} waiting={waitingRes} filterInput={filterInput} setFilterInput={setFilterInput} age={age} />}
         {role === "student" && courselist !== undefined && (

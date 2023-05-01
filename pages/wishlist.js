@@ -19,6 +19,8 @@ const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
   const [profile, setProfile] = useState();
 
+  const [age, setAge] = useState("");
+
   const convertToFloat = (val) => {
     const num = parseFloat(val);
     return parseFloat(num.toFixed(2));
@@ -40,6 +42,8 @@ const Wishlist = () => {
 
       const profile = await getProfile(Cookies.get("token"));
       if (profile !== undefined && profile.meta.code === 200) {
+        const age = new Date().getFullYear() - profile.data.user.birth_date.slice(0, 4);
+        setAge(age);
         setProfile(profile.data.user);
       }
     } catch (error) {
@@ -69,14 +73,12 @@ const Wishlist = () => {
     handleWishlist();
   }, []);
 
-  const age = profile !== undefined && new Date().getFullYear() - profile.birth_date.slice(0, 4);
-
   return (
     <div className={styles.wishlist_container}>
       <div className={styles.wishlist_title}>Daftar Wishlist</div>
       <div className={styles.wishlist_content}>
-        {/* {console.log(wishlist)}
-        {console.log(profile)} */}
+        {/* {console.log(wishlist)} */}
+        {/* {console.log(age)} */}
         {wishlist.map((val, i) => (
           <div className={styles.wishlist_card} key={i}>
             <div className={styles.wishlist_card_img}>
