@@ -113,7 +113,7 @@ const Dashboard = () => {
     } catch (error) {}
   };
 
-  const age = profile.birth_date !== undefined && new Date().getFullYear() - profile.birth_date.slice(0, 4);
+  const age = profile !== undefined && new Date().getFullYear() - profile.birth_date.slice(0, 4);
   const copyText = reservId !== "" && `troffen.com/cari-kursus`;
 
   const handleCopy = () => {
