@@ -12,7 +12,7 @@ import Tutor from "../components/dashboard/Tutor";
 import Student from "../components/dashboard/Student";
 
 import GreenChecklist from "../assets/img/dashboard/greenchecklist.svg";
-import Copy from "../assets/img/dashboard/Copy.svg";
+import Copy from "../assets/img/dashboard/copy.svg";
 
 import { getDashboardStudent, getDashboardTutor, responCourseReq } from "../functions/dashboard";
 import { getProfile } from "../functions/profile";
