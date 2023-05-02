@@ -116,8 +116,21 @@
 
 .search_location_left {
   padding-left: 2rem;
+  display: flex;
+  align-items: center;
 
   /* width: 20rem; */
+}
+
+.input_html_2 {
+  min-width: 110%;
+  /* padding: 0.8rem; */
+  border-radius: 12px;
+  border-style: none;
+
+  /* background-color: #1ea9e4; */
+
+  /* color: var(--gray); */
 }
 
 .search_location_right {

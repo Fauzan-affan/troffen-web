@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import fs from "fs";
 import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
+import Autocomplete from "react-autocomplete";
+import indonesia from "territory-indonesia";
 
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -44,6 +46,15 @@ import Banner from "../assets/img/banner.png";
 // import GOR from "../assets/img/GroupOfReviewer.svg";
 
 import GeneralTemplate from "../components/layouts/GeneralTemplate";
+import { loadCoursesFunc } from "../functions/courses";
+
+const kotaOption = [];
+indonesia
+  .getAllRegencies()
+  .then((res) => {
+    kotaOption.push(res);
+  })
+  .catch((err) => console.log(err));
 
 export const getStaticProps = async () => {
   // get list of files from the posts folder
@@ -76,6 +87,22 @@ export default function Home({ posts }) {
   const [listContent, setListContent] = useState(0);
   const [modalBanner, setModalBanner] = useState(true);
   const [visible, setVisible] = useState(false);
+
+  const [courses, setCourses] = useState([]);
+
+  const [title, setTitle] = useState("");
+  const [areaKursus, setAreaKursus] = useState("");
+
+  // menghilangkan duplicate nama course
+  const filteredCourses = courses.filter((item, index, arr) => arr.findIndex((t) => t.title === item.title) === index);
+  // mendapatkan semua area dari nama course terpilih dan memfilter unique id area saja
+  const allArea = courses.filter((item) => item.title === title).map((item) => item.course_area);
+  const filteredAreaId = allArea.filter((item, index) => allArea.indexOf(item) === index);
+  // mendapatkan kota berdasrkan nama course yg dipilih
+  // const filteredArea = kotaOption[0].filter((item) => filteredAreaId.includes(item.id));
+  const filteredArea = filteredAreaId.map((item) => ({
+    name: item,
+  }));
 
   const handleArticleClick = (slug) => {
     router.push(`/blog/${slug}`);
@@ -110,12 +137,25 @@ export default function Home({ posts }) {
     setIsClick(val);
   };
 
+  const handleCourses = async () => {
+    try {
+      const courses = await loadCoursesFunc();
+
+      // console.log(courses);
+      setCourses(courses.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     let pop_status = localStorage.getItem("pop_status");
     if (!pop_status) {
       setVisible(true);
       localStorage.setItem("pop_status", 1);
     }
+
+    handleCourses();
 
     setListContent(posts.length);
   }, [posts.length]);
@@ -135,23 +175,61 @@ export default function Home({ posts }) {
               <div className={styles.content1}>Temukan dan belajar dari guru yang sesuai kriteriamu.</div>
               <div className={styles.content2}>Apa yang ingin kamu pelajari? Dengan Troffen cukup ketik topik yang kamu minati dan juga ketik lokasi pilihanmu, untuk mendapatkan kursus yang sesuai untuk kamu.</div>
             </div>
-            {/* <div className={styles.search_box}>
+            <div className={styles.search_box}>
               <div className={styles.search_subject}>
-                <input type="text" placeholder="Mau belajar apa hari ini?" />
+                <div className={styles.wrapper}>
+                  <div className={styles.input}>
+                    <Autocomplete
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      getItemValue={(item) => item.title}
+                      items={filteredCourses}
+                      renderItem={(item, isHighlighted) => (
+                        <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.id}>
+                          {item.title}
+                        </div>
+                      )}
+                      renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Mau belajar apa hari ini?" type="text" />}
+                      onSelect={(title) => setTitle(title)}
+                      shouldItemRender={(item, value) => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                      autoHighlight={true}
+                    />
+                  </div>
+                </div>
               </div>
               <div className={styles.search_location}>
                 <div className={styles.search_location_left}>
                   <Image alt="" src={JumbotronLoc} priority />
-                  <input type="text" placeholder="Lokasi" />
+                  <div className={styles.wrapper}>
+                    <div className={styles.input}>
+                      <Autocomplete
+                        value={areaKursus}
+                        onChange={(e) => setAreaKursus(e.target.value)}
+                        getItemValue={(item) => item.name}
+                        items={title.length === 0 ? kotaOption[0] : filteredArea}
+                        renderItem={(item, isHighlighted) => (
+                          <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.id}>
+                            {item.name}
+                          </div>
+                        )}
+                        renderInput={(props) => <input {...props} className={styles.input_html_2} placeholder="Lokasi" type="text" />}
+                        onSelect={(areaKursus) => setAreaKursus(areaKursus)}
+                        shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        autoHighlight={true}
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div className={styles.search_location_right}>
-                  <button className={styles.button_search}>Cari Kursus</button>
+                  <button className={styles.button_search} onClick={() => router.push("cari-kursus")}>
+                    Cari Kursus
+                  </button>
                 </div>
               </div>
               <div className={styles.search_location_mobile}>
                 <button className={styles.button_search_mobile}>Cari Kursus</button>
               </div>
-            </div> */}
+            </div>
             <div className={styles.content4}>
               Belum tahu tentang Troffen <Link href="/tentang-kami">Pelajari di sini</Link>
             </div>

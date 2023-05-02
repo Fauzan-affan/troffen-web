@@ -165,7 +165,7 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
                                 <nav>
                                   <Tag type="blogTag">{tags}</Tag>
                                 </nav>
-                                <div className={styles.content_title}>{title}</div>
+                                <div className={styles.content_title}>{truncate(title, 40)}</div>
                                 <div className={styles.content_creator_container}>
                                   <div className={styles.content_creator}>
                                     <Image alt="" src={j} priority width={20} />
