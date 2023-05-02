@@ -10,6 +10,12 @@ import Tips from "../components/core/Tips";
 import Input from "../components/core/Input";
 import Textarea from "../components/core/Textarea";
 import Checkbox from "../components/core/Checkbox";
+import Modal from "../components/core/modal/Modal";
+
+import { loadProvinceFunc } from "../functions/province";
+import { reqCourseList } from "../functions/iklan";
+import { submitCourse } from "../functions/tutor";
+import Cookies from "js-cookie";
 
 const provOption = [];
 indonesia
@@ -69,37 +75,37 @@ const Index = () => {
   const [listCourses, setListCourses] = useState([]);
   const [stage, setStage] = useState("iklan saya");
   const [state, setState] = useState({
-    stage: "",
-    email: "",
-    password: "",
-
-    namaLengkap: "",
-    namaDepan: "",
-    namaBelakang: "",
-    tanggalLahir: "",
-    tempatLahir: "",
-    bulanLahir: "",
-    tahunLahir: "",
-    gender: "",
-    fotoProfil: "",
-    noHP: "",
-    provinsi: "",
-    kota: "",
-    alamatLengkap: "",
-
-    pengalamanPendidikan: "",
-    pengalamanPekerjaan: "",
-    sertifikat: "",
-
-    subjekKursus: "",
-    judulKursus: "",
-    hashtagKursus: "",
-    keteranganKursus: "",
-    tarifKursus: "",
-    onlineKursus: "",
     areaKursus: "",
     checkbox: 1,
   });
+
+  const [judulKursus, setJudulKursus] = useState("");
+  const [keteranganKursus, setKeteranganKursus] = useState("");
+  const [tarifKursus, setTarifKursus] = useState("");
+  const [subjekKursus, setSubjekKurses] = useState("");
+  const [hashtagKursus, setHashtagKursus] = useState("");
+  const [provinces, setProvinces] = useState([]);
+
+  const [modalInfo, setModalInfo] = useState(false);
+  const [modalBlank, setModalBlank] = useState(false);
+
+  const closeModalInfo = () => {
+    setModalInfo(false);
+    router.reload();
+  };
+  const closeModalBlank = () => {
+    setModalBlank(false);
+  };
+
+  const handleProvinces = async () => {
+    try {
+      const prov = await loadProvinceFunc();
+
+      setProvinces(prov);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleToogle = (id) => {
     setListCourses((prevState) =>
@@ -135,109 +141,45 @@ const Index = () => {
     }));
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    // console.log(state);
 
-    if (state.stage === "" && state.email.length !== 0 && state.password.length !== 0) {
-      setState((state) => ({
-        ...state,
-        ["stage"]: "Personal Info",
-      }));
+    const { areaKursus, checkbox } = state;
+
+    if (stage === "daftar iklan" && judulKursus.length !== 0 && keteranganKursus.length !== 0 && tarifKursus.length !== 0 && areaKursus.length !== 0 && subjekKursus.length !== 0 && hashtagKursus.length !== 0) {
+      // console.log(stage, judulKursus, keteranganKursus, tarifKursus, areaKursus, subjekKursus, hashtagKursus);
+      try {
+        const res = await submitCourse(Cookies.get("token"), subjekKursus, judulKursus, hashtagKursus, keteranganKursus, tarifKursus, areaKursus, checkbox);
+        // console.log(res);
+        if (res !== undefined && res.meta.code === 200) {
+          setModalInfo(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setModalBlank(true);
     }
-
-    if (
-      state.stage === "Personal Info" &&
-      state.namaLengkap.length !== 0 &&
-      state.namaDepan.length !== 0 &&
-      state.namaBelakang.length !== 0 &&
-      state.tempatLahir.length !== 0 &&
-      state.gender.length !== 0 &&
-      state.fotoProfil.length !== 0 &&
-      state.noHP.length !== 0 &&
-      state.provinsi.length !== 0 &&
-      state.kota.length !== 0
-    ) {
-      setState((state) => ({
-        ...state,
-        ["stage"]: "Experiences",
-      }));
-    }
-
-    if (
-      state.stage === "Experiences" &&
-      state.pengalamanPendidikan.length !== 0 &&
-      state.pengalamanPekerjaan.length !== 0
-      // && state.sertifikat.length !== 0
-    ) {
-      setState((state) => ({
-        ...state,
-        ["stage"]: "Subjek Kursus",
-      }));
-    }
-
-    if (
-      state.stage === "Subjek Kursus" &&
-      state.subjekKursus.length !== 0 &&
-      state.judulKursus.length !== 0 &&
-      state.hashtagKursus.length !== 0 &&
-      state.keteranganKursus.length !== 0 &&
-      state.tarifKursus.length !== 0 &&
-      state.onlineKursus.length !== 0
-    ) {
-      setState((state) => ({
-        ...state,
-        ["stage"]: "Done",
-      }));
-    }
-  };
-
-  const handleSubmit = async () => {
-    // console.log(state);
-
-    const { namaDepan, namaBelakang, namaLengkap, tempatLahir, tahunLahir, bulanLahir, tanggalLahir, alamatLengkap, fotoProfil, gender, noHP, email, password } = state;
-
-    // try {
-    //   const res = await fetch("https://api.troffen-api.com/api/register", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     // credentials: "include",
-    //     body: JSON.stringify({
-    //       first_name: namaDepan,
-    //       last_name: namaBelakang,
-    //       full_name: namaLengkap,
-    //       birth_place: tempatLahir,
-    //       birth_date: `${tahunLahir}-${bulanLahir}-${tanggalLahir}`,
-    //       full_address: alamatLengkap,
-    //       photo: fotoProfil,
-    //       gender: gender,
-    //       phone: noHP,
-    //       email: email,
-    //       password: password,
-    //       password_confirmation: password,
-    //       user_status: "murid",
-    //       id_area: 1,
-    //     }),
-    //   });
-
-    //   const data = await res.json();
-    //   if (data.meta.code === 200) {
-    //     // action
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   if (error.meta.code === 422) {
-    //     console.log(error);
-    //   }
-    // }
-    router.reload();
   };
 
   const handleReset = () => {
     router.reload();
   };
 
+  const handleCourseList = async () => {
+    try {
+      const res = await reqCourseList(Cookies.get("token"));
+      if (res !== undefined && res.meta.code === 200) {
+        // setListCourses(res.data.data);
+        console.log(res);
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
+    handleProvinces();
+    handleCourseList();
+
     Courses !== undefined && listCourses.length === 0 ? setListCourses(Courses) : "";
   }, [listCourses]);
 
@@ -250,10 +192,6 @@ const Index = () => {
             <div className={styles.po_body_left}>
               <div className={styles.po_body_left_title}>
                 <div className={styles.po_title}>
-                  {/* <div className={styles.no}>
-                    <Image alt="" src={lingkaran} className={styles.no_0} />
-                    <Image alt="" src={Tiga} className={styles.no_1} />
-                  </div> */}
                   <nav>Buat Iklan</nav>
                 </div>
                 <div className={styles.po_desc}>Pilih subjek kursus yang sesuai dengan bidang keahlianmu. Kamu hanya dapat memilih 1 subjek kursus</div>
@@ -261,11 +199,10 @@ const Index = () => {
               <form onSubmit={handleRegister}>
                 <div className={styles.wrapper}>
                   <label htmlFor={"Subjek Kursus"}>Subjek Kursus</label>
-                  {/* <nav>{desc}</nav> */}
                   <div className={styles.input}>
                     <Autocomplete
-                      value={state.subjekKursus}
-                      onChange={(e) => setState({ subjekKursus: e.target.value })}
+                      value={subjekKursus}
+                      onChange={(e) => setSubjekKurses(e.target.value)}
                       getItemValue={(item) => item.name}
                       items={subjekOption}
                       renderItem={(item, isHighlighted) => (
@@ -274,21 +211,21 @@ const Index = () => {
                         </div>
                       )}
                       renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih subjek kursus" type="text" />}
-                      onSelect={(subjekKursus) => setState({ subjekKursus })}
+                      onSelect={(subjekKursus) => setSubjekKurses(subjekKursus)}
                       shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
                       autoHighlight={true}
                     />
                   </div>
                 </div>
-                <Input label="Judul Kursus" name="judulKursus" desc="Contoh: Kursus Bahasa Inggris Dasar" placeholder="Mauskkan judul kursus" handleChange={handleChange} />
-                {/* <Select label="Hashtag Kursus" optionLabel="Pilih hashtag kursus (sesuai subjek)" desc="" name="hashtagKursus" options={hashtagOption} handleChange={handleChange} /> */}
+
+                <Input label="Judul Kursus" name="judulKursus" desc="Contoh: Kursus Bahasa Inggris Dasar" placeholder="Mauskkan judul kursus" handleChange={(e) => setJudulKursus(e.target.value)} />
+
                 <div className={styles.wrapper}>
                   <label htmlFor={"Hashtag Kursus"}>Hashtag Kursus</label>
-                  {/* <nav>{desc}</nav> */}
                   <div className={styles.input}>
                     <Autocomplete
-                      value={state.hashtagKursus}
-                      onChange={(e) => setState({ hashtagKursus: e.target.value })}
+                      value={hashtagKursus}
+                      onChange={(e) => setHashtagKursus(e.target.value)}
                       getItemValue={(item) => item.name}
                       items={hashtagOption}
                       renderItem={(item, isHighlighted) => (
@@ -297,12 +234,13 @@ const Index = () => {
                         </div>
                       )}
                       renderInput={(props) => <input {...props} className={styles.input_html} placeholder="Pilih hashtag kursus (sesuai subjek)" type="text" />}
-                      onSelect={(hashtagKursus) => setState({ hashtagKursus })}
+                      onSelect={(hashtagKursus) => setHashtagKursus(hashtagKursus)}
                       shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
                       autoHighlight={true}
                     />
                   </div>
                 </div>
+
                 <Textarea
                   label="Keterangan Kursus"
                   name="keteranganKursus"
@@ -310,20 +248,26 @@ const Index = () => {
                   col={40}
                   row={4}
                   placeholder="Minimal 250 karakter"
-                  handleChange={handleChange}
+                  handleChange={(e) => setKeteranganKursus(e.target.value)}
                 />
-                <Input type="sideLabel" inputLabel="per sesi" label="Tarif Kursus" name="tarifKursus" desc="Tarif dasar kursus per sesi. Contoh: Rp 50.000/sesi (jam). " placeholder="Masukkan minimal tarif" handleChange={handleChange} />
-                {/* {console.log(kotaOption[0])} */}
-                {/* <Select label="Area Kursus" optionLabel="Pilih area kursus" desc="" name="areaKursus" options={kotaOption[0]} handleChange={handleChange} /> */}
+                <Input
+                  type="sideLabel"
+                  inputLabel="per sesi"
+                  label="Tarif Kursus"
+                  name="tarifKursus"
+                  desc="Tarif dasar kursus per sesi. Contoh: Rp 50.000/sesi (jam). "
+                  placeholder="Masukkan minimal tarif"
+                  handleChange={(e) => setTarifKursus(e.target.value)}
+                />
+                {/* {console.log(provinces)} */}
                 <div className={styles.wrapper}>
                   <label htmlFor={"Area Kursus"}>Area Kursus</label>
-                  {/* <nav>{desc}</nav> */}
                   <div className={styles.input}>
                     <Autocomplete
                       value={state.areaKursus}
                       onChange={(e) => setState({ areaKursus: e.target.value })}
                       getItemValue={(item) => item.name}
-                      items={kotaOption[0]}
+                      items={provinces}
                       renderItem={(item, isHighlighted) => (
                         <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.name}>
                           {item.name}
@@ -346,7 +290,7 @@ const Index = () => {
                   <button type="submit" className={styles.button_kembali} onClick={() => handleReset()}>
                     Reset
                   </button>
-                  <button type="submit" className={styles.button} onClick={() => handleSubmit()}>
+                  <button type="submit" className={styles.button}>
                     Selesai
                   </button>
                 </div>
@@ -365,6 +309,13 @@ const Index = () => {
           </div>
         </div>
       )}
+
+      <Modal modalInfo={modalInfo} handleModal={closeModalInfo}>
+        <div className={styles.modal_info}>Iklan berhasil dibuat!</div>
+      </Modal>
+      <Modal modalInfo={modalBlank} handleModal={closeModalBlank}>
+        <div className={styles.modal_info}>Field harus diisi semua!</div>
+      </Modal>
     </div>
   );
 };

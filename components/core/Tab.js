@@ -36,6 +36,8 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
   const [toogleFAQ1, setToogleFAQ1] = useState(true);
   const [toogleFAQ2, setToogleFAQ2] = useState(false);
   const [toogleFAQ3, setToogleFAQ3] = useState(false);
+  const [toogleFAQ4, setToogleFAQ4] = useState(false);
+  const [toogleFAQ5, setToogleFAQ5] = useState(false);
 
   const changeHeaderType = (type) => {
     setheaderType(type);
@@ -49,9 +51,11 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
     val === "Bank Permata" && setTooglePermata(!tooglePermata);
 
     // FAQ
-    val === "Apa itu Troffen?" && setToogleFAQ1(!toogleFAQ1);
-    val === "Bagaimana Cara Menjadi Guru di Troffen?" && setToogleFAQ2(!toogleFAQ2);
-    val === "Bagaimana Cara Memesan Kursus di Troffen?" && setToogleFAQ3(!toogleFAQ3);
+    val === "Pertanyaan Umum" && setToogleFAQ1(!toogleFAQ1);
+    val === "Pengajar" && setToogleFAQ2(!toogleFAQ2);
+    val === "Murid" && setToogleFAQ3(!toogleFAQ3);
+    val === "Pendaftaran" && setToogleFAQ4(!toogleFAQ4);
+    val === "Pembayaran" && setToogleFAQ5(!toogleFAQ5);
   };
 
   return (
@@ -116,9 +120,11 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
                   <div className={styles.option_1_header_right}>
                     {(obj.optionName === "BCA" && toogleBCA) ||
                     (obj.optionName === "Bank Permata" && tooglePermata) ||
-                    (obj.optionName === "Apa itu Troffen?" && toogleFAQ1) ||
-                    (obj.optionName === "Bagaimana Cara Menjadi Guru di Troffen?" && toogleFAQ2) ||
-                    (obj.optionName === "Bagaimana Cara Memesan Kursus di Troffen?" && toogleFAQ3) ? (
+                    (obj.optionName === "Pertanyaan Umum" && toogleFAQ1) ||
+                    (obj.optionName === "Pengajar" && toogleFAQ2) ||
+                    (obj.optionName === "Murid" && toogleFAQ3) ||
+                    (obj.optionName === "Pendaftaran" && toogleFAQ4) ||
+                    (obj.optionName === "Pembayaran" && toogleFAQ5) ? (
                       <Image alt="" src={Strip} priority />
                     ) : (
                       <Image alt="" src={Plus} priority />
@@ -146,24 +152,38 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
                 </div>
               )}
               {/* FAQ */}
-              {obj.optionName === "Apa itu Troffen?" && toogleFAQ1 && (
+              {obj.optionName === "Pertanyaan Umum" && toogleFAQ1 && (
                 <div className={styles.option_1_body}>
                   {obj.desc.map((desc) => (
-                    <nav key={desc.id}>{desc.val}</nav>
+                    <nav key={desc.id} dangerouslySetInnerHTML={{ __html: desc.val }}></nav>
                   ))}
                 </div>
               )}
-              {obj.optionName === "Bagaimana Cara Menjadi Guru di Troffen?" && toogleFAQ2 && (
+              {obj.optionName === "Pengajar" && toogleFAQ2 && (
                 <div className={styles.option_1_body}>
                   {obj.desc.map((desc) => (
-                    <nav key={desc.id}>{desc.val}</nav>
+                    <nav key={desc.id} dangerouslySetInnerHTML={{ __html: desc.val }}></nav>
                   ))}
                 </div>
               )}
-              {obj.optionName === "Bagaimana Cara Memesan Kursus di Troffen?" && toogleFAQ3 && (
+              {obj.optionName === "Murid" && toogleFAQ3 && (
                 <div className={styles.option_1_body}>
                   {obj.desc.map((desc) => (
-                    <nav key={desc.id}>{desc.val}</nav>
+                    <nav key={desc.id} dangerouslySetInnerHTML={{ __html: desc.val }}></nav>
+                  ))}
+                </div>
+              )}
+              {obj.optionName === "Pendaftaran" && toogleFAQ4 && (
+                <div className={styles.option_1_body}>
+                  {obj.desc.map((desc) => (
+                    <nav key={desc.id} dangerouslySetInnerHTML={{ __html: desc.val }}></nav>
+                  ))}
+                </div>
+              )}
+              {obj.optionName === "Pembayaran" && toogleFAQ5 && (
+                <div className={styles.option_1_body}>
+                  {obj.desc.map((desc) => (
+                    <nav key={desc.id} dangerouslySetInnerHTML={{ __html: desc.val }}></nav>
                   ))}
                 </div>
               )}

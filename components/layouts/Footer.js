@@ -51,7 +51,7 @@ function Footer() {
             <div className={styles.footer_bantuan}>
               <div className={styles.footer_bantuan_label}>Bantuan</div>
               <div className={styles.footer_bantuan_detail}>
-                <div className={styles.FAQ} onClick={() => handleRedirect("/coming-soon")}>
+                <div className={styles.FAQ} onClick={() => handleRedirect("/FAQ")}>
                   FAQ
                 </div>
                 <div className={styles.syarat_dan_ketentuan} onClick={() => handleRedirect("/coming-soon")}>
