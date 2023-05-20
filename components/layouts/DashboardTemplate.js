@@ -45,21 +45,6 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
 
   const filteredCourses = courses.filter((item, index, arr) => arr.findIndex((t) => t.title === item.title) === index);
 
-  const handleNavbar = (nav) => {
-    if (nav === undefined) {
-      setNavbar("");
-      router.back();
-    } else if (nav === "dashboardNavbar") {
-      router.push("/dashboard");
-    } else if (nav === "home") {
-      router.replace("/");
-    } else if (nav === "profile") {
-      router.replace("/profile");
-    } else if (nav === "upgrade") {
-      router.replace("/monthly-pass");
-    }
-  };
-
   const handleLogout = () => {
     Logout();
     setIsLogin(false);
@@ -105,7 +90,7 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
           <div className={styles.container_dashboard}>
             <div className={styles.left_sidebar}>
               <div className={styles.sidebar_wrapper}>
-                <div className={styles.sidebar_header} onClick={() => handleNavbar("home")}>
+                <div className={styles.sidebar_header} onClick={() => router.push("/")}>
                   <Image src={Logo} alt={"image"} />
                 </div>
                 <hr className={styles.hr} />
@@ -240,7 +225,7 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
               </div>
             </div>
             <div className={styles.right_content}>
-              <Header navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} title={searchTitle} filteredCourses={filteredCourses} setTitle={setSearchTitle} />
+              <Header navbar={navbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} title={searchTitle} filteredCourses={filteredCourses} setTitle={setSearchTitle} />
               <div className={styles.right_content_section}>{children}</div>
             </div>
           </div>

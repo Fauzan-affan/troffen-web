@@ -94,12 +94,12 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout, titl
                       <div className={styles.loggedin_username}>{Cookies.get("firstName")}</div>
                       <Image alt="" src={PP} priority />
                       <ul className={styles.ds_loggedin_menu_body}>
-                        <li className={styles.dashboard_menu} onClick={() => handleNavbar("profile")}>
+                        <li className={styles.dashboard_menu} onClick={() => router.push("profile")}>
                           <Image src={ProfileIcon} alt={""} />
                           <div className={styles.dashboard_body}>Profile</div>
                         </li>
                         <hr />
-                        <li className={styles.upgrade_menu} onClick={() => handleNavbar("upgrade")}>
+                        <li className={styles.upgrade_menu} onClick={() => router.push("monthly-pass")}>
                           <Image src={UpgradeIcon} alt={""} />
                           <div className={styles.upgrade_body}>{Cookies.get("role") === "tutor" ? "Upgrade ke Pro" : "Langganan"}</div>
                         </li>
