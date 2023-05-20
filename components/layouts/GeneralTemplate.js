@@ -114,7 +114,7 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
         Cookies.set("firstName", res.data.user.first_name);
         Cookies.set("role", res.data.role);
         Cookies.set("isProvider", "yes");
-        router.push("/");
+        router.reload();
       }
     } catch (error) {
       console.log(error);
