@@ -134,13 +134,15 @@
   border-radius: 8px 8px 8px 8px;
 }
 
-.ds_header_search > div > input {
+.input {
   margin-left: 0.5rem;
-  width: 100%;
+  width: 290%;
   border: none;
+
+  /* background-color: antiquewhite; */
 }
 
-.ds_header_search > div > input:focus {
+.input:focus {
   outline: none !important;
 }
 

@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "../styles/Profile.module.css";
@@ -7,25 +8,85 @@ import Tab from "../components/core/Tab";
 import Upload from "../components/core/Upload";
 import Input from "../components/core/Input";
 import Textarea from "../components/core/Textarea";
+import Modal from "../components/core/modal/Modal";
+import Select from "../components/core/Select";
 
 import Plus from "../assets/img/dashboard/profile/plus.svg";
 
+import { getProfile, updateEducation, updateProfile } from "../functions/profile";
+import { submitEducation } from "../functions/tutor";
+
+const year = [
+  { name: 1980, value: 1980 },
+  { name: 1981, value: 1981 },
+  { name: 1982, value: 1982 },
+  { name: 1983, value: 1983 },
+  { name: 1984, value: 1984 },
+  { name: 1985, value: 1985 },
+  { name: 1986, value: 1986 },
+  { name: 1987, value: 1987 },
+  { name: 1988, value: 1988 },
+  { name: 1989, value: 1989 },
+  { name: 1990, value: 1990 },
+  { name: 1991, value: 1991 },
+  { name: 1992, value: 1992 },
+  { name: 1993, value: 1993 },
+  { name: 1994, value: 1994 },
+  { name: 1995, value: 1995 },
+  { name: 1996, value: 1996 },
+  { name: 1997, value: 1997 },
+  { name: 1998, value: 1998 },
+  { name: 1999, value: 1999 },
+  { name: 2001, value: 2001 },
+  { name: 2002, value: 2002 },
+  { name: 2003, value: 2003 },
+  { name: 2004, value: 2004 },
+  { name: 2005, value: 2005 },
+  { name: 2006, value: 2006 },
+  { name: 2007, value: 2007 },
+  { name: 2008, value: 2008 },
+  { name: 2009, value: 2009 },
+  { name: 2010, value: 2010 },
+  { name: 2011, value: 2011 },
+  { name: 2012, value: 2012 },
+  { name: 2013, value: 2013 },
+  { name: 2014, value: 2014 },
+  { name: 2015, value: 2015 },
+  { name: 2016, value: 2016 },
+  { name: 2017, value: 2017 },
+  { name: 2018, value: 2018 },
+  { name: 2019, value: 2019 },
+  { name: 2020, value: 2020 },
+  { name: 2021, value: 2021 },
+  { name: 2022, value: 2022 },
+  { name: 2023, value: 2023 },
+];
+const degree = [
+  { name: "SD", value: "SD" },
+  { name: "SMP", value: "SMP" },
+  { name: "SMA", value: "SMA" },
+  { name: "S1", value: "S1" },
+  { name: "S2", value: "S2" },
+  { name: "S3", value: "S3" },
+];
+
 const Profile = () => {
+  const router = useRouter();
+
   const [stage, setStage] = useState("Informasi Pribadi");
   const [photo, setPhoto] = useState("");
   const [isSubmited, setIsSubmited] = useState(0);
-  const [nama, setNama] = useState({
-    namaLengkap: "",
-    nameDepan: "",
-    namaBelakang: "",
-  });
-  const [isNamaSubmited, setIsNamaSubmited] = useState(0);
-  const [bio, setBio] = useState({
-    nomorTelepon: "",
-    akunInstagram: "",
-    alamatLengkap: "",
-  });
-  const [isBioSubmited, setIsBioSubmited] = useState(0);
+  // const [nama, setNama] = useState({
+  //   namaLengkap: "",
+  //   nameDepan: "",
+  //   namaBelakang: "",
+  // });
+
+  // const [bio, setBio] = useState({
+  //   nomorTelepon: "",
+  //   akunInstagram: "",
+  //   alamatLengkap: "",
+  // });
   const [pengalaman, setPengalaman] = useState(false);
   const [sertifikat, setSertifikat] = useState({
     sertifikat1: "",
@@ -36,6 +97,28 @@ const Profile = () => {
     sertifikat1: 0,
     sertifikat2: 0,
     sertifikat3: 0,
+  });
+
+  const [pendidikan, setPendidikan] = useState();
+  const [newIdPend, setNewIdPend] = useState();
+  const [newPendidikan, setNewPendidikan] = useState();
+
+  const [fullname, setFullname] = useState();
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
+
+  const [phone, setPhone] = useState();
+  const [fullAddress, setFullAddress] = useState();
+  const [Ig, setIg] = useState();
+
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [modalPend, setModalPend] = useState(false);
+
+  const [stateExp, setStateExp] = useState({
+    eduSchool: "",
+    eduDegree: "",
+    startDate: "",
+    endDate: "",
   });
 
   const tabObj = [
@@ -71,26 +154,58 @@ const Profile = () => {
     }));
   };
 
-  const handleNama = (e) => {
+  const handleNamaDepan = (e) => {
+    const target = e.target;
+    const value = target.value;
+
+    setFirstname(value);
+  };
+
+  const handleNamaBelakang = (e) => {
+    const target = e.target;
+    const value = target.value;
+
+    setLastname(value);
+  };
+
+  const handlePhone = (e) => {
+    const target = e.target;
+    const value = target.value;
+
+    setPhone(value);
+  };
+
+  const handleIg = (e) => {
+    const target = e.target;
+    const value = target.value;
+
+    setIg(value);
+  };
+
+  const handleFullAddress = (e) => {
+    const target = e.target;
+    const value = target.value;
+
+    setFullAddress(value);
+  };
+
+  const handleChangeExperiance = (e) => {
     const target = e.target;
     const value = target.value;
     const name = target.name;
-
-    setNama((state) => ({
+    setStateExp((state) => ({
       ...state,
       [name]: value,
     }));
   };
 
-  const handleBio = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
+  const handleCloseModalSuccess = () => {
+    setModalSuccess(false);
+    router.reload();
+  };
 
-    setBio((state) => ({
-      ...state,
-      [name]: value,
-    }));
+  const handleCloseModalPend = () => {
+    setModalPend(false);
   };
 
   const handleReset = () => {
@@ -104,18 +219,72 @@ const Profile = () => {
     state === "sertifikat3" && setSertifikat({ sertifikat3: "" }) && setIsSertifikatSubmited({ sertifikat3: 0 });
   };
 
-  const handlePengalaman = () => {};
+  const handlePendidikan = (e) => {
+    const id = e.target.name;
+    const value = e.target.value;
+
+    setNewIdPend(id);
+    setNewPendidikan(value);
+  };
 
   const handleSubmitPhoto = () => {
     setIsSubmited(1);
   };
 
-  const handleSubmitNama = () => {
-    setIsNamaSubmited(1);
+  const handleSubmitNama = async (e) => {
+    e.preventDefault();
+    const obj = {
+      first_name: firstname,
+      last_name: lastname,
+    };
+    try {
+      const res = await updateProfile(Cookies.get("token"), obj);
+      // console.log(res);
+      if (res.meta.code === 200) {
+        setModalSuccess(true);
+      }
+    } catch (error) {}
   };
 
-  const handleSubmitBiodata = () => {
-    setIsBioSubmited(1);
+  const handleSubmitBiodata = async (e) => {
+    e.preventDefault();
+    const obj = {
+      phone: phone,
+      full_address: fullAddress,
+    };
+    try {
+      const res = await updateProfile(Cookies.get("token"), obj);
+      // console.log(res);
+      if (res.meta.code === 200) {
+        setModalSuccess(true);
+      }
+    } catch (error) {}
+  };
+
+  const handleSavePend = async (e) => {
+    e.preventDefault();
+    const obj = {
+      id: newIdPend,
+      education_degree: newPendidikan,
+    };
+    try {
+      const res = await updateEducation(Cookies.get("token"), obj);
+      // console.log(res);
+      if (res.meta.code === 200) {
+        setModalSuccess(true);
+      }
+    } catch (error) {}
+  };
+
+  const handleSubmitPendidikan = async () => {
+    const { eduSchool, eduDegree, startDate, endDate } = stateExp;
+    if (stage === "Pengalaman" && eduSchool.length !== 0 && eduDegree.length !== 0 && startDate.length !== 0 && endDate.length !== 0) {
+      const res = await submitEducation(Cookies.get("token"), eduSchool, eduDegree, startDate, endDate);
+      if (res.meta.code === 200) {
+        setModalPend(false);
+        setModalSuccess(true);
+      }
+    }
   };
 
   const handleSubmitSertifikat = (state) => {
@@ -125,18 +294,38 @@ const Profile = () => {
   };
 
   const handleTambahPengalaman = () => {
-    setPengalaman(true);
+    setModalPend(true);
+  };
+
+  const handleProfile = async () => {
+    try {
+      const res = await getProfile(Cookies.get("token"));
+      if (res !== undefined && res.meta.code === 200) {
+        // console.log(res.data.user);
+        setPendidikan(res.data.user.educations);
+
+        setFullname(res.data.user.full_name);
+        setFirstname(res.data.user.first_name);
+        setLastname(res.data.user.last_name);
+        setPhone(res.data.user.phone);
+        setFullAddress(res.data.user.full_address);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
-    Cookies.get("firstName") !== undefined && setNama({ namaLengkap: `${Cookies.get("firstName")} Maulana`, nameDepan: Cookies.get("firstName"), namaBelakang: "Maulana" });
+    handleProfile();
+    // Cookies.get("firstName") !== undefined && setNama({ namaLengkap: `${Cookies.get("firstName")} Maulana`, nameDepan: Cookies.get("firstName"), namaBelakang: "Maulana" });
 
-    bio.nomorTelepon === "" && bio.akunInstagram === "" && bio.alamatLengkap === "" && setBio({ nomorTelepon: "081322787899", akunInstagram: "https://intagram.com/fabianmaulana", alamatLengkap: "Jl. Jakarta, South Jakarta" });
-  }, [bio.nomorTelepon, bio.akunInstagram, bio.alamatLengkap]);
+    // bio.nomorTelepon === "" && bio.akunInstagram === "" && bio.alamatLengkap === "" && setBio({ nomorTelepon: "081322787899", akunInstagram: "https://intagram.com/fabianmaulana", alamatLengkap: "Jl. Jakarta, South Jakarta" });
+  }, []);
 
   return (
     <div className={styles.profile_container}>
       {/* {JSON.stringify(stage)} */}
+      {/* {console.log(profile)} */}
       <div className={styles.profile_title}>Profil</div>
       <Tab tabObj={tabObj} defaultType={defaultType} isProfile={true} handleStage={handleStage} />
       {stage === "Informasi Pribadi" && (
@@ -147,24 +336,24 @@ const Profile = () => {
           <div className={styles.ib_data}>
             <div className={styles.ib_nama}>
               <form onSubmit={handleSubmitNama}>
-                <Input label="Nama Lengkap" name="namaLengkap" value={nama.namaLengkap} isDisabled={true} />
-                <Input label="Nama Depan" name="namaDepan" value={nama.nameDepan} handleChange={handleNama} />
-                <Input label="Nama Belakang" name="namaLBelakang" value={nama.namaBelakang} handleChange={handleNama} />
+                <Input label="Nama Lengkap" name="namaLengkap" value={fullname} isDisabled={true} />
+                <Input label="Nama Depan" name="namaDepan" value={firstname} handleChange={handleNamaDepan} />
+                <Input label="Nama Belakang" name="namaLBelakang" value={lastname} handleChange={handleNamaBelakang} />
                 <button className={styles.button}>Ubah</button>
               </form>
             </div>
             <div className={styles.ib_biodata}>
               <form onSubmit={handleSubmitBiodata}>
-                <Input label="Nomor Telepon" name="nomorTelepon" value={bio.nomorTelepon} handleChange={handleBio} />
-                <Input label="Akun Instagram" name="akunInstagram" value={bio.akunInstagram} handleChange={handleBio} />
+                <Input label="Nomor Telepon" name="nomorTelepon" value={phone} handleChange={handlePhone} />
+                <Input label="Akun Instagram" name="akunInstagram" value={Ig} handleChange={handleIg} />
                 <Textarea
                   label="Alamat lengkap"
                   name="alamatLengkap"
                   // desc="Contoh: Bahasa Inggris Dasar untuk pemula. Materi akan membahas Grammar, Vocabulary dan Speaking."
                   col={50}
                   row={4}
-                  placeholder={bio.alamatLengkap}
-                  handleBio={handleBio}
+                  placeholder={fullAddress}
+                  handleChange={handleFullAddress}
                 />
                 <button className={styles.button}>Ubah</button>
               </form>
@@ -175,10 +364,24 @@ const Profile = () => {
       {stage === "Pengalaman" && (
         <div className={styles.pengalaman_container}>
           <div className={styles.pengalaman_pendidikan}>
-            <Textarea label="Pengalaman Pendidikan" name="pengalamanPendidikan1" desc={"SMA Keren Abis (2010-2013)"} col={50} row={4} placeholder={"3 tahun di SMA Keren Abis"} handlePengalaman={handlePengalaman} />
-            <Textarea name="pengalamanPendidikan2" desc={"Universitas ABC (2013-2017)"} col={50} row={4} placeholder={"4 tahun di Universitas ABC"} handlePengalaman={handlePengalaman} />
-            <Textarea name="pengalamanPendidikan3" desc={"PT Maju Terus (2018-2020)"} col={50} row={4} placeholder={"2 tahun di PT Maju Terus"} handlePengalaman={handlePengalaman} />
-            <Textarea name="pengalamanPendidikan4" desc={"PT Terus Maju (2018-Present)"} col={50} row={4} placeholder={"2 tahun di PT Terus Maju"} handlePengalaman={handlePengalaman} />
+            {pendidikan.map((item, i) => (
+              <form onSubmit={handleSavePend} key={i}>
+                <Textarea
+                  key={i}
+                  label="Pengalaman Pendidikan"
+                  name={item.id}
+                  desc={`${item.education_school} (${item.education_start_date}-${item.education_end_date})`}
+                  col={50}
+                  row={4}
+                  placeholder={item.education_degree}
+                  handleChange={handlePendidikan}
+                />
+                <button type="submit" className={styles.button_save}>
+                  Simpan
+                </button>
+              </form>
+            ))}
+
             <div className={styles.tambah_pengalaman} onClick={() => handleTambahPengalaman()}>
               <Image src={Plus} alt="" />
               <div>Tambah Pengalaman</div>
@@ -228,6 +431,29 @@ const Profile = () => {
           </div>
         </div>
       )}
+
+      <Modal modalInfo={modalSuccess} handleModal={handleCloseModalSuccess}>
+        <>Profile berhasil diubah!</>
+      </Modal>
+
+      <Modal modalForm={modalPend} onClose={handleCloseModalPend}>
+        <div className={styles.modal_title}>Tambah Pengalaman Pendidikan</div>
+        <div className={styles.eduSchool}>
+          <Input label="Nama Sekolah/Universitas" name="eduSchool" desc="" placeholder="Cth: Sekolah Menengah Atas ABC" handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.eduDegree}>
+          <Select label="Tingkat" optionLabel="Degree" desc="" name="eduDegree" options={degree} handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.startDate}>
+          <Select label="Tahun Mulai" optionLabel="Tahun" desc="" name="startDate" options={year} handleChange={handleChangeExperiance} />
+        </div>
+        <div className={styles.endDate}>
+          <Select label="Tahun Selesai" optionLabel="Tahun" desc="" name="endDate" options={year} handleChange={handleChangeExperiance} />
+        </div>
+        <button type="submit" className={styles.button} onClick={() => handleSubmitPendidikan()}>
+          Selesai
+        </button>
+      </Modal>
     </div>
   );
 };

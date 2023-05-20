@@ -29,6 +29,32 @@
   opacity: 0.9;
 }
 
+.button_save {
+  /* position: absolute;
+      top: -5rem;
+      left: 53rem; */
+
+  background: #1ea9e4;
+  border-radius: 12px;
+  color: white;
+  border: none;
+
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 34px;
+
+  padding: 0.5rem 2.5rem;
+  cursor: pointer;
+
+  width: 25rem;
+
+  margin-bottom: 2rem;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
 .ib_data {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -44,7 +70,9 @@
   border: 1px solid #1ea9e4;
   border-radius: 12px;
 
-  width: 26rem;
+  width: 25rem;
+
+  padding: 0.5rem 2.5rem;
 
   color: #1ea9e4;
 
@@ -60,4 +88,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 2rem;
+}
+
+.modal_title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+
+  margin-bottom: 1rem;
 }

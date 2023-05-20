@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Autocomplete from "react-autocomplete";
-import indonesia from "territory-indonesia";
 import styles from "../styles/IklanSaya.module.css";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
 
@@ -13,25 +12,9 @@ import Checkbox from "../components/core/Checkbox";
 import Modal from "../components/core/modal/Modal";
 
 import { loadProvinceFunc } from "../functions/province";
-import { reqCourseList } from "../functions/iklan";
+import { reqCourseList, onOffIklan } from "../functions/iklan";
 import { submitCourse } from "../functions/tutor";
 import Cookies from "js-cookie";
-
-const provOption = [];
-indonesia
-  .getAllProvinces()
-  .then((res) => {
-    provOption.push(res);
-  })
-  .catch((err) => console.log(err));
-
-const kotaOption = [];
-indonesia
-  .getAllRegencies()
-  .then((res) => {
-    kotaOption.push(res);
-  })
-  .catch((err) => console.log(err));
 
 const subjekOption = [
   { name: "UI/UX", value: "UI/UX" },
@@ -60,17 +43,9 @@ const tabObj = [
   },
 ];
 
-let Courses = [
-  { id: 1, status: "Aktif", kursus: "Kursus Programming Phyton", rating: "4.5", totalUlasan: 5 },
-  { id: 2, status: "Non-Aktif", kursus: "Kursus Programming Java", rating: "4.5", totalUlasan: 2 },
-  { id: 3, status: "Aktif", kursus: "Kursus Programming C", rating: "4.5", totalUlasan: 3 },
-  { id: 4, status: "Non-Aktif", kursus: "Kursus Programming C++", rating: "4.5", totalUlasan: 1 },
-  { id: 5, status: "Aktif", kursus: "Kursus Programming PHP", rating: "4.5", totalUlasan: 5 },
-];
-
 const Index = () => {
   const router = useRouter();
-  const defaultType = tabObj[0].id;
+  const defaultType = "Semua";
 
   const [listCourses, setListCourses] = useState([]);
   const [stage, setStage] = useState("iklan saya");
@@ -88,6 +63,7 @@ const Index = () => {
 
   const [modalInfo, setModalInfo] = useState(false);
   const [modalBlank, setModalBlank] = useState(false);
+  const [modalStatus, setModalStatus] = useState(false);
 
   const closeModalInfo = () => {
     setModalInfo(false);
@@ -95,6 +71,10 @@ const Index = () => {
   };
   const closeModalBlank = () => {
     setModalBlank(false);
+  };
+  const closeModalStatus = () => {
+    setModalStatus(false);
+    router.reload();
   };
 
   const handleProvinces = async () => {
@@ -107,31 +87,20 @@ const Index = () => {
     }
   };
 
-  const handleToogle = (id) => {
-    setListCourses((prevState) =>
-      prevState.map((obj) => {
-        if (obj.id === id && obj.status === "Aktif") {
-          return { ...obj, status: "Non-Aktif" };
-        } else if (obj.id === id && obj.status === "Non-Aktif") {
-          return { ...obj, status: "Aktif" };
-        } else return { ...obj };
-      })
-    );
+  const handleToogle = async (id, status) => {
+    try {
+      const res = await onOffIklan(Cookies.get("token"), id, status);
+      // console.log(res);
+      if (res !== undefined && res.meta.code === 200) {
+        setModalStatus(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleStage = (nextStage) => {
     setStage(nextStage);
-  };
-
-  const handleChange = (e) => {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-
-    setState((state) => ({
-      ...state,
-      [name]: value,
-    }));
   };
 
   const handleCheckbox = (val) => {
@@ -169,9 +138,22 @@ const Index = () => {
   const handleCourseList = async () => {
     try {
       const res = await reqCourseList(Cookies.get("token"));
+      // console.log(res);
       if (res !== undefined && res.meta.code === 200) {
-        // setListCourses(res.data.data);
-        console.log(res);
+        const allCourse = [];
+        res.data.data.map((item) => {
+          let objCourse = {};
+
+          objCourse["id"] = item.id;
+          objCourse["status"] = item.course_is_active === "0" ? "Non-Aktif" : "Aktif";
+          objCourse["kursus"] = item.title;
+          objCourse["rating"] = item.rating;
+          objCourse["totalUlasan"] = item.ulasan;
+
+          allCourse.push(objCourse);
+        });
+
+        setListCourses(allCourse);
       }
     } catch (error) {}
   };
@@ -179,9 +161,7 @@ const Index = () => {
   useEffect(() => {
     handleProvinces();
     handleCourseList();
-
-    Courses !== undefined && listCourses.length === 0 ? setListCourses(Courses) : "";
-  }, [listCourses]);
+  }, []);
 
   return (
     <div>
@@ -315,6 +295,9 @@ const Index = () => {
       </Modal>
       <Modal modalInfo={modalBlank} handleModal={closeModalBlank}>
         <div className={styles.modal_info}>Field harus diisi semua!</div>
+      </Modal>
+      <Modal modalInfo={modalStatus} handleModal={closeModalStatus}>
+        <div className={styles.modal_info}>Status berhasil dirubah!</div>
       </Modal>
     </div>
   );

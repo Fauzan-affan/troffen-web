@@ -9,6 +9,7 @@ import Tips from "../../../../components/core/Tips";
 import Textarea from "../../../../components/core/Textarea";
 
 import SubjekThumbnail from "../../../../assets/img/Thumbnail.svg";
+import PP from "../../../../assets/img/thumbnail_blank.svg";
 import Divider from "../../../../assets/img/Line8.svg";
 import Verify from "../../../../assets/img/Verify.svg";
 import Star from "../../../../assets/img/rating_star.svg";
@@ -97,7 +98,7 @@ const Index = ({ courses }) => {
           <div className={styles.content_title}>{title}</div>
           <div className={styles.content_body}>
             <div className={styles.content_body_left}>
-              <Image alt="" src={SubjekThumbnail} priority />
+              <Image alt="" src={PP} priority />
             </div>
             <div className={styles.content_body_right}>
               <div className={styles.label}>Guru</div>

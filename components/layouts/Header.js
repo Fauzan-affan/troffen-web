@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Autocomplete from "react-autocomplete";
 
 import styles from "../../styles/layout/Header.module.css";
 import TroffenLogo1 from "../../assets/img/Rectangle63.svg";
@@ -11,12 +12,12 @@ import Back from "../../assets/img/back.svg";
 
 import Search from "../../assets/img/dashboard/search.png";
 
-import PP from "../../assets/img/PP.svg";
+import PP from "../../assets/img/PEPE.svg";
 import ProfileIcon from "../../assets/img/dashboard/header/profile.svg";
 import UpgradeIcon from "../../assets/img/dashboard/header/upgrade.svg";
 import LogoutIcon from "../../assets/img/dashboard/header/logout.svg";
 
-function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
+function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout, title, filteredCourses, setTitle }) {
   const router = useRouter();
 
   const date = new Date();
@@ -60,7 +61,25 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
               <div className={styles.ds_header_search}>
                 <div>
                   <Image src={Search} width={20} alt="" />
-                  <input type="text" placeholder="Lihat Kursus Lain" />
+                  {/* <input type="text" placeholder="Lihat Kursus Lain" /> */}
+                  <Autocomplete
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    getItemValue={(item) => item.title}
+                    items={filteredCourses}
+                    renderItem={(item, isHighlighted) => (
+                      <div style={{ background: isHighlighted ? "lightgray" : "white" }} key={item.id}>
+                        {item.title}
+                      </div>
+                    )}
+                    renderInput={(props) => <input {...props} className={styles.input} placeholder="Lihat Kursus Lain" type="text" />}
+                    onSelect={(title, item) => {
+                      setTitle(title);
+                      router.push(`cari-kursus/${item.id}`);
+                    }}
+                    shouldItemRender={(item, value) => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                    autoHighlight={true}
+                  />
                 </div>
               </div>
               {/* notif */}
@@ -82,7 +101,7 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout }) {
                         <hr />
                         <li className={styles.upgrade_menu} onClick={() => handleNavbar("upgrade")}>
                           <Image src={UpgradeIcon} alt={""} />
-                          <div className={styles.upgrade_body}>Upgrade ke Pro</div>
+                          <div className={styles.upgrade_body}>{Cookies.get("role") === "tutor" ? "Upgrade ke Pro" : "Langganan"}</div>
                         </li>
                         <hr />
                         <li className={styles.logout_menu} onClick={() => handleLogout()}>

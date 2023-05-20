@@ -14,6 +14,8 @@ import Modal from "../../components/core/modal/Modal";
 import styles from "../../styles/cari-kursus/DetailCourse.module.css";
 
 import SubjekThumbnail from "../../assets/img/Thumbnail.svg";
+import PP from "../../assets/img/thumbnail_blank.svg";
+
 import Verify from "../../assets/img/Verify.svg";
 import Star from "../../assets/img/rating_star.svg";
 import GOR from "../../assets/img/GroupOfReviewer.svg";
@@ -134,7 +136,7 @@ const CourseId = ({ courseId, reviews }) => {
         <div className={styles.body_left}>
           <div className={styles.card}>
             <div>
-              <Image alt="" src={SubjekThumbnail} priority />
+              <Image alt="" src={PP} priority />
               <div className={styles.nama_guru}>
                 <div className={styles.label_nama_guru}>Nama Guru</div>
                 <div className={styles.value_nama_guru}>

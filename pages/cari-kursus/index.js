@@ -18,6 +18,7 @@ import Verify from "../../assets/img/Verify.svg";
 import Star from "../../assets/img/Star.svg";
 import Divider from "../../assets/img/Line8.svg";
 import GOR from "../../assets/img/GroupOfReviewer.svg";
+import PP from "../../assets/img/thumbnail_blank.svg";
 
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Modal from "../../components/core/modal/Modal";
@@ -128,7 +129,7 @@ export default function Index() {
             currentItems.sort(tarifAscendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -173,7 +174,7 @@ export default function Index() {
             currentItems.sort(tarifDescendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -218,7 +219,7 @@ export default function Index() {
             currentItems.sort(ratingDescendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -263,7 +264,7 @@ export default function Index() {
             currentItems.sort(tarifAscendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -308,7 +309,7 @@ export default function Index() {
             currentItems.sort(tarifDescendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -353,7 +354,7 @@ export default function Index() {
             currentItems.sort(postingAscendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -398,7 +399,7 @@ export default function Index() {
             currentItems.sort(postingDescendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -443,7 +444,7 @@ export default function Index() {
             currentItems.sort(ratingAscendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>
@@ -488,7 +489,7 @@ export default function Index() {
             currentItems.sort(ratingDescendingSort).map((course, i) => (
               <div className={styles.subjek_gallery_card} key={i} onClick={() => handleBook(course.id)}>
                 <div className={styles.subjek_thumbnail}>
-                  <Image alt="" src={SubjekThumbnail} priority />
+                  <Image alt="" src={PP} priority />
                 </div>
                 <div className={styles.subjek_content}>
                   <div className={styles.subjek_content_title}>

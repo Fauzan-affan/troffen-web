@@ -4,149 +4,150 @@ import DashboardTemplate from "../components/layouts/DashboardTemplate";
 import styles from "../styles/Tagihan.module.css";
 import Cookies from "js-cookie";
 
+const tutorData = [
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Tagihan: "Professional Plan Januari 2023",
+    TanggalTagihan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+];
+
+const studentData = [
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+  {
+    Langganan: "Professional Plan Januari 2023",
+    TanggalLangganan: "28 Januari 2022, 15:45",
+    Status: "Terbayar",
+    Nominal: "Rp 50.000",
+  },
+];
+
 const Tagihan = () => {
   const Status = ({ tagihanStatus }) => {
     return <div className={tagihanStatus === "Terbayar" ? styles.tagihan_terbayar : styles.tagihan}>{tagihanStatus}</div>;
   };
 
-  const filteredData =
-    Cookies.get("role") === "tutor"
-      ? [
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Tagihan: "Professional Plan Januari 2023",
-            TanggalTagihan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-        ]
-      : [
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-          {
-            Langganan: "Professional Plan Januari 2023",
-            TanggalLangganan: "28 Januari 2022, 15:45",
-            Status: "Terbayar",
-            Nominal: "Rp 50.000",
-          },
-        ];
+  const filteredData = Cookies.get("role") === "tutor" ? [] : [];
 
   const data = useMemo(() => filteredData, []);
 

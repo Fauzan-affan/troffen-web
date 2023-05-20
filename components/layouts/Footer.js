@@ -54,13 +54,13 @@ function Footer() {
                 <div className={styles.FAQ} onClick={() => handleRedirect("/FAQ")}>
                   FAQ
                 </div>
-                <div className={styles.syarat_dan_ketentuan} onClick={() => handleRedirect("/coming-soon")}>
+                <div className={styles.syarat_dan_ketentuan} onClick={() => handleRedirect("/syarat-dan-ketentuan")}>
                   Syarat & Ketentuan
                 </div>
-                <div className={styles.kebijakan_privasi} onClick={() => handleRedirect("/coming-soon")}>
+                <div className={styles.kebijakan_privasi} onClick={() => handleRedirect("/kebijakan-privasi")}>
                   Kebijakan Privasi
                 </div>
-                <div className={styles.hubungi_kami} onClick={() => handleRedirect("/coming-soon")}>
+                <div className={styles.hubungi_kami} onClick={() => handleRedirect("/hubungi-kami")}>
                   Hubungi Kami
                 </div>
                 {/* <div className={styles.FAQ} onClick={() => handleRedirect("/FAQ")}>

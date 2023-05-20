@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Logout } from "../../functions/logout";
 import Cookies from "js-cookie";
 
+import { loadCoursesFunc } from "../../functions/courses";
+
 import Head from "next/head";
 import Image from "next/image";
 import Header from "./Header";
@@ -38,6 +40,11 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
   const [dashMenu, setDashMenu] = useState("Dasbor");
   const [role, setRole] = useState("");
 
+  const [searchTitle, setSearchTitle] = useState("");
+  const [courses, setCourses] = useState([]);
+
+  const filteredCourses = courses.filter((item, index, arr) => arr.findIndex((t) => t.title === item.title) === index);
+
   const handleNavbar = (nav) => {
     if (nav === undefined) {
       setNavbar("");
@@ -59,9 +66,21 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
     router.replace("/");
   };
 
+  const handleCourse = async () => {
+    try {
+      const res = await loadCoursesFunc();
+      if (res.meta.code === 200) {
+        // console.log(res);
+        setCourses(res.data.data);
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     isNavbar ? setNavbar(isNavbar) : "";
     menu ? setDashMenu(menu) : "";
+
+    handleCourse();
 
     if (Cookies.get("token") !== undefined && Cookies.get("firstName").length > 0) {
       setFirstname(Cookies.get("firstName"));
@@ -146,19 +165,24 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                         )}
                       </li>
                     )}
-                    <li onClick={() => router.push("/wishlist")}>
-                      {dashMenu === "Wishlist" ? (
-                        <>
-                          <Image src={Wishlist1} alt={"image"} />
-                          <nav style={{ color: "#1EA9E4" }}>Wishlist</nav>
-                        </>
-                      ) : (
-                        <>
-                          <Image src={Wishlist0} alt={"image"} />
-                          <nav>Wishlist</nav>
-                        </>
-                      )}
-                    </li>
+                    {Cookies.get("role") === "student" ? (
+                      <li onClick={() => router.push("/wishlist")}>
+                        {dashMenu === "Wishlist" ? (
+                          <>
+                            <Image src={Wishlist1} alt={"image"} />
+                            <nav style={{ color: "#1EA9E4" }}>Wishlist</nav>
+                          </>
+                        ) : (
+                          <>
+                            <Image src={Wishlist0} alt={"image"} />
+                            <nav>Wishlist</nav>
+                          </>
+                        )}
+                      </li>
+                    ) : (
+                      ""
+                    )}
+
                     <li onClick={() => router.push("/ulasan")}>
                       {dashMenu === "Ulasan" ? (
                         <>
@@ -216,7 +240,7 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
               </div>
             </div>
             <div className={styles.right_content}>
-              <Header navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} />
+              <Header navbar={navbar} handleNavbar={handleNavbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} title={searchTitle} filteredCourses={filteredCourses} setTitle={setSearchTitle} />
               <div className={styles.right_content_section}>{children}</div>
             </div>
           </div>

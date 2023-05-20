@@ -23,6 +23,7 @@ import fb from "../../assets/img//blog/icon/fb.svg";
 import twitter from "../../assets/img/blog/icon/twitter.png";
 
 import article1 from "../../assets/img/blog/artickles/artickle1.svg";
+import PP from "../../assets/img/thumbnail_blank.svg";
 
 const nonActive = {
   color: "#666666",
@@ -136,7 +137,7 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
                   </div>
                 </div>
                 <div className={styles.article_detail_img}>
-                  <Image alt="" src={img} />
+                  <Image alt="" src={PP} width={800} />
                 </div>
                 <div className={styles.article_detail_contents}>
                   <div>
@@ -159,7 +160,7 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
                           return (
                             <div className={styles.artikel_baru_card} key={i} onClick={() => handleClick(slug)}>
                               <div className={styles.artikel_baru_card_img}>
-                                <Image alt="" src={article1} />
+                                <Image alt="" src={PP} />
                               </div>
                               <div className={styles.content_highlight}>
                                 <nav>
@@ -246,7 +247,7 @@ const Index = ({ slug, frontmatter, content, allTags }) => {
             <TwitterShareButton url={`https://troffen.com/blog/${slug.replace(/ /g, "-")}`} quote={JSON.stringify(slug)} hashtag={tags[0]}>
               <Image alt="" src={twitter} width={25} height={25} />
             </TwitterShareButton>
-            <ShareIntagram caption={`https://troffen.com/blog/${slug.replace(/ /g, "-")}`} imageUrl={article1} />
+            <ShareIntagram caption={`https://troffen.com/blog/${slug.replace(/ /g, "-")}`} imageUrl={PP} />
           </div>
         </div>
       </Modal>

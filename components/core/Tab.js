@@ -205,7 +205,7 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
           {Courses.map((course, i) => {
             if (headerType === "Semua") {
               return (
-                <div className={sc.card} key={i} onClick={() => handleToogleCard(course.id)}>
+                <div className={sc.card} key={i} onClick={() => handleToogleCard(course.id, course.status === "Aktif" ? "off" : "on")}>
                   <div className={sc.card_status}>
                     <Image alt="" src={course.status === "Aktif" ? ToogleActive : ToogleNonActive} />
                     <nav>{course.status}</nav>
@@ -229,9 +229,9 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
           {Courses.map((course, i) => {
             if (headerType === course.status) {
               return (
-                <div className={sc.card} key={i}>
+                <div className={sc.card} key={i} onClick={() => handleToogleCard(course.id, course.status === "Aktif" ? "off" : "on")}>
                   <div className={sc.card_status}>
-                    <Image alt="" src={ToogleActive} />
+                    <Image alt="" src={course.status === "Aktif" ? ToogleActive : ToogleNonActive} />
                     <nav>{course.status}</nav>
                   </div>
                   <div className={sc.card_image}>

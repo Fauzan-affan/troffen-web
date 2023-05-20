@@ -34,6 +34,7 @@ import MuridBenefit from "../assets/img/MuridBenefit.svg";
 import Previous from "../assets/img/Previous.svg";
 import Next from "../assets/img/Next.svg";
 import article1 from "../assets/img/blog/artickles/artickle1.svg";
+import PP from "../assets/img/thumbnail_blank.svg";
 import j from "../assets/img/blog/girl.png";
 import Line from "../assets/img/blog/line.svg";
 import DateCreated from "../assets/img/blog/date.svg";
@@ -231,7 +232,7 @@ export default function Home({ posts }) {
               </div>
             </div>
             <div className={styles.content4}>
-              Belum tahu tentang Troffen <Link href="/tentang-kami">Pelajari di sini</Link>
+              Belum tahu tentang Troffen <Link href="/coming-soon">Pelajari di sini</Link>
             </div>
           </div>
         </div>
@@ -259,7 +260,7 @@ export default function Home({ posts }) {
               </div>
             </div>
             <div className={styles.content4}>
-              Belum tahu tentang Troffen <Link href="/tentang-kami">Pelajari di sini</Link>
+              Belum tahu tentang Troffen <Link href="/coming-soon">Pelajari di sini</Link>
             </div>
           </div>
         </div>
@@ -449,7 +450,7 @@ export default function Home({ posts }) {
                   return (
                     <div className={styles.artikel_baru_card} key={slug} onClick={() => handleArticleClick(slug)}>
                       <div className={styles.artikel_baru_card_img}>
-                        <Image alt="" src={article1} />
+                        <Image alt="" src={PP} />
                       </div>
                       <div className={styles.content_highlight}>
                         <nav>

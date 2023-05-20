@@ -189,16 +189,6 @@ const DaftarGuru = () => {
     sertifikat: "",
   });
 
-  // token,
-  // courseCategory = subjekKursus,
-  // (courseTitle = judulKursus),
-  // (courseHashtag = hashtagKursus),
-  // (courseDescription = keteranganKursus),
-  // courseDetail,
-  // (coursePrice = tarifKursus),
-  // courseArea = areaKursus,
-  // isOnline = onlineKursus;
-
   const [stateCourse, setStateCourse] = useState({
     judulKursus: "", // done
     keteranganKursus: "", // done
@@ -334,21 +324,6 @@ const DaftarGuru = () => {
         ["stage"]: "Subjek Kursus",
       }));
     }
-
-    // if (
-    //   state.stage === "Subjek Kursus" &&
-    //   stateCourse.subjekKursus.length !== 0 &&
-    //   stateCourse.judulKursus.length !== 0 &&
-    //   stateCourse.hashtagKursus.length !== 0 &&
-    //   stateCourse.keteranganKursus.length !== 0 &&
-    //   stateCourse.tarifKursus.length !== 0 &&
-    //   stateCourse.onlineKursus.length !== 0
-    // ) {
-    //   setState((state) => ({
-    //     ...state,
-    //     ["stage"]: "Done",
-    //   }));
-    // }
   };
 
   const handleCheckbox = (val) => {

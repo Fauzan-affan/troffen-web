@@ -1,14 +1,40 @@
+import { useEffect, useState } from "react";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
 import styles from "../styles/Statistik.module.css";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
-const statistik = () => {
+import { getStatistik } from "../functions/statistik";
+import Cookies from "js-cookie";
+
+// cons statistik = [
+//   {
+//     month: "Jan",
+//     totalStudent: 33
+//   },
+//   {
+//     month: "Feb",
+//     totalStudent: 53
+//   },
+//   {
+//     month: "Mar",
+//     totalStudent: 33
+//   },
+//   {
+//     month: "Apr",
+//     totalStudent: 33
+//   },
+//   ...
+// ]
+
+const Statistik = () => {
+  const [iklanAktif, setIklanAktif] = useState();
+
   const data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"],
     datasets: [
       {
-        label: "Kursus",
+        label: "Murid",
         data: [33, 53, 85, 41, 44, 65, 33, 53, 85, 41, 44, 65],
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
@@ -16,6 +42,23 @@ const statistik = () => {
       },
     ],
   };
+
+  const handleChartData = async () => {
+    try {
+      const res = await getStatistik(Cookies.get("token"));
+      if (res !== undefined && res.meta.code === 200) {
+        console.log(res);
+        setIklanAktif(res.data.data[0].total_iklan_aktif);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleChartData();
+  }, []);
+
   return (
     <div className={styles.statistik_container}>
       <div className={styles.statistik_title}>Statistik</div>
@@ -23,7 +66,7 @@ const statistik = () => {
         <div className={styles.statistik_content_top}>
           <div className={styles.total_iklan_aktif}>
             <div className={styles.total_iklan_aktif_label}>TOTAL IKLAN AKTIF</div>
-            <div className={styles.total_iklan_aktif_value}>{3}</div>
+            <div className={styles.total_iklan_aktif_value}>{iklanAktif}</div>
           </div>
           <div className={styles.total_iklan_dilihat}>
             <div className={styles.total_iklan_dilihat_label}>TOTAL IKLAN DILIHAT</div>
@@ -48,7 +91,7 @@ const statistik = () => {
   );
 };
 
-statistik.getLayout = function getLayout(statistik) {
+Statistik.getLayout = function getLayout(Statistik) {
   return (
     <DashboardTemplate
       isNavbar={`dashboardNavbar`}
@@ -57,9 +100,9 @@ statistik.getLayout = function getLayout(statistik) {
       icon={`troffen.ico`}
       menu={`Statistik`}
     >
-      {statistik}
+      {Statistik}
     </DashboardTemplate>
   );
 };
 
-export default statistik;
+export default Statistik;

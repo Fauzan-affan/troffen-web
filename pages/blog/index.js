@@ -20,6 +20,7 @@ import twitter from "../../assets/img/blog/icon/twitter.png";
 import Previous from "../../assets/img/Previous.svg";
 import Next from "../../assets/img/Next.svg";
 import article1 from "../../assets/img/blog/artickles/artickle1.svg";
+import PP from "../../assets/img/thumbnail_blank.svg";
 
 import styles from "../../styles/blog/Blog.module.css";
 
@@ -125,7 +126,7 @@ export default function Index({ posts }) {
         <div className={styles.container}>
           <div className={styles.highlight}>
             <div className={styles.image_highlight} onClick={() => handleClick(posts[highlight].slug)}>
-              <Image alt="" src={Blog} />
+              <Image alt="" src={PP} width={500} />
             </div>
             <div className={styles.content_highlight}>
               <nav>
@@ -159,7 +160,7 @@ export default function Index({ posts }) {
                   <TwitterShareButton url={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "-")}`} quote={JSON.stringify(posts[highlight].slug)} hashtag={posts[highlight].frontmatter.tags}>
                     <Image alt="" src={twitter} width={25} height={25} />
                   </TwitterShareButton>
-                  <ShareIntagram caption={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "-")}`} imageUrl={article1} />
+                  <ShareIntagram caption={`https://troffen.com/blog/${posts[highlight].slug.replace(/ /g, "-")}`} imageUrl={PP} />
                 </div>
               </div>
               <div className={styles.content_actions}>
@@ -207,7 +208,7 @@ export default function Index({ posts }) {
                   return (
                     <div className={styles.artikel_baru_card} key={slug} onClick={() => handleClick(slug)}>
                       <div className={styles.artikel_baru_card_img}>
-                        <Image alt="" src={article1} />
+                        <Image alt="" src={PP} />
                       </div>
                       <div className={styles.content_highlight}>
                         <nav>
@@ -245,7 +246,7 @@ export default function Index({ posts }) {
                   return (
                     <div className={styles.artikel_baru_card} key={slug} onClick={() => handleClick(slug)}>
                       <div className={styles.artikel_baru_card_img}>
-                        <Image alt="" src={article1} />
+                        <Image alt="" src={PP} />
                       </div>
                       <div className={styles.content_highlight}>
                         <nav>
