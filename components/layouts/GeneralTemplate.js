@@ -131,7 +131,11 @@ const GeneralTemplate = ({ title, desc, icon, children, isNavbar }) => {
   useEffect(() => {
     isNavbar && setNavbar(isNavbar);
 
-    if (session?.user.account !== undefined && session?.user.account.access_token) {
+    // if (session?.user.account !== undefined && session?.user.account.access_token) {
+    //   getOAuthToken(session?.user.account.access_token);
+    // }
+
+    if (Cookies.get("token") === undefined) {
       getOAuthToken(session?.user.account.access_token);
     }
 
