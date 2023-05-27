@@ -9,7 +9,7 @@ import styles from "../../styles/pesan/ReservId.module.css";
 import Modal from "../../components/core/modal/Modal";
 import Chat from "../../components/core/chat/Chat";
 
-import PP from "../../assets/img/dashboard/pp_pesan.svg";
+import PP from "../../assets/img/PEPE.svg";
 import dot from "../../assets/img/dashboard/dot.svg";
 
 import { getPesan, getPesanStudent, getPesanDetailStudent, getPesanDetailTutor } from "../../functions/dashboard";

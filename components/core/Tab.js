@@ -9,7 +9,7 @@ import Plus from "../../assets/img/plus.svg";
 import QR from "../../assets/img/png/qr.png";
 import ToogleActive from "../../assets/img/dashboard/ToggleActive.svg";
 import ToogleNonActive from "../../assets/img/dashboard/Toggle.svg";
-import pp_iklan from "../../assets/img/dashboard/pp_iklan.svg";
+import pp_iklan from "../../assets/img/thumbnail_blank.svg";
 import star from "../../assets/img/dashboard/star.svg";
 
 const masukSebagaiLabel = {
@@ -211,7 +211,7 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
                     <nav>{course.status}</nav>
                   </div>
                   <div className={sc.card_image}>
-                    <Image alt="" src={pp_iklan} />
+                    <Image alt="" src={pp_iklan} width={210} />
                   </div>
                   <div className={sc.card_kursus}>{course.kursus}</div>
                   <div className={sc.card_rating}>
@@ -235,7 +235,7 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
                     <nav>{course.status}</nav>
                   </div>
                   <div className={sc.card_image}>
-                    <Image alt="" src={pp_iklan} />
+                    <Image alt="" src={pp_iklan} width={210} />
                   </div>
                   <div className={sc.card_kursus}>{course.kursus}</div>
                   <div className={sc.card_rating}>

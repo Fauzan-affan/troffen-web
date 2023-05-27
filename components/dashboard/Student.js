@@ -7,7 +7,7 @@ import styles from "../../styles/dashboard/Student.module.css";
 import Search from "../../assets/img/dashboard/search.png";
 import NoChat from "../../assets/img/dashboard/no_chat.svg";
 import NewChat from "../../assets/img/dashboard/chat_new.svg";
-import PP from "../../assets/img/dashboard/pp.svg";
+import PP from "../../assets/img/PEPE.svg";
 import Yes from "../../assets/img/dashboard/yes.svg";
 import No from "../../assets/img/dashboard/no.svg";
 

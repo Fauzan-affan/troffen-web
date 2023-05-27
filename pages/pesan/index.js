@@ -8,7 +8,7 @@ import Modal from "../../components/core/modal/Modal";
 import styles from "../../styles/pesan/Pesan.module.css";
 
 import VectorAction from "../../assets/img/dashboard/VectorAction.svg";
-import PP from "../../assets/img/dashboard/pp_pesan.svg";
+import PP from "../../assets/img/PEPE.svg";
 import dot from "../../assets/img/dashboard/dot.svg";
 
 import { getPesan, getPesanStudent } from "../../functions/dashboard";
