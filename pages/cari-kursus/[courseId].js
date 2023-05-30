@@ -56,10 +56,10 @@ export const getStaticProps = async ({ params }) => {
 };
 
 const CourseId = ({ courseId, reviews }) => {
-  // console.log(reviews);
   // console.log(Cookies.get("token"));
 
   const router = useRouter();
+  // console.log(router.params);
 
   const [course, setCourse] = useState({ id: "", tutor: "", tarif: "", title: "", rating: "", ulasan: "", is_online: "", hashtag: "", description: "", murid: "", course_area: "", is_wishlist: "" });
   const [modalWishlist, setModalWishlist] = useState(false);
