@@ -7,8 +7,8 @@ export const loadCoursesFunc = async (title = "", area = "", page = 1) => {
       body: JSON.stringify({
         // course_title: title,
         // course_area: area,
-        // limit: 6,
-        // page: page,
+        limit: 100,
+        page: 1,
         orderby: "desc",
       }),
     });

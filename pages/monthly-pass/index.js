@@ -10,32 +10,58 @@ import E2 from "../../assets/img/e2.svg";
 
 import BCA from "../../assets/img/bank/Bank_Central_Asia.svg";
 import Permata from "../../assets/img/bank/permata.svg";
+import CIMB from "../../assets/img/bank/CIMB_Niaga_logo.svg";
 
 const tabObj = [
+  // {
+  //   id: "bank1",
+  //   title: "Virtual Account",
+  //   optionName: "BCA",
+  //   optionImg: BCA,
+  //   desc: [
+  //     { descId: "desc1", val: "Instruksi 1" },
+  //     { descId: "desc2", val: "Instruksi 2" },
+  //     { descId: "desc3", val: "Instruksi 3" },
+  //     { descId: "desc4", val: "Instruksi 4" },
+  //     { descId: "desc5", val: "Instruksi 5" },
+  //   ],
+  // },
+  // {
+  //   id: "bank2",
+  //   title: "QR",
+  //   optionName: "Bank Permata",
+  //   optionImg: Permata,
+  //   desc: [
+  //     { descId: "desc1", val: "Instruksi 1" },
+  //     { descId: "desc2", val: "Instruksi 2" },
+  //     { descId: "desc3", val: "Instruksi 3" },
+  //     { descId: "desc4", val: "Instruksi 4" },
+  //     { descId: "desc5", val: "Instruksi 5" },
+  //   ],
+  // },
   {
     id: "bank1",
-    title: "Virtual Account",
-    optionName: "BCA",
-    optionImg: BCA,
+    title: "Transfer",
+    optionName: "ATM CIMB Niaga",
+    optionImg: CIMB,
     desc: [
-      { descId: "desc1", val: "Instruksi 1" },
-      { descId: "desc2", val: "Instruksi 2" },
-      { descId: "desc3", val: "Instruksi 3" },
-      { descId: "desc4", val: "Instruksi 4" },
-      { descId: "desc5", val: "Instruksi 5" },
-    ],
-  },
-  {
-    id: "bank2",
-    title: "QR",
-    optionName: "Bank Permata",
-    optionImg: Permata,
-    desc: [
-      { descId: "desc1", val: "Instruksi 1" },
-      { descId: "desc2", val: "Instruksi 2" },
-      { descId: "desc3", val: "Instruksi 3" },
-      { descId: "desc4", val: "Instruksi 4" },
-      { descId: "desc5", val: "Instruksi 5" },
+      { descId: "desc1", val: "Masukkan kartu ATM ke dalam slot kartu di mesin ATM." },
+      { descId: "desc2", val: "Pilih bahasa Indonesia untuk memudahkan kamu bertransaksi." },
+      { descId: "desc3", val: "Masukkan nomor PIN ATM kamu." },
+      { descId: "desc4", val: "Pilih jenis transaksi yang akan dilakukan. Pilih menu TRANSFER." },
+      { descId: "desc5", val: "Setelah itu, pilih bank tujuan transfer." },
+      {
+        descId: "desc6",
+        val: "Masukkan nomor rekening tujuan: 800170922300 / SANG HYANG BATARA ISMAYA. Setelah itu pilih BENAR.",
+      },
+      {
+        descId: "desc7",
+        val: "Bila transfer ditujukan ke rekening bank lain, kamu perlu memasukkan kode bank terlebih dahulu lalu diikuti dengan nomor rekening tujuan. Apabila kamu mengirim ke sesama rekening CIMB, kamu cukup memasukkan nomor rekening saja. Setelah memasukkan nomor rekening tujuan, pilih BENAR.",
+      },
+      { descId: "desc8", val: "Masukkan Nominal Uang yang ingin ditransfer ke rekening tujuan Rp 50.000 (Monthly Pass). Pilih BENAR." },
+      { descId: "desc9", val: "Masukkan Nomor Referensi (opsional)" },
+      { descId: "desc10", val: "Konfirmasi ulang. Setelah semua detail transaksi yang ditampilkan benar, pilih YA." },
+      { descId: "desc11", val: "Transfer berhasil. Kamu akan menerima bukti transaksi berupa struk dan kartu ATM-mu kembali." },
     ],
   },
 ];

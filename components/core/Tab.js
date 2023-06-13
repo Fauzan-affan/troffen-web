@@ -31,6 +31,7 @@ const masukSebagaiSelectedHr = {
 
 const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, isProfile, Courses, handleToogleCard, handleStage }) => {
   const [headerType, setheaderType] = useState(defaultType);
+  const [toogleCIMB, setToogleCIMB] = useState(true);
   const [toogleBCA, setToogleBCA] = useState(true);
   const [tooglePermata, setTooglePermata] = useState(false);
   const [toogleFAQ1, setToogleFAQ1] = useState(true);
@@ -47,6 +48,7 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
   };
 
   const handleToogle = (val) => {
+    val === "ATM CIMB Niaga" && setToogleCIMB(!toogleCIMB);
     val === "BCA" && setToogleBCA(!toogleBCA);
     val === "Bank Permata" && setTooglePermata(!tooglePermata);
 
@@ -112,13 +114,14 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
                   <div className={styles.option_1_header_left}>
                     {obj.optionImg && (
                       <nav className={styles.img_container_1}>
-                        <Image alt="" src={obj.optionImg} priority width={100} height={100} />
+                        <Image alt="" src={obj.optionImg} priority width={200} height={100} />
                       </nav>
                     )}
                     <nav>{obj.optionName}</nav>
                   </div>
                   <div className={styles.option_1_header_right}>
-                    {(obj.optionName === "BCA" && toogleBCA) ||
+                    {(obj.optionName === "ATM CIMB Niaga" && toogleCIMB) ||
+                    (obj.optionName === "BCA" && toogleBCA) ||
                     (obj.optionName === "Bank Permata" && tooglePermata) ||
                     (obj.optionName === "Pertanyaan Umum" && toogleFAQ1) ||
                     (obj.optionName === "Pengajar" && toogleFAQ2) ||
@@ -133,6 +136,15 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
                 </div>
               </div>
               <hr />
+              {obj.optionName === "ATM CIMB Niaga" && toogleCIMB && (
+                <div className={styles.option_1_body}>
+                  <ol>
+                    {obj.desc.map((desc) => (
+                      <li key={desc.descId}>{desc.val}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
               {obj.optionName === "BCA" && toogleBCA && (
                 <div className={styles.option_1_body}>
                   <ol>
@@ -191,14 +203,14 @@ const Tab = ({ tabObj, defaultType = "", isHeader, isBody, isCard, isCardBody, i
           </div>
         ))}
 
-      {isBody && headerType === tabObj[1].id && (
+      {/* {isBody && headerType === tabObj[1].id && (
         <div className={styles.payment_container}>
           <div className={styles.QR}>
             <Image alt="" src={QR} priority width={300} height={300} />
             <nav>Transfer melalui QRIS a/n Troffen.</nav>
           </div>
         </div>
-      )}
+      )} */}
 
       {isCardBody && (
         <div className={sc.container_card}>

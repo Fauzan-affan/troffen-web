@@ -4,7 +4,7 @@ import styles from "../styles/Statistik.module.css";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
-import { getStatistik } from "../functions/statistik";
+import { getStatistik, getMonthlyStatistik } from "../functions/statistik";
 import Cookies from "js-cookie";
 
 // cons statistik = [
@@ -29,13 +29,20 @@ import Cookies from "js-cookie";
 
 const Statistik = () => {
   const [iklanAktif, setIklanAktif] = useState();
+  const [iklanDilihat, setIklanDilihat] = useState();
+  const [totalMurid, setTotalMurid] = useState();
+
+  const [totalKursus, setTotalKursus] = useState();
+
+  const [labelMonths, setLabelMonths] = useState();
+  const [studentPerMonth, setStudentPerMonth] = useState();
 
   const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"],
+    labels: labelMonths,
     datasets: [
       {
         label: "Murid",
-        data: [33, 53, 85, 41, 44, 65, 33, 53, 85, 41, 44, 65],
+        data: studentPerMonth,
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "#1EA9E4",
@@ -47,8 +54,75 @@ const Statistik = () => {
     try {
       const res = await getStatistik(Cookies.get("token"));
       if (res !== undefined && res.meta.code === 200) {
-        console.log(res);
+        // console.log(res);
+        let totalMurid = parseInt(res.data.data[0].total_iklan_diterima) + parseInt(res.data.data[0].total_iklan_ditolak) + parseInt(res.data.data[0].total_iklan_selesai);
         setIklanAktif(res.data.data[0].total_iklan_aktif);
+        setIklanDilihat(res.data.data[0].total_iklan_dilihat);
+        setTotalMurid(totalMurid);
+        setTotalKursus(res.data.data[0].total_iklan_all);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleStatistikPerMonth = async () => {
+    try {
+      const res = await getMonthlyStatistik(Cookies.get("token"), new Date().getFullYear(), "All");
+      if (res !== undefined && res.meta.code === 200) {
+        console.log(res);
+        let bulan = [];
+        let student = [];
+        res.data.map((item) => {
+          // ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"]
+          let stringBulan = "";
+          switch (item.month) {
+            case "01":
+              stringBulan = "Jan";
+              break;
+            case "02":
+              stringBulan = "Feb";
+              break;
+            case "03":
+              stringBulan = "Mar";
+              break;
+            case "04":
+              stringBulan = "Apr";
+              break;
+            case "05":
+              stringBulan = "May";
+              break;
+            case "06":
+              stringBulan = "Jun";
+              break;
+            case "07":
+              stringBulan = "Jul";
+              break;
+            case "08":
+              stringBulan = "Aug";
+              break;
+            case "09":
+              stringBulan = "Sep";
+              break;
+            case "10":
+              stringBulan = "Oct";
+              break;
+            case "11":
+              stringBulan = "Nov";
+              break;
+            case "12":
+              stringBulan = "Des";
+              break;
+
+            default:
+              stringBulan = "Bulan";
+              break;
+          }
+          bulan.push(stringBulan);
+          student.push(item.total_student);
+        });
+        setLabelMonths(bulan);
+        setStudentPerMonth(student);
       }
     } catch (error) {
       console.log(error);
@@ -57,6 +131,7 @@ const Statistik = () => {
 
   useEffect(() => {
     handleChartData();
+    handleStatistikPerMonth();
   }, []);
 
   return (
@@ -70,17 +145,17 @@ const Statistik = () => {
           </div>
           <div className={styles.total_iklan_dilihat}>
             <div className={styles.total_iklan_dilihat_label}>TOTAL IKLAN DILIHAT</div>
-            <div className={styles.total_iklan_dilihat_value}>{24}</div>
+            <div className={styles.total_iklan_dilihat_value}>{iklanDilihat}</div>
           </div>
           <div className={styles.total_murid}>
             <div className={styles.total_murid_label}>TOTAL MURID</div>
-            <div className={styles.total_murid_value}>{12}</div>
+            <div className={styles.total_murid_value}>{totalMurid}</div>
           </div>
         </div>
         <div className={styles.statistik_content_down}>
           <div className={styles.pengajuan_kursus_oleh_murid}>
             <div className={styles.pengajuan_kursus_oleh_murid_label}>PENGAJUAN KURSUS OLEH MURID</div>
-            <div className={styles.pengajuan_kursus_oleh_murid_value}>{`${5} Kursus`}</div>
+            <div className={styles.pengajuan_kursus_oleh_murid_value}>{`${totalKursus} Kursus`}</div>
             <div className={styles.pengajuan_kursus_oleh_murid_line_chart}>
               <Line data={data} />
             </div>

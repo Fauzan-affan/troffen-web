@@ -145,7 +145,7 @@ const Index = () => {
           let objCourse = {};
 
           objCourse["id"] = item.id;
-          objCourse["status"] = item.course_is_active === "0" ? "Non-Aktif" : "Aktif";
+          objCourse["status"] = item.course_is_active === "0" ? "Non-Aktif" : "Aktif"; // statusnya ilang dari response
           objCourse["kursus"] = item.title;
           objCourse["rating"] = item.rating;
           objCourse["totalUlasan"] = item.ulasan;
