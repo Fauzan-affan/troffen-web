@@ -15,6 +15,7 @@ import Plus from "../assets/img/dashboard/profile/plus.svg";
 
 import { getProfile, updateEducation, updateProfile } from "../functions/profile";
 import { submitEducation } from "../functions/tutor";
+import { uploadImage } from "../functions/uploadImage";
 
 const year = [
   { name: 1980, value: 1980 },
@@ -227,7 +228,23 @@ const Profile = () => {
     setNewPendidikan(value);
   };
 
-  const handleSubmitPhoto = () => {
+  const handleSubmitPhoto = async () => {
+    const formData = new FormData();
+    // formData.append("file", photo);
+    // formData.append("upload_preset", "troffen01");
+
+    formData.append("file", photo);
+    formData.append("cloud_name", "db4qplcj9");
+    formData.append("upload_preset", "troffen-img");
+    formData.append("public_id", "troffen_upload_img_1");
+
+    // console.log(formData);
+
+    const res = await uploadImage(formData);
+    console.log(res);
+    // if (res.meta.code === 200) {
+    //   console.log(res)
+    // }
     setIsSubmited(1);
   };
 
@@ -344,7 +361,7 @@ const Profile = () => {
             </div>
             <div className={styles.ib_biodata}>
               <form onSubmit={handleSubmitBiodata}>
-                <Input label="Nomor Telepon" name="nomorTelepon" value={phone} handleChange={handlePhone} />
+                <Input label="Nomor Telepon" name="nomorTelepon" value={phone} handleChange={handlePhone} isDisabled={true} />
                 <Input label="Akun Instagram" name="akunInstagram" value={Ig} handleChange={handleIg} />
                 <Textarea
                   label="Alamat lengkap"

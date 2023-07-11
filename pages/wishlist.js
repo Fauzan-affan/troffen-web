@@ -5,7 +5,7 @@ import Image from "next/image";
 import DashboardTemplate from "../components/layouts/DashboardTemplate";
 
 import Line from "../assets/img/dashboard/line.svg";
-import PP from "../assets/img/dashboard/pp_wishlist.svg";
+import PP from "../assets/img/PEPE.svg";
 import Love from "../assets/img/dashboard/love.svg";
 import Star from "../assets/img/dashboard/star.svg";
 
@@ -82,7 +82,7 @@ const Wishlist = () => {
         {wishlist.map((val, i) => (
           <div className={styles.wishlist_card} key={i}>
             <div className={styles.wishlist_card_img}>
-              <Image src={PP} alt="" />
+              <Image src={PP} width={150} alt="" />
             </div>
             <div className={styles.wishlist_card_info}>
               <div className={styles.wishlist_card_info_label}>
