@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
-import { useState, useEffect } from "react";
 import DashboardTemplate from "../../components/layouts/DashboardTemplate";
 import Modal from "../../components/core/modal/Modal";
+import Blank from "../../components/blank/blank";
+
 import styles from "../../styles/pesan/Pesan.module.css";
 
 import VectorAction from "../../assets/img/dashboard/VectorAction.svg";
@@ -59,7 +61,7 @@ const Pesan = () => {
 
   return (
     <div className={styles.pesan_container}>
-      {/* {console.log(message)} */}
+      {message.length === 0 && <Blank menu={"daftar pesan"} />}
       {message.map((item, i) => (
         <>
           <div className={styles.pesan_card} key={i}>

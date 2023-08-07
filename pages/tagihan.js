@@ -1,176 +1,54 @@
-import { useTable, usePagination } from "react-table";
-import { useState, useMemo } from "react";
-import DashboardTemplate from "../components/layouts/DashboardTemplate";
-import styles from "../styles/Tagihan.module.css";
+import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import Cookies from "js-cookie";
 
-const tutorData = [
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Tagihan: "Professional Plan Januari 2023",
-    TanggalTagihan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-];
+import TagihanLangganan from "../components/dashboard/TagihanLangganan";
+import DashboardTemplate from "../components/layouts/DashboardTemplate";
 
-const studentData = [
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-  {
-    Langganan: "Professional Plan Januari 2023",
-    TanggalLangganan: "28 Januari 2022, 15:45",
-    Status: "Terbayar",
-    Nominal: "Rp 50.000",
-  },
-];
+import { paymentList } from "../functions/admin";
+
+import styles from "../styles/Tagihan.module.css";
+import Blank from "../components/blank/blank";
 
 const Tagihan = () => {
+  const [paymentlist_, setPaymentlist_] = useState();
+  const [filterInput, setFilterInput] = useState("");
+
   const Status = ({ tagihanStatus }) => {
     return <div className={tagihanStatus === "Terbayar" ? styles.tagihan_terbayar : styles.tagihan}>{tagihanStatus}</div>;
   };
 
-  const filteredData = Cookies.get("role") === "tutor" ? [] : [];
-
-  const data = useMemo(() => filteredData, []);
+  const handlePaymentlist_ = async () => {
+    try {
+      const res = await paymentList(Cookies.get("adminToken"));
+      if (res !== undefined && res.meta.code === 200) {
+        setPaymentlist_(res.data.data.filter((i) => i.user_id === Cookies.get("userId")));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const header1 =
     Cookies.get("role") === "tutor"
       ? {
           Header: "Tagihan",
-          accessor: "Tagihan",
+          accessor: "id",
         }
       : {
           Header: "Langganan",
-          accessor: "Langganan",
+          accessor: "id",
         };
 
   const header2 =
     Cookies.get("role") === "tutor"
       ? {
           Header: "Tanggal Tagihan",
-          accessor: "TanggalTagihan",
+          accessor: "created_at",
         }
       : {
           Header: "Tanggal Langganan",
-          accessor: "TanggalLangganan",
+          accessor: "created_at",
         };
 
   const columns = useMemo(
@@ -179,137 +57,29 @@ const Tagihan = () => {
       header2,
       {
         Header: () => "Status",
-        accessor: "Status",
+        accessor: "subscription_payment_status",
         Cell: ({ cell: { value } }) => <Status tagihanStatus={value} />,
       },
       {
+        Header: `Selesai ${Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}`,
+        accessor: "subscription_end_period",
+      },
+      {
         Header: "Nominal",
-        accessor: "Nominal",
+        accessor: "subscription_payment_price",
       },
     ],
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable({ columns, data }, usePagination);
+  useEffect(() => {
+    handlePaymentlist_();
+  }, []);
 
   return (
     <div className={styles.tagihan_container}>
-      <div className={styles.tagihan_title}>Daftar {Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}</div>
-      <div className={styles.tagihan_content}>
-        <div className={styles.course_request_body}>
-          <table {...getTableProps()} className={styles.table}>
-            <thead>
-              {headerGroups.map((headerGroup, i) => (
-                <tr {...headerGroup.getHeaderGroupProps()} key={i}>
-                  {headerGroup.headers.map((column, i) => (
-                    <th
-                      {...column.getHeaderProps()}
-                      style={{
-                        // borderBottom: "solid 3px",
-                        background: "#F7F8FA",
-                        color: "#4F4F4F",
-                        fontWeight: "bold",
-                      }}
-                      key={i}
-                    >
-                      {column.render("Header")}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {page.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()} key={i}>
-                    {row.cells.map((cell, i) => {
-                      return (
-                        <td
-                          {...cell.getCellProps()}
-                          style={{
-                            padding: "10px",
-                            fontWeight: "bold",
-                            fontSize: "10px",
-                          }}
-                          key={i}
-                        >
-                          {cell.render("Cell")}
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <hr className={styles.hr} />
-        <div className={styles.table_footer}>
-          <div className={styles.table_footer_total}>Total Tagihan: {data.length}</div>
-          <div className={styles.table_footer_pagination}>
-            <div className="pagination">
-              <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                {"<<"}
-              </button>{" "}
-              <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                {"<"}
-              </button>{" "}
-              <button onClick={() => nextPage()} disabled={!canNextPage}>
-                {">"}
-              </button>{" "}
-              <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                {">>"}
-              </button>{" "}
-              <span>
-                Page{" "}
-                <strong>
-                  {pageIndex + 1} of {pageOptions.length}
-                </strong>{" "}
-              </span>
-              <span>
-                | Go to page:{" "}
-                <input
-                  type="number"
-                  defaultValue={pageIndex + 1}
-                  onChange={(e) => {
-                    const page = e.target.value ? Number(e.target.value) - 1 : 0;
-                    gotoPage(page);
-                  }}
-                  style={{ width: "100px" }}
-                />
-              </span>{" "}
-              <select
-                value={pageSize}
-                onChange={(e) => {
-                  setPageSize(Number(e.target.value));
-                }}
-              >
-                {[10, 20, 30, 40, 50].map((pageSize) => (
-                  <option key={pageSize} value={pageSize}>
-                    Show {pageSize}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
+      {paymentlist_ !== undefined && paymentlist_.length === 0 && <Blank menu={"langganan"} />}
+      <div className={styles.tagihan_content}>{paymentlist_ !== undefined && paymentlist_.length > 0 && <TagihanLangganan columns={columns} dataCourse={paymentlist_} filterInput={filterInput} setFilterInput={setFilterInput} />}</div>
     </div>
   );
 };

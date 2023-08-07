@@ -16,7 +16,7 @@
 }
 
 #title {
-  margin: 3rem 0;
+  margin: 1rem 0;
 }
 
 .title_1 {
@@ -226,4 +226,22 @@
 
 .option_1_body nav {
   padding: 2rem;
+}
+
+.info_text {
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  background-color: #ffe698;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 2rem;
+}
+
+.warning_info {
+  margin-right: 1rem;
 }

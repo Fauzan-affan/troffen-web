@@ -3,7 +3,7 @@ import styles from "../../../styles/core/Modal.module.css";
 import CloseIcon from "../../../assets/img/close.svg";
 import Progres50 from "../../../assets/img/dashboard/50persen.svg";
 
-function Modal({ show, modalInfo, modalForm, modalUlasan, modalBanner, onClose, handleModal, children, title, isSticky = false }) {
+function Modal({ show, modalInfo, modalRating, modalForm, modalForgotPass, modalUlasan, modalBanner, onClose, handleModal, children, title, isSticky = false }) {
   const handleCloseClick = (e) => {
     e.preventDefault();
     onClose();
@@ -65,6 +65,19 @@ function Modal({ show, modalInfo, modalForm, modalUlasan, modalBanner, onClose, 
         </>
       )}
 
+      {modalRating && (
+        <>
+          <div className={styles.modal_overlay}>
+            <div className={styles.modal_rating}>
+              <div className={styles.modal_close} onClick={handleCloseModal}>
+                <Image alt="" src={CloseIcon} />
+              </div>
+              <div>{children}</div>
+            </div>
+          </div>
+        </>
+      )}
+
       {modalUlasan && (
         <>
           <div className={styles.modal_overlay}>
@@ -82,6 +95,19 @@ function Modal({ show, modalInfo, modalForm, modalUlasan, modalBanner, onClose, 
         <>
           <div className={styles.modal_overlay}>
             <div className={styles.modal_pend}>
+              <div className={styles.modal_close} onClick={handleCloseClick}>
+                <Image alt="" src={CloseIcon} />
+              </div>
+              <div>{children}</div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {modalForgotPass && (
+        <>
+          <div className={styles.modal_overlay}>
+            <div className={styles.modal_forgot_pass}>
               <div className={styles.modal_close} onClick={handleCloseClick}>
                 <Image alt="" src={CloseIcon} />
               </div>

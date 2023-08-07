@@ -128,26 +128,26 @@ export const reqCoursesList = async (token) => {
   }
 };
 
-export const reqCourseDetail = async (token, id) => {
+export const reqCourseDetail = async (id) => {
   try {
     const res = await fetch(`https://api.troffen-api.com/api/student/course/search/${id}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${Cookies.get("token")}` },
     });
 
     const data = await res.json();
-    // console.log(data);
+
     return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const courseReview = async (token, id) => {
+export const courseReview = async (id) => {
   try {
     const res = await fetch(`https://api.troffen-api.com/api/public/course/review`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${Cookies.get("token")}` },
       body: JSON.stringify({
         course_id: id,
         // "limit":10,
@@ -179,7 +179,7 @@ export const addOrRemoveStudentWishlist = async (token, id) => {
   }
 };
 
-export const submitAjukanKursus = async (token, courseId, reason, reservation_payment_va) => {
+export const submitAjukanKursus = async (token, courseId, reason, reservation_payment_va = "CIMB") => {
   try {
     const res = await fetch(`https://api.troffen-api.com/api/student/course/reservation`, {
       method: "POST",

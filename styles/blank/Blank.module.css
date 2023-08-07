@@ -1,0 +1,21 @@
+.blank_container {
+  height: 50vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blank_header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 1.5rem;
+}
+
+.blank_body {
+  font-size: 22px;
+  text-align: center;
+  color: #828282;
+}

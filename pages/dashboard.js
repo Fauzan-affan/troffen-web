@@ -10,6 +10,7 @@ import Textarea from "../components/core/Textarea";
 import Stars from "../components/core/Star";
 import Tutor from "../components/dashboard/Tutor";
 import Student from "../components/dashboard/Student";
+import Blank from "../components/blank/blank";
 
 import GreenChecklist from "../assets/img/dashboard/greenchecklist.svg";
 import Copy from "../assets/img/dashboard/copy.svg";
@@ -103,7 +104,9 @@ const Dashboard = () => {
         setAge(age);
         setProfile(res.data.user);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleResponCourseReq = async (reservId, action) => {
@@ -135,8 +138,10 @@ const Dashboard = () => {
       <div className={styles.container}>
         <Modal onClose={closeStickyModal} isSticky={stickyActive} />
 
-        {role === "tutor" && courselist !== undefined && <Tutor dataCourse={courselist} respon={handleResponCourseReq} waiting={waitingRes} filterInput={filterInput} setFilterInput={setFilterInput} age={age} />}
-        {role === "student" && courselist !== undefined && (
+        {courselist !== undefined && courselist.length === 0 && <Blank menu={"permintaan kursus"} />}
+
+        {role === "tutor" && courselist !== undefined && courselist.length > 0 && <Tutor dataCourse={courselist} respon={handleResponCourseReq} waiting={waitingRes} filterInput={filterInput} setFilterInput={setFilterInput} age={age} />}
+        {role === "student" && courselist !== undefined && courselist.length > 0 && (
           <Student dataCourse={courselist} respon={handleResponCourseReq} waiting={waitingRes} filterInput={filterInput} setFilterInput={setFilterInput} age={age} onOpenModal={handleModalUlasan} />
         )}
 

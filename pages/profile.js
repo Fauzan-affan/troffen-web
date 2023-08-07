@@ -15,7 +15,6 @@ import Plus from "../assets/img/dashboard/profile/plus.svg";
 
 import { getProfile, updateEducation, updateProfile } from "../functions/profile";
 import { submitEducation } from "../functions/tutor";
-import { uploadImage } from "../functions/uploadImage";
 
 const year = [
   { name: 1980, value: 1980 },
@@ -75,8 +74,7 @@ const Profile = () => {
   const router = useRouter();
 
   const [stage, setStage] = useState("Informasi Pribadi");
-  const [photo, setPhoto] = useState("");
-  const [isSubmited, setIsSubmited] = useState(0);
+  // const [isSubmited, setIsSubmited] = useState(0);
   // const [nama, setNama] = useState({
   //   namaLengkap: "",
   //   nameDepan: "",
@@ -88,7 +86,7 @@ const Profile = () => {
   //   akunInstagram: "",
   //   alamatLengkap: "",
   // });
-  const [pengalaman, setPengalaman] = useState(false);
+  // const [pengalaman, setPengalaman] = useState(false);
   const [sertifikat, setSertifikat] = useState({
     sertifikat1: "",
     sertifikat2: "",
@@ -100,10 +98,13 @@ const Profile = () => {
     sertifikat3: 0,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [pendidikan, setPendidikan] = useState();
   const [newIdPend, setNewIdPend] = useState();
   const [newPendidikan, setNewPendidikan] = useState();
 
+  const [photo, setPhoto] = useState("");
   const [fullname, setFullname] = useState();
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
@@ -139,9 +140,79 @@ const Profile = () => {
     setStage(nextStage);
   };
 
-  const handleChange = (e) => {
-    const src = URL.createObjectURL(e.target.files[0]);
-    setPhoto(src);
+  const processFile = async (e) => {
+    setIsLoading(true);
+
+    var file = e.target.files[0];
+
+    // Set your cloud name and unsigned upload preset here:
+    var YOUR_CLOUD_NAME = "db4qplcj9";
+    var YOUR_UNSIGNED_UPLOAD_PRESET = "troffen01";
+
+    var POST_URL = "https://api.cloudinary.com/v1_1/" + YOUR_CLOUD_NAME + "/auto/upload";
+
+    var XUniqueUploadId = +new Date();
+
+    processFile();
+
+    function processFile(e) {
+      var size = file.size;
+      var sliceSize = 20000000;
+      var start = 0;
+
+      setTimeout(loop, 3);
+
+      function loop() {
+        var end = start + sliceSize;
+
+        if (end > size) {
+          end = size;
+        }
+        var s = slice(file, start, end);
+        send(s, start, end - 1, size);
+        if (end < size) {
+          start += sliceSize;
+          setTimeout(loop, 3);
+        }
+      }
+    }
+
+    function send(piece, start, end, size) {
+      console.log("start ", start);
+      console.log("end", end);
+
+      var formdata = new FormData();
+      console.log(XUniqueUploadId);
+
+      console.log(piece);
+
+      formdata.append("file", piece);
+      formdata.append("cloud_name", YOUR_CLOUD_NAME);
+      formdata.append("upload_preset", YOUR_UNSIGNED_UPLOAD_PRESET);
+      formdata.append("public_id", XUniqueUploadId);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", POST_URL, false);
+      xhr.setRequestHeader("X-Unique-Upload-Id", XUniqueUploadId);
+      xhr.setRequestHeader("Content-Range", "bytes " + start + "-" + end + "/" + size);
+
+      xhr.onload = function () {
+        // do something to response
+        const resImg = JSON.parse(this.responseText);
+        // console.log(resImg);
+        handleSubmitPhoto(resImg.secure_url);
+      };
+
+      xhr.send(formdata);
+    }
+
+    function slice(file, start, end) {
+      var slice = file.mozSlice ? file.mozSlice : file.webkitSlice ? file.webkitSlice : file.slice ? file.slice : noop;
+
+      return slice.bind(file)(start, end);
+    }
+
+    function noop() {}
   };
 
   const handleChangeSertifikat = (e) => {
@@ -211,7 +282,7 @@ const Profile = () => {
 
   const handleReset = () => {
     setPhoto("");
-    setIsSubmited(0);
+    // setIsSubmited(0);
   };
 
   const handleResetSertifikat = (state) => {
@@ -224,28 +295,32 @@ const Profile = () => {
     const id = e.target.name;
     const value = e.target.value;
 
+    setPendidikan((current) =>
+      current.map((obj) => {
+        if (obj.id === parseInt(id)) {
+          return { ...obj, education_degree: value };
+        }
+        return obj;
+      })
+    );
+
     setNewIdPend(id);
     setNewPendidikan(value);
   };
 
-  const handleSubmitPhoto = async () => {
-    const formData = new FormData();
-    // formData.append("file", photo);
-    // formData.append("upload_preset", "troffen01");
-
-    formData.append("file", photo);
-    formData.append("cloud_name", "db4qplcj9");
-    formData.append("upload_preset", "troffen-img");
-    formData.append("public_id", "troffen_upload_img_1");
-
-    // console.log(formData);
-
-    const res = await uploadImage(formData);
-    console.log(res);
-    // if (res.meta.code === 200) {
-    //   console.log(res)
-    // }
-    setIsSubmited(1);
+  const handleSubmitPhoto = async (photoUrl) => {
+    // e.preventDefault();
+    const obj = {
+      photo: photoUrl,
+    };
+    try {
+      const res = await updateProfile(Cookies.get("token"), obj);
+      // console.log(res);
+      if (res.meta.code === 200) {
+        setModalSuccess(true);
+        setIsLoading(false);
+      }
+    } catch (error) {}
   };
 
   const handleSubmitNama = async (e) => {
@@ -268,6 +343,7 @@ const Profile = () => {
     const obj = {
       phone: phone,
       full_address: fullAddress,
+      instagram_link: Ig,
     };
     try {
       const res = await updateProfile(Cookies.get("token"), obj);
@@ -321,10 +397,12 @@ const Profile = () => {
         // console.log(res.data.user);
         setPendidikan(res.data.user.educations);
 
+        setPhoto(res.data.user.photo);
         setFullname(res.data.user.full_name);
         setFirstname(res.data.user.first_name);
         setLastname(res.data.user.last_name);
         setPhone(res.data.user.phone);
+        setIg(res.data.user.instagram_link);
         setFullAddress(res.data.user.full_address);
       }
     } catch (error) {
@@ -348,7 +426,7 @@ const Profile = () => {
       {stage === "Informasi Pribadi" && (
         <div className={styles.ib_container}>
           <div className={styles.ib_upload}>
-            <Upload stage={stage} src={photo} label="Foto Profil" name="fotoProfil" desc="" handleChange={handleChange} handleReset={handleReset} handleSubmitPhoto={handleSubmitPhoto} isSubmited={isSubmited} />
+            <Upload stage={stage} src={photo} label="Foto Profil" name="fotoProfil" desc="" handleChange={processFile} isLoading={isLoading} handleReset={handleReset} />
           </div>
           <div className={styles.ib_data}>
             <div className={styles.ib_nama}>
@@ -369,7 +447,7 @@ const Profile = () => {
                   // desc="Contoh: Bahasa Inggris Dasar untuk pemula. Materi akan membahas Grammar, Vocabulary dan Speaking."
                   col={50}
                   row={4}
-                  placeholder={fullAddress}
+                  value={fullAddress}
                   handleChange={handleFullAddress}
                 />
                 <button className={styles.button}>Ubah</button>
@@ -381,23 +459,26 @@ const Profile = () => {
       {stage === "Pengalaman" && (
         <div className={styles.pengalaman_container}>
           <div className={styles.pengalaman_pendidikan}>
-            {pendidikan.map((item, i) => (
-              <form onSubmit={handleSavePend} key={i}>
-                <Textarea
-                  key={i}
-                  label="Pengalaman Pendidikan"
-                  name={item.id}
-                  desc={`${item.education_school} (${item.education_start_date}-${item.education_end_date})`}
-                  col={50}
-                  row={4}
-                  placeholder={item.education_degree}
-                  handleChange={handlePendidikan}
-                />
-                <button type="submit" className={styles.button_save}>
-                  Simpan
-                </button>
-              </form>
-            ))}
+            {/* {console.log(pendidikan)} */}
+            {pendidikan !== undefined &&
+              pendidikan.map((item, i) => (
+                <form onSubmit={handleSavePend} key={i}>
+                  <Textarea
+                    key={i}
+                    label="Pengalaman Pendidikan"
+                    name={item.id}
+                    desc={`${item.education_school} (${item.education_start_date}-${item.education_end_date})`}
+                    col={50}
+                    row={4}
+                    value={item.education_degree}
+                    placeholder={"Silahkan isi pendidikan..."}
+                    handleChange={handlePendidikan}
+                  />
+                  <button type="submit" className={styles.button_save}>
+                    Simpan
+                  </button>
+                </form>
+              ))}
 
             <div className={styles.tambah_pengalaman} onClick={() => handleTambahPengalaman()}>
               <Image src={Plus} alt="" />

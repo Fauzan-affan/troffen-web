@@ -70,7 +70,7 @@ const Statistik = () => {
     try {
       const res = await getMonthlyStatistik(Cookies.get("token"), new Date().getFullYear(), "All");
       if (res !== undefined && res.meta.code === 200) {
-        console.log(res);
+        // console.log(res);
         let bulan = [];
         let student = [];
         res.data.map((item) => {

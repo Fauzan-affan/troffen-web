@@ -31,8 +31,10 @@
     "react-markdown": "^8.0.4",
     "react-paginate": "^8.1.5",
     "react-share": "^4.4.1",
+    "react-slider": "^2.0.6",
     "react-table": "^7.8.0",
     "react-toastify": "^9.1.1",
+    "styled-components": "^6.0.7",
     "territory-indonesia": "^0.1.4"
   }
 }

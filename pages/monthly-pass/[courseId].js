@@ -9,10 +9,32 @@ import E1 from "../../assets/img/e1.svg";
 import E2 from "../../assets/img/e2.svg";
 import Warning from "../../assets/img/warning-sign.svg";
 
-import BCA from "../../assets/img/bank/Bank_Central_Asia.svg";
-import Permata from "../../assets/img/bank/permata.svg";
 import CIMB from "../../assets/img/bank/CIMB_Niaga_logo.svg";
 import Cookies from "js-cookie";
+
+import { loadCoursesFunc } from "../../functions/courses";
+
+export const getStaticPaths = async () => {
+  const res = await loadCoursesFunc();
+  const paths = res.data.data.map((item) => ({
+    params: {
+      courseId: `${item.id}`,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  return {
+    props: {
+      courseId: params.courseId,
+    },
+  };
+};
 
 const tabObj = [
   // {
@@ -68,7 +90,7 @@ const tabObj = [
   },
 ];
 
-const index = () => {
+const index = ({ courseId }) => {
   const defaultType = tabObj[0].id;
 
   return (
@@ -80,7 +102,7 @@ const index = () => {
         </div>
       </section>
 
-      {/* <section id={styles.info}>
+      <section id={styles.info}>
         <div className={styles.container}>
           <div className={styles.info_text}>
             <div className={styles.warning_info}>
@@ -91,7 +113,7 @@ const index = () => {
               <a
                 href={`mailto:troffen.office@gmail.com?subject=MONTHLY PASS - [NO. REK] - ${Cookies.get("email")} - ${Cookies.get(
                   "userId"
-                )}&body=Hi Troffen, Saya sudah melakukan pembayaran untuk kursus [NAMA KURSUS] ke nomor rekening, mohon dikonfirmasi. Thank You!`}
+                )}&body=Hi Troffen, Saya sudah melakukan pembayaran untuk kursus ${courseId} ke nomor rekening, mohon dikonfirmasi. Thank You!`}
               >
                 troffen.office@gmail.com
               </a>{" "}
@@ -99,14 +121,14 @@ const index = () => {
               <a
                 href={`mailto:troffen.office@gmail.com?subject=MONTHLY PASS - [NO. REK] - ${Cookies.get("email")} - ${Cookies.get(
                   "userId"
-                )}&body=Hi Troffen, Saya sudah melakukan pembayaran untuk kursus [NAMA KURSUS] ke nomor rekening, mohon dikonfirmasi. Thank You!`}
+                )}&body=Hi Troffen, Saya sudah melakukan pembayaran untuk id kursus ${courseId} ke nomor rekening, mohon dikonfirmasi. Thank You!`}
               >
                 <u>klik di sini</u>
               </a>
             </nav>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <section id={styles.content}>
         <div className={styles.content_container}>

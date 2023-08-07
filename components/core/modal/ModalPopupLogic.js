@@ -26,7 +26,7 @@ const masukSebagaiSelectedHr = {
   border: "2px solid",
 };
 
-function ModalPopupLogic({ onClose, show, title, iSlogin, signIn, password, masukSebagaiType, changeLoginType, handleLogin, handleChange, handlePassword }) {
+function ModalPopupLogic({ onClose, show, title, iSlogin, signIn, password, masukSebagaiType, changeLoginType, handleLogin, handleChange, handlePassword, handleForgotPass }) {
   const router = useRouter();
 
   // if (status === "loading") {
@@ -91,7 +91,7 @@ function ModalPopupLogic({ onClose, show, title, iSlogin, signIn, password, masu
                     <nav>Ingat Saya</nav>
                   </div>
                   <div className="action_lupa_password">
-                    <nav>Lupa Password?</nav>
+                    <nav onClick={handleForgotPass}>Lupa Password?</nav>
                   </div>
                 </div>
                 <button className="masuk_submit" type="submit">

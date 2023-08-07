@@ -1,25 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { reqCoursesList, reqCourseDetail, submitAjukanKursus } from "../../../../functions/student";
-import styles from "../../../../styles/cari-kursus/Reservasi.module.css";
+import { reqCoursesList, reqCourseDetail, submitAjukanKursus } from "../../functions/student";
+import { loadCoursesFunc } from "../../functions/courses";
+import styles from "../../styles/cari-kursus/Reservasi.module.css";
 
-import GeneralTemplate from "../../../../components/layouts/GeneralTemplate";
-import Tips from "../../../../components/core/Tips";
-import Textarea from "../../../../components/core/Textarea";
+import GeneralTemplate from "../../components/layouts/GeneralTemplate";
+import Tips from "../../components/core/Tips";
+import Textarea from "../../components/core/Textarea";
 
-import SubjekThumbnail from "../../../../assets/img/Thumbnail.svg";
-import PP from "../../../../assets/img/thumbnail_blank.svg";
-import Divider from "../../../../assets/img/Line8.svg";
-import Verify from "../../../../assets/img/Verify.svg";
-import Star from "../../../../assets/img/rating_star.svg";
-import GOR from "../../../../assets/img/GroupOfReviewer.svg";
-import RedLove from "../../../../assets/img/love_red.svg";
+import PP from "../../assets/img/thumbnail_blank.svg";
+import Divider from "../../assets/img/Line8.svg";
+import Verify from "../../assets/img/Verify.svg";
+import Star from "../../assets/img/rating_star.svg";
+import GOR from "../../assets/img/GroupOfReviewer.svg";
+import RedLove from "../../assets/img/love_red.svg";
 import Cookies from "js-cookie";
 
 export const getStaticPaths = async () => {
-  const res = await reqCoursesList("Bearer 17|K01ITpaMfBrSTguFHR7XneeQrykSJ8BgX8ADNS2K");
-  // console.log(res);
+  const res = await loadCoursesFunc();
   const paths = res.data.data.map((item) => ({
     params: {
       courseId: `${item.id}`,
@@ -28,27 +27,37 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 };
 
 export const getStaticProps = async ({ params }) => {
-  const res = await reqCourseDetail("Bearer 17|K01ITpaMfBrSTguFHR7XneeQrykSJ8BgX8ADNS2K", params.courseId);
   return {
     props: {
-      courses: res,
+      courseId: params.courseId,
     },
   };
 };
 
-const Index = ({ courses }) => {
-  // console.log(courses);
+const Index = ({ courseId }) => {
+  // console.log(courseId);
   const router = useRouter();
 
+  // const [reservation_payment_va, set_eservation_payment_va] = useState("BCA");
   const [ketertarikan, setKetertarikan] = useState("");
-  const [reservation_payment_va, set_eservation_payment_va] = useState("BCA");
+  const [detail, setDetail] = useState([]);
 
-  const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area, is_wishlist } = courses.data;
+  const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area, is_wishlist } = detail;
+
+  const handleCourseDetail = async () => {
+    try {
+      const detail = await reqCourseDetail(courseId);
+      if (detail !== undefined && detail.meta.code === 200) {
+        // return detail.data;
+        setDetail(detail.data);
+      }
+    } catch (error) {}
+  };
 
   const convertToFloat = (val) => {
     const num = parseFloat(val);
@@ -73,16 +82,24 @@ const Index = ({ courses }) => {
     setKetertarikan(value);
   };
 
-  const handleAjukanKursus = async (token, courseId, reason, reservation_payment_va) => {
+  const handleAjukanKursus = async () => {
     try {
-      const res = await submitAjukanKursus(token, courseId, reason, reservation_payment_va);
+      const res = await submitAjukanKursus(Cookies.get("token"), id, ketertarikan);
       if (res.meta.code === 200) {
-        router.push(`/monthly-pass`);
+        router.push(`/monthly-pass/${id}`);
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    handleCourseDetail();
+  }, [handleCourseDetail]);
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
@@ -150,7 +167,7 @@ const Index = ({ courses }) => {
                 <div className={styles.atur_jadwal_action}>
                   <Textarea label="" name="ketertarikan" desc="" col={60} row={4} placeholder="Contoh: Saya memiiki ketertarikan kepada UI/UX sejak lama dan ingin belajar lebih banyak kepada Pak John." handleChange={handleChange} />
                   <div className={styles.action_container}>
-                    <div className={styles.button} onClick={() => handleAjukanKursus(Cookies.get("token"), id, ketertarikan, reservation_payment_va)}>
+                    <div className={styles.button} onClick={() => handleAjukanKursus()}>
                       Ajukan Kursus
                     </div>
                   </div>

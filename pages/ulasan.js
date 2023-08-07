@@ -10,6 +10,7 @@ import Star from "../assets/img/dashboard/star.svg";
 import { getStudentUlasan } from "../functions/ulasan";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
+import Blank from "../components/blank/blank";
 
 const Ulasan = () => {
   const [ulasan, setUlasan] = useState([]);
@@ -29,9 +30,9 @@ const Ulasan = () => {
 
   return (
     <div className={styles.ulasan_container}>
-      <div className={styles.ulasan_title}>Ulasan</div>
+      {ulasan !== undefined && ulasan.length === 0 && <Blank menu={"ulasan"} />}
+      {ulasan !== undefined && ulasan.length > 0 && <div className={styles.ulasan_title}>Ulasan</div>}
       <div className={styles.ulasan_content}>
-        {/* {console.log(ulasan)} */}
         {ulasan.map((val, i) => (
           <div className={styles.ulasan_card} key={i}>
             <div className={styles.ulasan_card_section_1}>

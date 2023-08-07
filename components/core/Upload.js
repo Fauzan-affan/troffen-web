@@ -1,7 +1,7 @@
 import styles from "../../styles/core/Upload.module.css";
 import Image from "next/image";
 
-const Upload = ({ stage, label, desc, name, handleChange, src = "", handleReset, handleSubmitPhoto, handleSubmitSertifikat, isSubmited, isSertifikatSubmited }) => {
+const Upload = ({ stage, label, desc, name, handleChange, isLoading, src = "", handleReset, handleSubmitSertifikat, isSertifikatSubmited }) => {
   return (
     <>
       {stage !== "Informasi Pribadi" && stage !== "Pengalaman" && (
@@ -19,22 +19,23 @@ const Upload = ({ stage, label, desc, name, handleChange, src = "", handleReset,
         <div className={styles.wrapper}>
           {label.length > 0 && <label htmlFor={label}>{label}</label>}
           {desc.length > 0 && <nav>{desc}</nav>}
-          {src.length > 0 ? (
+          {/* {console.log(src)} */}
+          {src.length > 0 && src.includes("https") ? (
             <div>
               <Image src={src} alt="" width={200} height={200} className={styles.photo_container} />
               <button className={styles.button_reset} onClick={() => handleReset()}>
                 Reset
               </button>
-              {isSubmited === 0 && (
-                <button className={styles.button} onClick={() => handleSubmitPhoto()}>
-                  Submit
-                </button>
-              )}
             </div>
+          ) : isLoading ? (
+            <nav className={styles.ip_input}>Loading ...</nav>
           ) : (
-            <nav className={styles.ip_input}>
-              <input id={name} name={name} type="file" className={styles.ip_input_file} onChange={handleChange} />
-            </nav>
+            <>
+              <nav className={styles.ip_input}>
+                <input id={name} name={name} type="file" className={styles.ip_input_file} onChange={handleChange} />
+              </nav>
+              <nav style={{ marginLeft: "1rem" }}>Img Ratio: 200 x 200</nav>
+            </>
           )}
         </div>
       )}

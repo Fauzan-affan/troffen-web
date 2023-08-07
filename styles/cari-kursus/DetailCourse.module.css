@@ -132,6 +132,19 @@
   gap: 1rem;
 }
 
+.info_back {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+
+  /* background-color: antiquewhite; */
+}
+
+.info_back > img {
+  cursor: pointer;
+}
+
 .info_title_label {
   font-weight: 700;
   font-size: 32px;

@@ -12,6 +12,7 @@ import Star from "../assets/img/dashboard/star.svg";
 import { getStudentWishlist, getTutorWishlist, addOrDeleteWishlistStudent, addOrDeleteWishlistTutor } from "../functions/wishlist";
 import { getProfile } from "../functions/profile";
 import Cookies from "js-cookie";
+import Blank from "../components/blank/blank";
 
 const Wishlist = () => {
   const router = useRouter();
@@ -75,10 +76,9 @@ const Wishlist = () => {
 
   return (
     <div className={styles.wishlist_container}>
-      <div className={styles.wishlist_title}>Daftar Wishlist</div>
+      {wishlist !== undefined && wishlist.length === 0 && <Blank menu={"wishlist"} />}
+      {wishlist !== undefined && wishlist.length > 0 && <div className={styles.wishlist_title}>Daftar Wishlist</div>}
       <div className={styles.wishlist_content}>
-        {/* {console.log(wishlist)} */}
-        {/* {console.log(age)} */}
         {wishlist.map((val, i) => (
           <div className={styles.wishlist_card} key={i}>
             <div className={styles.wishlist_card_img}>

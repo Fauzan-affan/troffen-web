@@ -17,7 +17,7 @@ import ProfileIcon from "../../assets/img/dashboard/header/profile.svg";
 import UpgradeIcon from "../../assets/img/dashboard/header/upgrade.svg";
 import LogoutIcon from "../../assets/img/dashboard/header/logout.svg";
 
-function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout, title, filteredCourses, setTitle }) {
+function Header({ modalConfig, navbar, handleNavbar, handleLogout, title, filteredCourses, setTitle, profile }) {
   const router = useRouter();
 
   const date = new Date();
@@ -92,7 +92,9 @@ function Header({ modalConfig, navbar, handleNavbar, isLogin, handleLogout, titl
                   <ul className={styles.ds_ul}>
                     <li className={styles.loggedin_menu}>
                       <div className={styles.loggedin_username}>{Cookies.get("firstName")}</div>
-                      <Image alt="" src={PP} priority />
+                      {/* {console.log(profile !== undefined && profile.user.photo)} */}
+
+                      {profile !== undefined && profile.user.photo.includes("https") ? <Image src={profile.user.photo} width={50} height={50} alt={""} priority /> : <Image alt="" src={PP} priority />}
                       <ul className={styles.ds_loggedin_menu_body}>
                         <li className={styles.dashboard_menu} onClick={() => router.push("profile")}>
                           <Image src={ProfileIcon} alt={""} />

@@ -1,19 +1,13 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 
 import Image from "next/image";
 import Link from "next/link";
 
-import { reqCoursesList, reqCourseDetail, courseReview, addOrRemoveStudentWishlist } from "../../functions/student";
+import styles from "../../styles/cari-kursus/DetailCourse.module.css";
 
-import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Tag from "../../components/core/Tag";
 import Modal from "../../components/core/modal/Modal";
 
-import styles from "../../styles/cari-kursus/DetailCourse.module.css";
-
-import SubjekThumbnail from "../../assets/img/Thumbnail.svg";
 import PP from "../../assets/img/thumbnail_blank.svg";
 
 import Verify from "../../assets/img/Verify.svg";
@@ -24,47 +18,13 @@ import loc2 from "../../assets/img/loc2.svg";
 import Online from "../../assets/img/online.svg";
 import Favorite from "../../assets/img/Fav.svg";
 import RedLove from "../../assets/img/love_red.svg";
-import Share from "../../assets/img/Share.svg";
 import pp_comment from "../../assets/img/pp_comment.svg";
 import Divider from "../../assets/img/Line8.svg";
 import Filter from "../../assets/img/filter.svg";
+import Back from "../../assets/img/back.svg";
 
-export const getStaticPaths = async () => {
-  const res = await reqCoursesList("Bearer 17|K01ITpaMfBrSTguFHR7XneeQrykSJ8BgX8ADNS2K");
-  // console.log(res);
-  const paths = res.data.data.map((item) => ({
-    params: {
-      courseId: `${item.id}`,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params }) => {
-  const review = await courseReview("Bearer 17|K01ITpaMfBrSTguFHR7XneeQrykSJ8BgX8ADNS2K", params.courseId);
-
-  return {
-    props: {
-      courseId: params.courseId,
-      reviews: review,
-    },
-  };
-};
-
-const CourseId = ({ courseId, reviews }) => {
-  // console.log(Cookies.get("token"));
-
-  const router = useRouter();
-  // console.log(router.params);
-
-  const [course, setCourse] = useState({ id: "", tutor: "", tarif: "", title: "", rating: "", ulasan: "", is_online: "", hashtag: "", description: "", murid: "", course_area: "", is_wishlist: "" });
-  const [modalWishlist, setModalWishlist] = useState(false);
-
-  const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area, is_wishlist } = course;
+const Detail = ({ courseId, reviews, detail, wishList, handleWishlist, modalWishlist, closeModalWishlist, handleBack }) => {
+  const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area } = detail;
 
   const convertToRupiah = (val) => {
     const nominal = parseInt(val);
@@ -86,53 +46,16 @@ const CourseId = ({ courseId, reviews }) => {
     return ratings;
   };
 
-  const closeModalWishlist = () => {
-    setModalWishlist(false);
-    router.reload();
+  const handleLaporkanGuru = () => {
+    window.open(`mailto:troffen.office@gmail.com?subject=Laporkan ${tutor} | ${id}&body=Hi Troffen Saya ingin melaporkan ${tutor} dalam kursus ${title} karena .... Thank You!`, "_blank", "noreferrer");
   };
-
-  const handleCourses = async () => {
-    try {
-      const res = await reqCourseDetail(Cookies.get("token"), courseId);
-      if (res.meta.code === 200) {
-        const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area, is_wishlist } = res.data;
-        setCourse((state) => ({
-          ...state,
-          ["id"]: id,
-          ["tutor"]: tutor,
-          ["tarif"]: tarif,
-          ["title"]: title,
-          ["rating"]: rating,
-          ["ulasan"]: ulasan,
-          ["is_online"]: is_online,
-          ["hashtag"]: hashtag,
-          ["description"]: description,
-          ["murid"]: murid,
-          ["course_area"]: course_area,
-          ["is_wishlist"]: is_wishlist,
-        }));
-      }
-    } catch (error) {}
-  };
-
-  const handleWishlist = async () => {
-    try {
-      const res = await addOrRemoveStudentWishlist(Cookies.get("token"), id);
-      if (res.meta.code === 200) {
-        setModalWishlist(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    handleCourses();
-  }, []);
 
   return (
-    <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`}>
+    <>
       <div className={styles.container}>
+        <div className={styles.info_back}>
+          <Image alt="" src={Back} priority onClick={() => handleBack()} />
+        </div>
         <div className={styles.body_left}>
           <div className={styles.card}>
             <div>
@@ -145,8 +68,8 @@ const CourseId = ({ courseId, reviews }) => {
                 </div>
               </div>
               {/* <Link href={"#"} className={styles.view_profile}>
-                Lihat Profil Lengkap
-              </Link> */}
+        Lihat Profil Lengkap
+    </Link> */}
               <div className={styles.tarif_kursus}>
                 <div className={styles.label_tarif_guru}>Tarif kursus &#x28;persesi&#x29;</div>
                 <div className={styles.nominal_tarif_guru}>{convertToRupiah(tarif)}/jam</div>
@@ -154,17 +77,18 @@ const CourseId = ({ courseId, reviews }) => {
             </div>
             <div className={styles.action_card_container}>
               {/* <Link href={`#`} className={styles.button}>
-                Ajukan Kursus
-              </Link> */}
+        Ajukan Kursus
+    </Link> */}
               <Link href={`reservasi/${courseId}`} className={styles.button}>
                 Ajukan Kursus
               </Link>
             </div>
             <nav className={styles.report}>
-              <p>Laporkan Guru</p>
+              <p onClick={handleLaporkanGuru}>Laporkan Guru</p>
             </nav>
           </div>
         </div>
+
         <div className={styles.body_right}>
           <div className={styles.info}>
             <div className={styles.info_title}>
@@ -176,10 +100,10 @@ const CourseId = ({ courseId, reviews }) => {
             <div className={styles.info_tags}>
               {is_online === "1" ? <div className={styles.info_tags_online}>Kursus ini tersedia ONLINE</div> : ""}
               {/* {["#DESAIN", "#UI/UX"].map((category, i) => (
-                <div className={styles.info_tags_category} key={i}>
+                  <div className={styles.info_tags_category} key={i}>
                   <Tag>{category}</Tag>
-                </div>
-              ))} */}
+                  </div>
+      ))} */}
               <div className={styles.info_tags_category}>
                 <Tag>{hashtag}</Tag>
               </div>
@@ -206,15 +130,15 @@ const CourseId = ({ courseId, reviews }) => {
             <hr className={styles.hr_divider} style={{ margin: "1rem 0" }} />
             <div className={styles.info_action}>
               <div className={styles.info_wishlist} onClick={() => handleWishlist()}>
-                {is_wishlist === "1" ? <Image alt="" src={RedLove} width={22} /> : <Image alt="" src={Favorite} width={20} />}
+                {wishList === true ? <Image alt="" src={RedLove} width={22} /> : <Image alt="" src={Favorite} width={20} />}
                 <p>Wishlist</p>
               </div>
               {/* {console.log(wishlist)} */}
               {/* <Image alt="" src={Divider} priority />
-              <div className={styles.info_share}>
-                <Image alt="" src={Share} />
-                <p>Share</p>
-              </div> */}
+      <div className={styles.info_share}>
+        <Image alt="" src={Share} />
+        <p>Share</p>
+      </div> */}
             </div>
           </div>
         </div>
@@ -224,7 +148,7 @@ const CourseId = ({ courseId, reviews }) => {
           <hr className={styles.hr_divider} />
           <div className={styles.course_info}>
             <div className={styles.course_info_title}>Informasi Kursus</div>
-            <div className={styles.course_info_detail}>{description}</div>
+            {/* <div className={styles.course_info_detail}>{description}</div> */}
           </div>
           <hr className={styles.hr_divider} />
         </div>
@@ -246,8 +170,8 @@ const CourseId = ({ courseId, reviews }) => {
               <Image alt="" src={Filter} priority className={styles.filter_icon} />
             </div>
           </div>
-          {reviews.data.data.length > 0
-            ? reviews.data.data.map((item, i) => (
+          {reviews.length > 0
+            ? reviews.map((item, i) => (
                 <div className={styles.ulasan_commment} key={i}>
                   <div className={styles.ulasan_commment_card}>
                     <div className={styles.ulasan_comment_header}>
@@ -274,11 +198,11 @@ const CourseId = ({ courseId, reviews }) => {
 
       <Modal modalInfo={modalWishlist} handleModal={closeModalWishlist}>
         <div className={styles.whitelist_wrapper}>
-          Kursus {title} berhasil {is_wishlist === "0" ? "ditambahkan" : "dihapus"}
+          Kursus {title} berhasil {wishList ? "ditambahkan" : "dihapus"}
         </div>
       </Modal>
-    </GeneralTemplate>
+    </>
   );
 };
 
-export default CourseId;
+export default Detail;

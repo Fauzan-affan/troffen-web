@@ -1,0 +1,28 @@
+.add_payment_form {
+  max-width: 30rem;
+}
+
+.add_payment_title {
+  margin: 1rem 0;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 33px;
+}
+
+.button {
+  background: #1ea9e4;
+  border-radius: 12px;
+  color: white;
+  border: none;
+
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 34px;
+
+  width: 100%;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.9;
+}

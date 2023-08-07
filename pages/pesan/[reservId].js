@@ -154,6 +154,8 @@ const Index = () => {
               ""
             )} */}
 
+            {/* {console.log(detailMessage)} */}
+
             {detailMessage.map((item, i) => {
               return (
                 <div key={i}>

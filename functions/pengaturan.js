@@ -39,3 +39,25 @@ export const changePassTutor = async (token, oldpassword, newpassword) => {
     console.log(error);
   }
 };
+
+export const forgotPass = async (email, oldpassword, newpassword) => {
+  try {
+    const res = await fetch(`https://api.troffen-api.com/api/auth/update_password`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        oldpassword: oldpassword,
+        newpassword: newpassword,
+      }),
+    });
+
+    // if (!res.ok) throw new Error("Request failed.");
+    if (res.status === 404) console.log(res);
+    const data = await res.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

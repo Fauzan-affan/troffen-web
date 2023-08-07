@@ -83,6 +83,14 @@
   padding: 30px;
 }
 
+.modal_rating {
+  background: white;
+  width: 400px;
+  height: 350px;
+  border-radius: 50px;
+  padding: 30px;
+}
+
 .modal_ulasan {
   background: white;
   width: 800px;
@@ -95,6 +103,14 @@
   background: white;
   width: 800px;
   height: 650px;
+  border-radius: 50px;
+  padding: 30px;
+}
+
+.modal_forgot_pass {
+  background: white;
+  width: 400px;
+  height: 760px;
   border-radius: 50px;
   padding: 30px;
 }

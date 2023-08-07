@@ -4,6 +4,8 @@ import { Logout } from "../../functions/logout";
 import Cookies from "js-cookie";
 
 import { loadCoursesFunc } from "../../functions/courses";
+import { paymentList } from "../../functions/admin";
+import { getProfile } from "../../functions/profile";
 
 import Head from "next/head";
 import Image from "next/image";
@@ -43,6 +45,10 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
   const [searchTitle, setSearchTitle] = useState("");
   const [courses, setCourses] = useState([]);
 
+  const [isLangganan, setIsLangganan] = useState(false);
+
+  const [profile, setProfile] = useState();
+
   const filteredCourses = courses.filter((item, index, arr) => arr.findIndex((t) => t.title === item.title) === index);
 
   const handleLogout = () => {
@@ -61,11 +67,41 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
     } catch (error) {}
   };
 
+  const handlePaymentList = async () => {
+    try {
+      const res = await paymentList(Cookies.get("adminToken"));
+      if (res !== undefined && res.meta.code === 200) {
+        let list = [];
+        const currentDate = new Date();
+
+        list = res.data.data.filter((i) => i.user_id === Cookies.get("userId"));
+        if (list.length > 0) {
+          if (new Date(list[0].subscription_end_period) > currentDate) {
+            setIsLangganan(true);
+          }
+        } else {
+          console.log("Anda belum berlangganan");
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleProfile = async () => {
+    const res = await getProfile(Cookies.get("token"));
+    if (res !== undefined && res.meta.code === 200) {
+      setProfile(res.data);
+    }
+  };
+
   useEffect(() => {
     isNavbar ? setNavbar(isNavbar) : "";
     menu ? setDashMenu(menu) : "";
 
     handleCourse();
+    handlePaymentList();
+    handleProfile();
 
     if (Cookies.get("token") !== undefined && Cookies.get("firstName").length > 0) {
       setFirstname(Cookies.get("firstName"));
@@ -96,6 +132,21 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                 <hr className={styles.hr} />
                 <div className={styles.sidebar_menu}>
                   <ul>
+                    {Cookies.get("email") === "admin.troffen@gmail.com" && (
+                      <li onClick={() => router.push("/admin")}>
+                        {dashMenu === "Admin" ? (
+                          <>
+                            <Image src={Ulasan1} alt={"image"} />
+                            <nav style={{ color: "#1EA9E4" }}>Admin</nav>
+                          </>
+                        ) : (
+                          <>
+                            <Image src={Ulasan0} alt={"image"} />
+                            <nav>Admin</nav>
+                          </>
+                        )}
+                      </li>
+                    )}
                     <li onClick={() => router.push("/dashboard")}>
                       {dashMenu === "Dasbor" ? (
                         <>
@@ -126,12 +177,12 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                       {dashMenu === "Tagihan" ? (
                         <>
                           <Image src={IklanLangganan1} alt={"image"} />
-                          <nav style={{ color: "#1EA9E4" }}>{Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}</nav>
+                          <nav style={{ color: "#1EA9E4" }}>{role === "tutor" ? "Tagihan" : "Langganan"}</nav>
                         </>
                       ) : (
                         <>
                           <Image src={IklanLangganan0} alt={"image"} />
-                          <nav>{Cookies.get("role") === "tutor" ? "Tagihan" : "Langganan"}</nav>
+                          <nav>{role === "tutor" ? "Tagihan" : "Langganan"}</nav>
                         </>
                       )}
                     </li>
@@ -150,7 +201,7 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                         )}
                       </li>
                     )}
-                    {Cookies.get("role") === "student" ? (
+                    {role === "student" ? (
                       <li onClick={() => router.push("/wishlist")}>
                         {dashMenu === "Wishlist" ? (
                           <>
@@ -181,7 +232,7 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                         </>
                       )}
                     </li>
-                    {role === "tutor" && (
+                    {role === "tutor" && isLangganan && (
                       <li onClick={() => router.push("/statistik")}>
                         {dashMenu === "Statistik" ? (
                           <>
@@ -217,15 +268,13 @@ const DashboardTemplate = ({ title, desc, icon, children, isNavbar, menu }) => {
                 </div>
               </div>
               <div className={styles.sidebar_upgrade}>
-                {Cookies.get("role") === "tutor" ? (
-                  <Image src={UpgradeIcon} width={180} alt={"image"} onClick={() => router.push("/monthly-pass")} />
-                ) : (
-                  <Image src={UpgradeIconStudent} width={180} alt={"image"} onClick={() => router.push("/monthly-pass")} />
-                )}
+                {role === "tutor"
+                  ? !isLangganan && <Image src={UpgradeIcon} width={180} alt={"image"} onClick={() => router.push("/monthly-pass")} />
+                  : !isLangganan && <Image src={UpgradeIconStudent} width={180} alt={"image"} onClick={() => router.push("/monthly-pass")} />}
               </div>
             </div>
             <div className={styles.right_content}>
-              <Header navbar={navbar} isLogin={isLogin} token={token} firstname={firstname} handleLogout={handleLogout} title={searchTitle} filteredCourses={filteredCourses} setTitle={setSearchTitle} />
+              <Header navbar={navbar} isLogin={isLogin} token={token} profile={profile} firstname={firstname} handleLogout={handleLogout} title={searchTitle} filteredCourses={filteredCourses} setTitle={setSearchTitle} />
               <div className={styles.right_content_section}>{children}</div>
             </div>
           </div>
