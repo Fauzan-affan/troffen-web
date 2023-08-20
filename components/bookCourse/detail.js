@@ -1,5 +1,3 @@
-import Cookies from "js-cookie";
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,7 +21,7 @@ import Divider from "../../assets/img/Line8.svg";
 import Filter from "../../assets/img/filter.svg";
 import Back from "../../assets/img/back.svg";
 
-const Detail = ({ courseId, reviews, detail, wishList, handleWishlist, modalWishlist, closeModalWishlist, handleBack }) => {
+const Detail = ({ courseId, reviews, detail, wishList, handleWishlist, modalWishlist, closeModalWishlist, handleBack, handleLaporkanGuru, modalLaporkanGuru, closeModalLaporkanGuru }) => {
   const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area } = detail;
 
   const convertToRupiah = (val) => {
@@ -46,8 +44,8 @@ const Detail = ({ courseId, reviews, detail, wishList, handleWishlist, modalWish
     return ratings;
   };
 
-  const handleLaporkanGuru = () => {
-    window.open(`mailto:troffen.office@gmail.com?subject=Laporkan ${tutor} | ${id}&body=Hi Troffen Saya ingin melaporkan ${tutor} dalam kursus ${title} karena .... Thank You!`, "_blank", "noreferrer");
+  const copyEmail = () => {
+    navigator.clipboard.writeText("troffen.office@gmail.com");
   };
 
   return (
@@ -199,6 +197,30 @@ const Detail = ({ courseId, reviews, detail, wishList, handleWishlist, modalWish
       <Modal modalInfo={modalWishlist} handleModal={closeModalWishlist}>
         <div className={styles.whitelist_wrapper}>
           Kursus {title} berhasil {wishList ? "ditambahkan" : "dihapus"}
+        </div>
+      </Modal>
+
+      <Modal modalReport={modalLaporkanGuru} handleModal={closeModalLaporkanGuru}>
+        <div className={styles.report_wrapper}>
+          <h1>laporkan Guru</h1>
+          <div className={styles.report_body}>
+            <div className={styles.report_body_email}>
+              Ingin melaporkan Guru? Silahkan email ke{" "}
+              <a href={"#"} onClick={copyEmail}>
+                <b>
+                  <u>troffen.office@gmail.com</u>
+                </b>
+              </a>
+            </div>
+            <div className={styles.report_body_subject}>
+              <b>Subject:</b>
+              <div>{`Laporkan ${tutor} | ${id}`}</div>
+            </div>
+            <div className={styles.report_body_body}>
+              <b>Body:</b>
+              <div>{`Hi Troffen Saya ingin melaporkan ${tutor} dalam kursus ${title} karena .... Thank You!`}</div>
+            </div>
+          </div>
         </div>
       </Modal>
     </>

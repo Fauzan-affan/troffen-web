@@ -408,3 +408,9 @@
 .ulasan_comment_body_profile img {
   margin-right: 1rem;
 }
+
+.report_body_email,
+.report_body_subject,
+.report_body_body {
+  margin-bottom: 0.5rem;
+}

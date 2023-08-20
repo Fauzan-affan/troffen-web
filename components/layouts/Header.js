@@ -75,7 +75,7 @@ function Header({ modalConfig, navbar, handleNavbar, handleLogout, title, filter
                     renderInput={(props) => <input {...props} className={styles.input} placeholder="Lihat Kursus Lain" type="text" />}
                     onSelect={(title, item) => {
                       setTitle(title);
-                      router.push(`cari-kursus/${item.id}`);
+                      router.push(`reservasi/${item.id}`);
                     }}
                     shouldItemRender={(item, value) => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1}
                     autoHighlight={true}

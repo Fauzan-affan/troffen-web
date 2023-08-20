@@ -91,9 +91,10 @@ export default function Index() {
   const [wishList, setWishList] = useState(false);
 
   const [modalWishlist, setModalWishlist] = useState(false);
+  const [modalLaporkanGuru, setModalLaporkanGuru] = useState(false);
 
   const [tarif, setTarif] = useState([MIN, MAX]);
-  const [rating, setRating] = useState(["0", "5"]);
+  // const [rating, setRating] = useState(["0", "5"]);
 
   const [checkedState, setCheckedState] = useState(new Array(allRatings.length).fill(false));
 
@@ -115,16 +116,9 @@ export default function Index() {
   // mendapatkan id dari area
   const areaKursusId = kotaOption[0].filter((val) => val.name === areaKursus).map((val) => val.id);
 
-  // const updateTotal = (checkboxValues) => {
-  //   const totalRating = checkboxValues.reduce((sum, currentState, index) => {
-  //     if (currentState === true) {
-  //       return sum + allRatings[index].price;
-  //     }
-  //     return sum;
-  //   }, 0);
-
-  //   setTotalRating(totalRating);
-  // };
+  const handleLaporkanGuru = () => {
+    setModalLaporkanGuru(true);
+  };
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) => (index === position ? !item : item));
@@ -762,6 +756,10 @@ export default function Index() {
     setModalWishlist(false);
   };
 
+  const closeModalLaporkanGuru = () => {
+    setModalLaporkanGuru(false);
+  };
+
   useEffect(() => {
     handleCourses();
 
@@ -988,7 +986,19 @@ export default function Index() {
           </Modal>
         </>
       ) : (
-        <Detail courseId={courseId} detail={detailCourse} reviews={review} wishList={wishList} handleWishlist={handleWishlist} modalWishlist={modalWishlist} closeModalWishlist={closeModalWishlist} handleBack={handleBack} />
+        <Detail
+          courseId={courseId}
+          detail={detailCourse}
+          reviews={review}
+          wishList={wishList}
+          handleWishlist={handleWishlist}
+          modalWishlist={modalWishlist}
+          closeModalWishlist={closeModalWishlist}
+          handleBack={handleBack}
+          handleLaporkanGuru={handleLaporkanGuru}
+          modalLaporkanGuru={modalLaporkanGuru}
+          closeModalLaporkanGuru={closeModalLaporkanGuru}
+        />
       )}
     </GeneralTemplate>
   );
