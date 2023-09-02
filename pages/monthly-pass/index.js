@@ -71,6 +71,10 @@ const tabObj = [
 const index = () => {
   const defaultType = tabObj[0].id;
 
+  const copyEmail = () => {
+    navigator.clipboard.writeText("troffen.office@gmail.com");
+  };
+
   return (
     <GeneralTemplate title={`Cari Guru - Troffen`} desc={`Cari guru yang sesuai denganmu`} icon={`troffen.ico`} isNavbar={`backNavbar`}>
       <section id={styles.title}>
@@ -80,33 +84,37 @@ const index = () => {
         </div>
       </section>
 
-      {/* <section id={styles.info}>
+      <section id={styles.info}>
         <div className={styles.container}>
           <div className={styles.info_text}>
             <div className={styles.warning_info}>
               <Image alt="" src={Warning} priority />
             </div>
-            <nav>
-              Mohon lakukan konfirmasi transfer ke{" "}
-              <a
-                href={`mailto:troffen.office@gmail.com?subject=MONTHLY PASS - [NO. REK] - ${Cookies.get("email")} - ${Cookies.get(
-                  "userId"
-                )}&body=Hi Troffen, Saya sudah melakukan pembayaran untuk kursus [NAMA KURSUS] ke nomor rekening, mohon dikonfirmasi. Thank You!`}
-              >
-                troffen.office@gmail.com
-              </a>{" "}
-              dengan subjek “MONTHLY PASS - [NO. REK] - [EMAIL PENGGUNA] - [USER ID]” setelah melakukan pembayaran. Atau{" "}
-              <a
-                href={`mailto:troffen.office@gmail.com?subject=MONTHLY PASS - [NO. REK] - ${Cookies.get("email")} - ${Cookies.get(
-                  "userId"
-                )}&body=Hi Troffen, Saya sudah melakukan pembayaran untuk kursus [NAMA KURSUS] ke nomor rekening, mohon dikonfirmasi. Thank You!`}
-              >
-                <u>klik di sini</u>
-              </a>
-            </nav>
+            <div className={styles.report_wrapper}>
+              {/* <h1>laporkan Guru</h1> */}
+              <div className={styles.report_body}>
+                <div className={styles.report_body_email}>
+                  Mohon lakukan konfirmasi transfer ke{" "}
+                  <a href={"#"} onClick={copyEmail}>
+                    <b>troffen.office@gmail.com</b>
+                  </a>{" "}
+                  dan pembayaran akan diproses maksimal 1x24 jam. Dengan format email seperti di bawah ini:
+                </div>
+                <div className={styles.report_body_subject}>
+                  <b>Subject:</b>
+                  <div>{`MONTHLY PASS - [NO. REK STUDENT] - ${Cookies.get("email")} - Student Id ${Cookies.get("userId")}`}</div>
+                  {/* <div>{`Laporkan ${tutor} | ${id}`}</div> */}
+                </div>
+                <div className={styles.report_body_body}>
+                  <b>Body:</b>
+                  <div>{`Hi Troffen, Saya sudah melakukan pembayaran Monthly Pass ke nomor rekening Troffen (CIMB 800170922300 / SANG HYANG BATARA ISMAYA), mohon dikonfirmasi. Thank You!`}</div>
+                  {/* <div>{`Hi Troffen Saya ingin melaporkan ${tutor} dalam kursus ${title} karena .... Thank You!`}</div> */}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
       <section id={styles.content}>
         <div className={styles.content_container}>
