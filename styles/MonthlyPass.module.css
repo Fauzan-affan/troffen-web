@@ -236,7 +236,7 @@
   background-color: #ffe698;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 
   margin-bottom: 2rem;
@@ -244,4 +244,10 @@
 
 .warning_info {
   margin-right: 1rem;
+}
+
+.report_body_email,
+.report_body_subject,
+.report_body_body {
+  margin-bottom: 0.5rem;
 }

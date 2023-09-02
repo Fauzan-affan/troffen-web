@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { reqCoursesList, reqCourseDetail, submitAjukanKursus } from "../../functions/student";
-import { loadCoursesFunc } from "../../functions/courses";
+
 import styles from "../../styles/cari-kursus/Reservasi.module.css";
+
+import { reqCourseDetail, submitAjukanKursus } from "../../functions/student";
+import { paymentList } from "../../functions/admin";
+import { loadCoursesFunc } from "../../functions/courses";
 
 import GeneralTemplate from "../../components/layouts/GeneralTemplate";
 import Tips from "../../components/core/Tips";
 import Textarea from "../../components/core/Textarea";
+import Modal from "../../components/core/modal/Modal";
 
 import PP from "../../assets/img/thumbnail_blank.svg";
 import Divider from "../../assets/img/Line8.svg";
@@ -46,6 +50,10 @@ const Index = ({ courseId }) => {
   // const [reservation_payment_va, set_eservation_payment_va] = useState("BCA");
   const [ketertarikan, setKetertarikan] = useState("");
   const [detail, setDetail] = useState([]);
+  const [modalInfo, setModalInfo] = useState();
+  const [errMessage, setErrMessage] = useState();
+
+  const [isLangganan, setIsLangganan] = useState(false);
 
   const { id, tutor, tarif, title, rating, ulasan, is_online, hashtag, description, murid, course_area, is_wishlist } = detail;
 
@@ -82,20 +90,54 @@ const Index = ({ courseId }) => {
     setKetertarikan(value);
   };
 
-  const handleAjukanKursus = async () => {
+  const handlePaymentListLangganan = async () => {
     try {
-      const res = await submitAjukanKursus(Cookies.get("token"), id, ketertarikan);
-      if (res.meta.code === 200) {
-        router.push(`/monthly-pass/${id}`);
+      const res = await paymentList(Cookies.get("adminToken"));
+      if (res !== undefined && res.meta.code === 200) {
+        let list = [];
+        const currentDate = new Date();
+
+        list = res.data.data.filter((i) => i.user_id === Cookies.get("userId"));
+        if (list.length > 0) {
+          if (new Date(list[0].subscription_end_period) > currentDate) {
+            setIsLangganan(true);
+          }
+        } else {
+          setIsLangganan(false);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleAjukanKursus = async () => {
+    try {
+      const res = await submitAjukanKursus(Cookies.get("token"), id, ketertarikan);
+      if (res.meta.code === 200) {
+        // console.log(isLangganan);
+        // router.push(`/monthly-pass/${id}`);
+        // return null;
+        if (isLangganan) {
+          router.push(`/dashboard`);
+        }
+      } else if (res.meta.code === 400) {
+        setErrMessage(res.meta.message);
+        setModalInfo(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCloseModalInfo = () => {
+    setModalInfo(false);
+  };
+
   useEffect(() => {
     handleCourseDetail();
-  }, [handleCourseDetail]);
+    handlePaymentListLangganan();
+  }, []);
 
   if (router.isFallback) {
     return <div>Loading...</div>;
@@ -183,6 +225,10 @@ const Index = ({ courseId }) => {
           </div>
         </section>
       </section>
+
+      <Modal modalInfo={modalInfo} handleModal={handleCloseModalInfo}>
+        <div>{errMessage}</div>
+      </Modal>
     </GeneralTemplate>
   );
 };
